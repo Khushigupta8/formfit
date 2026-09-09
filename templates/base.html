@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{# Title and description are the two things Google actually shows. #}
+<title>{{ page_title }} | {{ site_name }}</title>
+<meta name="description" content="{{ page_desc }}">
+<link rel="canonical" href="{{ canonical }}">
+
+{# Social preview - matters for WhatsApp and Telegram shares, which is
+   how most students will pass this link around. #}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_desc }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:site_name" content="{{ site_name }}">
+<meta property="og:locale" content="en_IN">
+<meta property="og:image" content="{{ site_url }}/static/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ site_url }}/static/img/og-image.png">
+
+{% if adsense %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense }}"
+        crossorigin="anonymous"></script>
+{% endif %}
+
+<link rel="icon" href="/static/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png">
+<link rel="manifest" href="/static/img/site.webmanifest">
+<meta name="theme-color" content="#1f4e79">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "{{ site_name }}",
+  "url": "{{ site_url }}/",
+  "logo": "{{ site_url }}/static/img/mark.png",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+}
+</script>
+{% block schema %}{% endblock %}
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="/">
+    <img class="wordmark__mark" src="/static/img/mark.png" alt="" width="31" height="31">
+    {{ site_name }}
+  </a>
+  <p class="masthead__line">Photo and signature sizing for exam forms</p>
+  <nav class="masthead__nav">
+    <a href="/guide">Size list</a>
+    <a href="/guides">Guides</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer>
+  <div class="footer__cols">
+    <div>
+      <h2>{{ site_name }}</h2>
+      <p>Resize a photo or signature to the exact pixel size and KB range an
+         exam form asks for. Everything runs in your browser, so your image is
+         never uploaded.</p>
+    </div>
+    <div>
+      <h2>Sizes</h2>
+      <ul>
+        <li><a href="/">Resizer</a></li>
+        <li><a href="/guide">All exam sizes</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="/guides">All guides</a></li>
+        <li><a href="/guides/photo-rejected-in-online-form">Photo rejected?</a></li>
+        <li><a href="/guides/how-to-reduce-photo-size-to-20-kb">Reduce to 20 KB</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms of use</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer__base">Sizes are compiled from published notifications and
+     can change. Always check your own notice before uploading.</p>
+</footer>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

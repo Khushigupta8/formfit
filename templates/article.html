@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% from "_ad.html" import slot with context %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | tojson }},
+  "description": {{ article.desc | tojson }},
+  "mainEntityOfPage": "{{ canonical }}",
+  "publisher": { "@type": "Organization", "name": "{{ site_name }}" }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="guide">
+
+  <h1>{{ h1 }}</h1>
+  <p class="lede">{{ article.desc }}</p>
+
+  {% for heading, paras in body %}
+    <h2>{{ heading }}</h2>
+    {% for p in paras %}<p>{{ p }}</p>{% endfor %}
+    {% if loop.index == 3 and body | length > 5 %}{{ slot("mid") }}{% endif %}
+  {% endfor %}
+
+  {% if updated %}<p class="updated">Last updated {{ updated }}.</p>{% endif %}
+
+  {{ slot("end") }}
+
+  {% if pages %}
+  <h2>Resize for a specific exam</h2>
+  <ul class="related">
+    {% for g in pages %}
+    <li><a href="/{{ g.slug }}">{{ g.exam_label }}
+      {{ g.primary.kind.lower() }}, {{ g.primary.w }}x{{ g.primary.h }} px,
+      {{ g.primary.min_kb }}-{{ g.primary.max_kb }} KB</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if others %}
+  <h2>More guides</h2>
+  <ul class="related">
+    {% for a in others %}
+    <li><a href="/guides/{{ a.slug }}">{{ a.h1 }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+</main>
+{% endblock %}

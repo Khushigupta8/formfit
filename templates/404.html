@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="guide">
+  <h1>That page isn't here</h1>
+  <p>The link may be wrong. Pick your exam from the list below.</p>
+  <ul class="related">
+    {% for p in presets %}
+    <li><a href="/{{ p.slug }}">{{ p.exam_label }} {{ p.primary.kind.lower() }}, {{ p.primary.w }}x{{ p.primary.h }} px, {{ p.primary.min_kb }}-{{ p.primary.max_kb }} KB</a></li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

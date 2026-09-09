@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_ad.html" import slot with context %}
+
+{% block content %}
+<main class="guide">
+
+  <h1>Guides</h1>
+  <p class="lede">Plain answers to the problems that stop people at the upload
+     step of an application form.</p>
+
+  <ul class="cards">
+    {% for a in articles %}
+    <li>
+      <a href="/guides/{{ a.slug }}">
+        <h2>{{ a.h1 }}</h2>
+        <p>{{ a.desc }}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {{ slot("end") }}
+
+  <h2>Or go straight to your exam</h2>
+  <ul class="related">
+    {% for g in pages %}
+    <li><a href="/{{ g.slug }}">{{ g.exam_label }} {{ g.primary.kind.lower() }}, {{ g.primary.w }}x{{ g.primary.h }} px,
+      {{ g.primary.min_kb }}-{{ g.primary.max_kb }} KB</a></li>
+    {% endfor %}
+  </ul>
+
+</main>
+{% endblock %}

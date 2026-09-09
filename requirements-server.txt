@@ -1,0 +1,4 @@
+# Only needed if you want the unused /api/resize route to work.
+# The live site resizes in the browser and does not use it.
+Flask==3.0.3
+Pillow==10.4.0

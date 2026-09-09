@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% from "_ad.html" import slot with context %}
+
+{% block content %}
+<main class="guide">
+
+  <h1>What size does your exam form actually want?</h1>
+
+  <p>Application portals check three things when you upload: the pixel
+  dimensions, the file size in KB, and the format. Miss any one and the upload
+  bounces, usually with an error message that doesn't say which one failed.</p>
+
+  <p>Here are the numbers most commonly asked for. Treat this as a starting
+  point and match it against your own notification, because exam bodies revise
+  them between cycles.</p>
+
+  <table class="sizes">
+    <thead>
+      <tr><th>Exam</th><th>Upload</th><th>Pixels</th><th>File size</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for p in presets %}
+      <tr>
+        <td>{{ p.exam }}</td>
+        <td>{{ p.kind }}</td>
+        <td class="n">{{ p.w }} x {{ p.h }}</td>
+        <td class="n">{{ p.min_kb }}-{{ p.max_kb }} KB</td>
+        <td><a href="/{{ slug_for(p) }}">Resize</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ slot("after_table") }}
+
+  <h2>Why a correctly sized photo still gets rejected</h2>
+
+  <p>The most common cause is a file that is <em>under</em> the minimum. Most
+  forms ask for a range, say 20 to 50 KB, and people compress until the number
+  is small without noticing they dropped below the floor. A 12 KB file fails a
+  20 KB minimum just as surely as a 200 KB one fails the ceiling.</p>
+
+  <p>Second most common is orientation. Phone cameras store rotation as a
+  hidden tag rather than actually turning the pixels. Your photo looks upright
+  in the gallery and arrives sideways at the portal. Any tool that reads that
+  tag properly, including this one, fixes it on the way through.</p>
+
+  <p>Third is a signature photographed on paper. The paper reads as grey, not
+  white, and some portals bounce it for poor contrast. Sign with a black or
+  dark blue pen on plain white paper, photograph it in daylight without shadow,
+  and use the option here that lifts the paper to pure white.</p>
+
+  <h2>How this tool handles the KB range</h2>
+
+  <p>It searches for the highest JPEG quality that still lands under your
+  ceiling, so you keep as much detail as the limit allows. If the result falls
+  below the minimum, it first tries a richer encode. Only if that still comes
+  up short does it insert JPEG comment padding, which lifts the file size
+  without altering a single pixel. Every decoder ignores those segments, so the
+  image you see is the image the portal receives.</p>
+
+  <p>All of this runs inside your browser. The image is never uploaded, which
+  is why there is no size limit on what you can put in and nothing to store.</p>
+
+  <p><a href="/">Open the resizer</a></p>
+
+</main>
+{% endblock %}

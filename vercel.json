@@ -1,0 +1,30 @@
+{
+  "buildCommand": "python3 -m pip install -r requirements.txt && python3 build.py",
+  "outputDirectory": "dist",
+  "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/uppsc-photo-size",
+      "destination": "/ibps-photo-size",
+      "permanent": true
+    },
+    {
+      "source": "/uppsc-signature-size",
+      "destination": "/ibps-signature-size",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
