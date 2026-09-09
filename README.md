@@ -17,7 +17,7 @@ inside a KB range, which is what Indian exam portals check on upload.
     static/fonts/       Archivo + IBM Plex, self-hosted (172 KB)
     passenger_wsgi.py   only needed for cPanel, ignore on Vercel
 
-## Putting it on cPanel (only if you are not using Vercel)
+## Putting it on cPanel   (only if you are not using Vercel)
 
 1. **Upload.** cPanel → File Manager. Make a folder in your home directory
    called `formfit` (not inside `public_html`). Upload the zip there and
