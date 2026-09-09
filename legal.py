@@ -25,10 +25,26 @@ LEGAL = [
                 "all.",
                 "Because nothing is sent, there is nothing for us to store, "
                 "nothing to delete on a schedule, and nothing that could be "
-                "exposed if our hosting were ever compromised. When you close the "
-                "tab, the image is gone from memory along with the page.",
+                "exposed if our hosting were ever compromised.",
                 "We therefore hold no photographs, no signatures, and no "
                 "thumbprints belonging to anyone.",
+            ]),
+            ("The upload kit, and what your own browser keeps", [
+                "Most exam forms want more than one image, so the site keeps a "
+                "short record of which ones you have finished and holds on to the "
+                "resized files, letting you take them all away together later. "
+                "That record and those files are written to your browser's local "
+                "storage on your own device.",
+                "This is storage that belongs to your browser, not to us. The "
+                "files stay on the device that made them, they are not "
+                "transmitted anywhere, and we have no way to read them. Nobody "
+                "using another device or another browser can see them either.",
+                "They are kept until you remove them. Clearing your browsing "
+                "data for this site deletes both the record and the files. "
+                "Browsing in a private or incognito window discards everything "
+                "when the window closes.",
+                "The resized file being handed to you on the download page is "
+                "held for the life of that browser tab and no longer.",
             ]),
             ("What we do collect", [
                 "Our host records standard server logs when a page is requested. "

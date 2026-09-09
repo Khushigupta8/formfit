@@ -148,6 +148,16 @@
 
   <p class="alert" id="alert" hidden></p>
 
+  {# Appears only after this visitor has finished at least one file for this
+     exam. Filled in by kit.js from localStorage. #}
+  <section class="kit" id="formKit" hidden>
+    <h2>Your <span id="kitExam">form</span> upload kit</h2>
+    <p class="kit__sub" id="kitSub"></p>
+    <div class="kit__bar"><span id="kitFill"></span></div>
+    <ul class="kit__list" id="kitList"></ul>
+    <div class="kit__actions" id="kitActions" hidden></div>
+  </section>
+
   {{ slot("after_tool") }}
 
   {% if body %}
@@ -186,5 +196,7 @@
 {% block scripts %}
 <script id="presetData" type="application/json">{{ presets | tojson }}</script>
 <script id="preselect" type="application/json">{{ (preset.id if preset else None) | tojson }}</script>
+<script id="slugMap" type="application/json">{{ slug_map | tojson }}</script>
+<script src="{{ url_for('static', filename='js/kit.js') }}"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 {% endblock %}

@@ -9,6 +9,12 @@
   var PRESETS = JSON.parse(document.getElementById("presetData").textContent);
   var $ = function (id) { return document.getElementById(id); };
 
+  // preset id -> the page that covers it. Merged pages mean a preset's own
+  // slug is not always a URL that exists.
+  var SLUGS = {};
+  var slugNode = document.getElementById("slugMap");
+  if (slugNode) { try { SLUGS = JSON.parse(slugNode.textContent); } catch (e) { SLUGS = {}; } }
+
   // Exam pages tell us which preset to open with, so the visitor lands on
   // exactly the size they searched for.
   var PRESELECT = null;
@@ -22,7 +28,7 @@
       checklist = $("checklist"), downloadBtn = $("downloadBtn"), againBtn = $("againBtn"),
       resultMeta = $("resultMeta"), alertBox = $("alert");
 
-  var chosenFile = null, activePreset = null;
+  var chosenFile = null, activePreset = null, leaving = false;
 
   /* ---------- presets ---------- */
 
@@ -65,9 +71,24 @@
     Array.prototype.forEach.call(kindChips.children, function (c) {
       c.classList.toggle("is-on", c.textContent === p.kind);
     });
+    paintKit();
   }
 
   examSelect.addEventListener("change", renderKinds);
+
+  /* The kit card under the tool. It only appears once the visitor has
+     actually finished one file for this exam - before that there is nothing
+     to report and an empty progress bar is just noise. */
+  function paintKit() {
+    if (!window.FormFitKit || !$("formKit") || !activePreset) return;
+    var done = window.FormFitKit.doneFor(activePreset.exam);
+    if (!Object.keys(done).length) { $("formKit").hidden = true; return; }
+    window.FormFitKit.render({
+      card: $("formKit"), exam: $("kitExam"), sub: $("kitSub"),
+      fill: $("kitFill"), list: $("kitList"), actions: $("kitActions")
+    }, { presets: PRESETS, slugMap: SLUGS, exam: activePreset.exam,
+         currentId: activePreset.id });
+  }
 
   if (PRESELECT) {
     var wanted = PRESETS.filter(function (p) { return p.id === PRESELECT; })[0];
@@ -214,6 +235,55 @@
     return out;
   }
 
+  /* Cheap image statistics, read straight off the output canvas. The
+     download page turns these into the quality report. All of it is
+     arithmetic on pixels already in memory, so it costs a few milliseconds
+     and nothing leaves the browser.
+
+       mean      average luminance, i.e. exposure
+       contrast  standard deviation of luminance
+       sharpness variance of the Laplacian, the usual cheap blur measure
+       border    average luminance of the outermost ring of pixels, which is
+                 the background behind a face or the paper behind a signature
+  */
+  function analyse(canvas) {
+    var w = canvas.width, h = canvas.height;
+    var d = canvas.getContext("2d").getImageData(0, 0, w, h).data;
+    var lum = new Float32Array(w * h);
+    var sum = 0, i, p;
+
+    for (i = 0, p = 0; p < d.length; p += 4, i++) {
+      var v = 0.299 * d[p] + 0.587 * d[p + 1] + 0.114 * d[p + 2];
+      lum[i] = v; sum += v;
+    }
+    var mean = sum / lum.length;
+
+    var acc = 0;
+    for (i = 0; i < lum.length; i++) { var dv = lum[i] - mean; acc += dv * dv; }
+    var contrast = Math.sqrt(acc / lum.length);
+
+    var lSum = 0, lSq = 0, n = 0;
+    for (var y = 1; y < h - 1; y++) {
+      for (var x = 1; x < w - 1; x++) {
+        var k = y * w + x;
+        var L = 4 * lum[k] - lum[k - 1] - lum[k + 1] - lum[k - w] - lum[k + w];
+        lSum += L; lSq += L * L; n++;
+      }
+    }
+    var sharpness = n ? (lSq / n) - Math.pow(lSum / n, 2) : 0;
+
+    var bSum = 0, bN = 0;
+    for (x = 0; x < w; x++) { bSum += lum[x] + lum[(h - 1) * w + x]; bN += 2; }
+    for (y = 0; y < h; y++) { bSum += lum[y * w] + lum[y * w + w - 1]; bN += 2; }
+
+    return {
+      mean: +mean.toFixed(1),
+      contrast: +contrast.toFixed(1),
+      sharpness: +sharpness.toFixed(1),
+      border: +(bSum / bN).toFixed(1)
+    };
+  }
+
   async function process(file, o) {
     var src = await loadBitmap(file);
     var originalW = src.width, originalH = src.height;
@@ -253,6 +323,8 @@
 
     return {
       bytes: bytes,
+      q: analyse(canvas),
+      grayscale: !!o.grayscale,
       original_w: originalW, original_h: originalH,
       original_kb: +(file.size / 1024).toFixed(1),
       width: o.width, height: o.height,
@@ -283,12 +355,16 @@
         whiten: $("whiten").checked,
         grayscale: $("grayscale").checked
       });
-      await render(d);
+      await handoff(d);
     } catch (err) {
       showAlert(err.message || "Something broke while processing. Try another file.");
     } finally {
-      goBtn.disabled = false;
-      goBtn.textContent = "Resize photo";
+      // Not when we are on our way to /download: putting the button back
+      // invites a second click during the moment the next page is loading.
+      if (!leaving) {
+        goBtn.disabled = false;
+        goBtn.textContent = "Resize photo";
+      }
     }
   });
 
@@ -312,8 +388,57 @@
     });
   }
 
-  async function render(d) {
+  function fileNameFor(d) {
+    var kind = activePreset ? activePreset.kind.toLowerCase().replace(/\s+/g, "-") : "image";
+    var exam = activePreset ? activePreset.exam.toLowerCase().replace(/[^a-z]+/g, "-") : "custom";
+    return exam + "-" + kind + "-" + d.width + "x" + d.height + ".jpg";
+  }
+
+  /* The finished file goes to /download rather than appearing under the tool.
+
+     It travels in sessionStorage, which means it is still only ever in this
+     browser - the download page fetches nothing. If storage refuses (private
+     mode on some browsers, or a file large enough to blow the quota) the old
+     in-page result panel is used instead, so nobody ends up unable to get
+     their image. */
+  async function handoff(d) {
     var url = await toDataUrl(d.bytes);
+    var payload = {
+      dataUrl: url,
+      filename: fileNameFor(d),
+      width: d.width, height: d.height, kb: d.kb,
+      min_kb: d.min_kb, max_kb: d.max_kb,
+      size_ok: d.size_ok, padded: d.padded, over_limit: d.over_limit,
+      grayscale: d.grayscale,
+      original_w: d.original_w, original_h: d.original_h, original_kb: d.original_kb,
+      q: d.q,
+      presetId: activePreset ? activePreset.id : null,
+      exam: activePreset ? activePreset.exam : null,
+      kind: activePreset ? activePreset.kind : null,
+      examLabel: activePreset ? (activePreset.label || activePreset.exam) : null,
+      slug: activePreset ? (SLUGS[activePreset.id] || activePreset.slug) : null,
+      at: Date.now()
+    };
+
+    try {
+      sessionStorage.setItem("formfit:result", JSON.stringify(payload));
+    } catch (e) {
+      await render(d, url);
+      return;
+    }
+
+    if (window.FormFitKit && activePreset) {
+      window.FormFitKit.record(activePreset);
+      window.FormFitKit.store(activePreset, payload.filename, url);
+    }
+
+    leaving = true;
+    goBtn.textContent = "Opening your file…";
+    window.location.href = "/download";
+  }
+
+  async function render(d, prebuilt) {
+    var url = prebuilt || await toDataUrl(d.bytes);
     resultImg.onerror = function () {
       showAlert("The image was built correctly but your browser won't preview it. " +
                 "Download JPG still works.");
@@ -322,9 +447,7 @@
     resultImg.style.width = Math.min(d.width, 340) + "px";
     downloadBtn.href = url;
 
-    var kind = activePreset ? activePreset.kind.toLowerCase().replace(/\s+/g, "-") : "image";
-    var exam = activePreset ? activePreset.exam.toLowerCase().replace(/[^a-z]+/g, "-") : "custom";
-    downloadBtn.download = exam + "-" + kind + "-" + d.width + "x" + d.height + ".jpg";
+    downloadBtn.download = fileNameFor(d);
 
     checklist.innerHTML = "";
     checklist.appendChild(row("Pixel size", true, d.width + " x " + d.height));

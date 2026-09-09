@@ -10,6 +10,8 @@
 <link rel="canonical" href="https://www.formfit.in/guides/jpg-png-heic-which-format-for-forms">
 
 
+
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="JPG, PNG or HEIC: Which Format Do Exam Forms Want?">
 <meta property="og:description" content="Why exam portals ask for JPG, what goes wrong with PNG and HEIC, and how to convert without losing quality.">
@@ -77,6 +79,7 @@
 </header>
 
 
+<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
 <main class="guide">
 
   <h1>Which image format do exam forms accept?</h1>
@@ -104,6 +107,15 @@
     
   
 
+  
+
+  
+  
+  <a class="nextup" href="/guides/what-is-dpi-in-exam-form-photo">
+    <span class="nextup__k">Read next</span>
+    <span class="nextup__t">DPI, pixels, and what your form actually needs</span>
+    <span class="nextup__d">Understand DPI versus pixel dimensions so you stop guessing when a form asks for 200 DPI or a size in centimetres.</span>
+  </a>
   
 
   
@@ -206,6 +218,28 @@
   <p class="footer__base">Sizes are compiled from published notifications and
      can change. Always check your own notice before uploading.</p>
 </footer>
+
+
+
+<script>
+/* Reading progress. Purely a nudge to finish the page - it reads scroll
+   position and nothing else. */
+(function () {
+  var fill = document.getElementById("progressFill");
+  if (!fill) return;
+  var ticking = false;
+  function paint() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+})();
+</script>
 
 
 </body>

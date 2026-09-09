@@ -10,6 +10,7 @@ upload size limit, and nothing to pay for.
 
 import os
 import shutil
+import stat
 import sys
 
 from app import PAGES, PRESETS, app
@@ -17,6 +18,21 @@ import articles as A
 import legal as L
 
 OUT = "dist"
+
+
+def _unlock(func, path, _exc):
+    """Retry a delete after clearing the read-only bit.
+
+    OneDrive marks synced folders read-only, and Windows then refuses to
+    remove them, so a rebuild inside a synced folder fails on the second run.
+    """
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def rmtree(path):
+    shutil.rmtree(path, onexc=_unlock) if sys.version_info >= (3, 12) \
+        else shutil.rmtree(path, onerror=lambda f, p, e: _unlock(f, p, e))
 
 
 def write(client, route, path):
@@ -40,11 +56,11 @@ def main():
     if os.path.isdir(keep):
         stash = OUT + ".vercel.bak"
         if os.path.isdir(stash):
-            shutil.rmtree(stash)
+            rmtree(stash)
         shutil.move(keep, stash)
 
     if os.path.isdir(OUT):
-        shutil.rmtree(OUT)
+        rmtree(OUT)
     os.makedirs(OUT)
 
     if stash:
@@ -55,6 +71,7 @@ def main():
         # Folder-per-page gives clean URLs (/ssc-photo-size) on any static host.
         ok += write(c, "/", "index.html")
         ok += write(c, "/guide", "guide/index.html")
+        ok += write(c, "/download", "download/index.html")
         for g in PAGES:
             ok += write(c, "/" + g["slug"], g["slug"] + "/index.html")
         ok += write(c, "/sitemap.xml", "sitemap.xml")

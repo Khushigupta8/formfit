@@ -13,6 +13,8 @@ inside a KB range, which is what Indian exam portals check on upload.
     templates/          index.html (the tool), guide.html (size reference)
     static/css/         style.css
     static/js/          app.js, does all the resizing, in the browser
+                        download.js, the download page
+                        kit.js, the upload-kit tracker and the zip builder
     static/img/         logo, favicons, social share image
     static/fonts/       Archivo + IBM Plex, self-hosted (172 KB)
     passenger_wsgi.py   only needed for cPanel, ignore on Vercel
@@ -235,6 +237,7 @@ Changes only reach the live site after `python build.py` plus a deploy.
 ## Site structure
 
     /                          the resizer
+    /download                  where a finished file is handed over
     /guide                     every exam size in one table
     /<exam-slug>               13 exam pages, tool preset + ~1000 word article
     /guides                    guide index
@@ -247,6 +250,59 @@ Content lives in three files. `app.py` holds the presets and the exam page
 copy, `articles.py` holds the standalone guides, `legal.py` holds the trust
 pages. Add a dict to any of them and the page, its sitemap entry and its
 navigation links appear on the next build.
+
+## The download flow
+
+Pressing Resize does not drop the result under the tool. It measures the
+output, writes it to `sessionStorage`, and sends the visitor to `/download`.
+
+Nothing is uploaded by any of this. `/download` fetches nothing; it reads
+what the tool page put down in the same browser, which is why the page is
+`noindex` and disallowed in `robots.txt` - it is empty without that handoff,
+and a crawler indexing an empty page helps nobody.
+
+What is on it:
+
+- **The checks.** Pixel size, KB, format, orientation, colour, and whether
+  the source was big enough to avoid enlarging. Real values, computed during
+  the resize, revealed a row at a time because a list that lands all at once
+  does not get read.
+- **A quality report.** `analyse()` in `app.js` measures exposure, contrast,
+  sharpness (variance of the Laplacian) and the brightness of the border
+  pixels, which stands in for the background behind a face or the paper
+  behind a signature. Each warning links to the guide that explains the fix.
+  Thresholds are forgiving on purpose: a false alarm on a good photo costs
+  more trust than a missed warning costs anything.
+- **The upload kit.** Most forms want a photo *and* a signature, often a
+  thumb impression and a declaration too. `kit.js` remembers which ones are
+  done, per exam, in `localStorage`, and links to the ones that are not.
+- **Before you upload.** The four mistakes that get a correct file rejected
+  anyway.
+
+### The kit keeps the files, not just the ticks
+
+Finished images are held in `localStorage` under `formfit:files:v1`, capped
+at 400 KB each. Every done row gets its own Download button, and once there
+are two or more the card offers the lot as a zip. The zip is built in
+`kit.js` in about eighty lines - stored, not deflated, because JPEGs are
+already compressed and deflating them would mean shipping a compression
+library for no gain.
+
+This is on the visitor's own device and nowhere else, and the privacy policy
+says so. If you change what gets stored, change that page too.
+
+### Why the site is built this way
+
+Someone who resizes one image and leaves sees one page. Someone who is
+walked through the rest of what their form wants sees four or five, comes
+back tomorrow for the next one, and actually turns up at the portal with a
+complete set. The extra pages are a by-product of that, not the point of it.
+
+Keep it that way. Do not gate the download behind a timer, an ad click, or a
+second redirect. AdSense forbids it outright, and it is the fastest way to
+lose a visitor who has a form deadline and three other tabs open. The
+download button on `/download` works the moment the checks finish and never
+depends on anything an advertiser does.
 
 ## AdSense
 

@@ -10,6 +10,8 @@
 <link rel="canonical" href="https://www.formfit.in/guides/how-to-reduce-photo-size-to-20-kb">
 
 
+
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="How to Reduce Photo Size to 20 KB Without Ruining It">
 <meta property="og:description" content="Get a photo down to 20 KB for an exam form without turning it into a blurry mess, and avoid the mistake that makes portals reject it anyway.">
@@ -77,6 +79,7 @@
 </header>
 
 
+<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
 <main class="guide">
 
   <h1>How to reduce a photo to 20 KB</h1>
@@ -104,6 +107,15 @@
     
   
 
+  
+
+  
+  
+  <a class="nextup" href="/guides/photo-rejected-in-online-form">
+    <span class="nextup__k">Read next</span>
+    <span class="nextup__t">Why your photo keeps getting rejected</span>
+    <span class="nextup__d">The real reasons exam portals reject a photo upload, in the order they actually happen, and how to fix each one.</span>
+  </a>
   
 
   
@@ -206,6 +218,28 @@
   <p class="footer__base">Sizes are compiled from published notifications and
      can change. Always check your own notice before uploading.</p>
 </footer>
+
+
+
+<script>
+/* Reading progress. Purely a nudge to finish the page - it reads scroll
+   position and nothing else. */
+(function () {
+  var fill = document.getElementById("progressFill");
+  if (!fill) return;
+  var ticking = false;
+  function paint() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+})();
+</script>
 
 
 </body>

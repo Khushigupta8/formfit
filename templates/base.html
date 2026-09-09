@@ -8,6 +8,9 @@
 <title>{{ page_title }} | {{ site_name }}</title>
 <meta name="description" content="{{ page_desc }}">
 <link rel="canonical" href="{{ canonical }}">
+{# Per-visitor pages carry nothing a crawler can use. Index them and you are
+   asking Google to rank a page that is empty without a sessionStorage blob. #}
+{% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
 
 {# Social preview - matters for WhatsApp and Telegram shares, which is
    how most students will pass this link around. #}

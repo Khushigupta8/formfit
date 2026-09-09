@@ -10,6 +10,8 @@
 <link rel="canonical" href="https://www.formfit.in/guides/why-phone-photos-upload-sideways">
 
 
+
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="Why Phone Photos Upload Sideways, and How to Fix It">
 <meta property="og:description" content="Phone photos look upright in the gallery and arrive rotated at the portal. Here is the reason and the fix.">
@@ -77,6 +79,7 @@
 </header>
 
 
+<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
 <main class="guide">
 
   <h1>Why your photo uploads sideways</h1>
@@ -100,6 +103,15 @@
     
   
 
+  
+
+  
+  
+  <a class="nextup" href="/guides/passport-size-photo-at-home">
+    <span class="nextup__k">Read next</span>
+    <span class="nextup__t">Taking a passport size photo at home</span>
+    <span class="nextup__d">Shoot an acceptable passport style photograph with a phone, including background, lighting and the rules that get photos rejected.</span>
+  </a>
   
 
   
@@ -202,6 +214,28 @@
   <p class="footer__base">Sizes are compiled from published notifications and
      can change. Always check your own notice before uploading.</p>
 </footer>
+
+
+
+<script>
+/* Reading progress. Purely a nudge to finish the page - it reads scroll
+   position and nothing else. */
+(function () {
+  var fill = document.getElementById("progressFill");
+  if (!fill) return;
+  var ticking = false;
+  function paint() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+})();
+</script>
 
 
 </body>

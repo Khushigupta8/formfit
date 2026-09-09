@@ -541,6 +541,11 @@ def page_body(page):
 _add_labels()
 PAGES = build_pages()
 
+# Which page covers each preset. The download page and the form-kit tracker
+# both need to turn a preset id into a URL on the client, and merged pages
+# mean a preset's own slug is not always the one that exists.
+SLUG_MAP = {p["id"]: slug_for(p) for p in PRESETS}
+
 
 def page_faq(page):
     """Marked up as FAQPage schema so answers can show directly in results."""
@@ -751,6 +756,7 @@ def index():
         "tool.html",
         presets=PRESETS,
         preset=None,
+        slug_map=SLUG_MAP,
         page_title="Exam Form Photo and Signature Resizer - Exact px and KB",
         page_desc=("Resize a photo or signature to the exact pixel size and KB "
                    "range your exam form asks for. SSC, IBPS, UPSC, NEET and "
@@ -774,6 +780,7 @@ def exam_page(slug):
         "tool.html",
         presets=PRESETS,
         preset=p,
+        slug_map=SLUG_MAP,
         exam_label=page["exam_label"],
         plural=len(page["members"]) > 1,
         page_title=title,
@@ -785,6 +792,31 @@ def exam_page(slug):
         body=page_body(page),
         faq=page_faq(page),
         related=related(page),
+        site_name=SITE_NAME, site_url=SITE_URL, adsense=ADSENSE_ID)
+
+
+@app.route("/download")
+def download():
+    """Where a finished file is handed over.
+
+    The resize happens on the tool page and the result travels here in
+    sessionStorage, so this page is per-visitor and has nothing for a crawler
+    to index - hence noindex. It exists because the moment after a resize is
+    the only moment a visitor will read anything: the checks that were run,
+    what is still missing from their application, and what to do next.
+    """
+    return render_template(
+        "download.html",
+        presets=PRESETS,
+        slug_map=SLUG_MAP,
+        page_title="Your file is ready to download",
+        page_desc=("Download the resized photo or signature, see the checks it "
+                   "passed, and finish the rest of your form."),
+        canonical=SITE_URL + "/download",
+        noindex=True,
+        show_ads=True,
+        h1="Your file is ready",
+        articles=ARTICLES_MOD.ARTICLES[:4],
         site_name=SITE_NAME, site_url=SITE_URL, adsense=ADSENSE_ID)
 
 
@@ -827,12 +859,18 @@ def article_page(slug):
     if art is None:
         abort(404)
     others = [a for a in ARTICLES_MOD.ARTICLES if a["slug"] != slug][:4]
+    # One explicit "next" guide, so a reader who finishes has somewhere
+    # obvious to go instead of a list of four to choose between.
+    order = ARTICLES_MOD.ARTICLES
+    here = [i for i, a in enumerate(order) if a["slug"] == slug][0]
+    next_article = order[(here + 1) % len(order)]
     return render_template(
         "article.html",
         article=art,
         h1=art["h1"],
         body=art["body"],
         others=others,
+        next_article=next_article,
         pages=PAGES[:6],
         page_title=art["title"],
         page_desc=art["desc"],
@@ -878,7 +916,10 @@ def ads_txt():
 
 @app.route("/robots.txt")
 def robots():
-    body = "User-agent: *\nAllow: /\n\nSitemap: {}/sitemap.xml\n".format(SITE_URL)
+    body = ("User-agent: *\n"
+            "Allow: /\n"
+            "Disallow: /download\n\n"
+            "Sitemap: {}/sitemap.xml\n").format(SITE_URL)
     return Response(body, mimetype="text/plain")
 
 

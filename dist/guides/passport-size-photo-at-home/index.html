@@ -10,6 +10,8 @@
 <link rel="canonical" href="https://www.formfit.in/guides/passport-size-photo-at-home">
 
 
+
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="How to Take a Passport Size Photo at Home">
 <meta property="og:description" content="Shoot an acceptable passport style photograph with a phone, including background, lighting and the rules that get photos rejected.">
@@ -77,6 +79,7 @@
 </header>
 
 
+<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
 <main class="guide">
 
   <h1>Taking a passport size photo at home</h1>
@@ -121,6 +124,15 @@
     
   
 
+  
+
+  
+  
+  <a class="nextup" href="/guides/jpg-png-heic-which-format-for-forms">
+    <span class="nextup__k">Read next</span>
+    <span class="nextup__t">Which image format do exam forms accept?</span>
+    <span class="nextup__d">Why exam portals ask for JPG, what goes wrong with PNG and HEIC, and how to convert without losing quality.</span>
+  </a>
   
 
   
@@ -223,6 +235,28 @@
   <p class="footer__base">Sizes are compiled from published notifications and
      can change. Always check your own notice before uploading.</p>
 </footer>
+
+
+
+<script>
+/* Reading progress. Purely a nudge to finish the page - it reads scroll
+   position and nothing else. */
+(function () {
+  var fill = document.getElementById("progressFill");
+  if (!fill) return;
+  var ticking = false;
+  function paint() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+})();
+</script>
 
 
 </body>

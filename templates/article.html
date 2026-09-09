@@ -15,6 +15,7 @@
 {% endblock %}
 
 {% block content %}
+{% if next_article %}<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>{% endif %}
 <main class="guide">
 
   <h1>{{ h1 }}</h1>
@@ -27,6 +28,16 @@
   {% endfor %}
 
   {% if updated %}<p class="updated">Last updated {{ updated }}.</p>{% endif %}
+
+  {% if next_article %}
+  {# One card, not a list. A reader who has got this far will take an obvious
+     next step and will skip a menu. #}
+  <a class="nextup" href="/guides/{{ next_article.slug }}">
+    <span class="nextup__k">Read next</span>
+    <span class="nextup__t">{{ next_article.h1 }}</span>
+    <span class="nextup__d">{{ next_article.desc }}</span>
+  </a>
+  {% endif %}
 
   {{ slot("end") }}
 
@@ -51,4 +62,28 @@
   {% endif %}
 
 </main>
+{% endblock %}
+
+{% block scripts %}
+{% if next_article %}
+<script>
+/* Reading progress. Purely a nudge to finish the page - it reads scroll
+   position and nothing else. */
+(function () {
+  var fill = document.getElementById("progressFill");
+  if (!fill) return;
+  var ticking = false;
+  function paint() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+})();
+</script>
+{% endif %}
 {% endblock %}

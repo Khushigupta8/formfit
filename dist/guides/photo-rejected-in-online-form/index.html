@@ -10,6 +10,8 @@
 <link rel="canonical" href="https://www.formfit.in/guides/photo-rejected-in-online-form">
 
 
+
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="Photo Rejected in an Online Form? Here Is Why">
 <meta property="og:description" content="The real reasons exam portals reject a photo upload, in the order they actually happen, and how to fix each one.">
@@ -77,6 +79,7 @@
 </header>
 
 
+<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
 <main class="guide">
 
   <h1>Why your photo keeps getting rejected</h1>
@@ -129,6 +132,15 @@
     
   
 
+  
+
+  
+  
+  <a class="nextup" href="/guides/how-to-scan-signature-with-phone">
+    <span class="nextup__k">Read next</span>
+    <span class="nextup__t">Scanning a signature with your phone</span>
+    <span class="nextup__d">Get a clean signature image for an exam form using only a phone, with a white background and no scanner needed.</span>
+  </a>
   
 
   
@@ -231,6 +243,28 @@
   <p class="footer__base">Sizes are compiled from published notifications and
      can change. Always check your own notice before uploading.</p>
 </footer>
+
+
+
+<script>
+/* Reading progress. Purely a nudge to finish the page - it reads scroll
+   position and nothing else. */
+(function () {
+  var fill = document.getElementById("progressFill");
+  if (!fill) return;
+  var ticking = false;
+  function paint() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+})();
+</script>
 
 
 </body>
