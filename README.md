@@ -8,7 +8,7 @@ inside a KB range, which is what Indian exam portals check on upload.
     app.py              presets, page content, routes
     build.py            renders every page into dist/ for static hosting
     vercel.json         clean URLs and cache headers
-    passenger_wsgi.py   cPanel entry point, don't edit
+    passenger_wsgi.py   cPanel entry poin  t, don't edit
     requirements.txt    Flask + Pillow
     templates/          index.html (the tool), guide.html (size reference)
     static/css/         style.css
