@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Why Phone Photos Upload Sideways, and How to Fix It | FormFit</title>
+<meta name="description" content="Phone photos look upright in the gallery and arrive rotated at the portal. Here is the reason and the fix.">
+<link rel="canonical" href="https://www.formfit.in/guides/why-phone-photos-upload-sideways">
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Why Phone Photos Upload Sideways, and How to Fix It">
+<meta property="og:description" content="Phone photos look upright in the gallery and arrive rotated at the portal. Here is the reason and the fix.">
+<meta property="og:url" content="https://www.formfit.in/guides/why-phone-photos-upload-sideways">
+<meta property="og:site_name" content="FormFit">
+<meta property="og:locale" content="en_IN">
+<meta property="og:image" content="https://www.formfit.in/static/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.formfit.in/static/img/og-image.png">
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9986755295957814"
+        crossorigin="anonymous"></script>
+
+
+<link rel="icon" href="/static/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png">
+<link rel="manifest" href="/static/img/site.webmanifest">
+<meta name="theme-color" content="#1f4e79">
+
+<link rel="stylesheet" href="/static/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FormFit",
+  "url": "https://www.formfit.in/",
+  "logo": "https://www.formfit.in/static/img/mark.png",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Phone Photos Upload Sideways, and How to Fix It",
+  "description": "Phone photos look upright in the gallery and arrive rotated at the portal. Here is the reason and the fix.",
+  "mainEntityOfPage": "https://www.formfit.in/guides/why-phone-photos-upload-sideways",
+  "publisher": { "@type": "Organization", "name": "FormFit" }
+}
+</script>
+
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="/">
+    <img class="wordmark__mark" src="/static/img/mark.png" alt="" width="31" height="31">
+    FormFit
+  </a>
+  <p class="masthead__line">Photo and signature sizing for exam forms</p>
+  <nav class="masthead__nav">
+    <a href="/guide">Size list</a>
+    <a href="/guides">Guides</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+
+
+<main class="guide">
+
+  <h1>Why your photo uploads sideways</h1>
+  <p class="lede">Phone photos look upright in the gallery and arrive rotated at the portal. Here is the reason and the fix.</p>
+
+  
+    <h2>The photo was never upright</h2>
+    <p>When you turn your phone sideways, the camera sensor does not turn with it. It captures the scene in whatever orientation it is physically mounted, then writes a small note inside the file saying which way up the result should be displayed. That note is called the EXIF orientation tag.</p><p>Your gallery app reads the tag and rotates the picture for you on screen. Nothing was changed on disk. The pixels are still stored the way the sensor saw them, and the tag is a request rather than a fact.</p>
+    
+  
+    <h2>Where it breaks</h2>
+    <p>Any software that reads the pixels without checking the tag gets the raw, unrotated image. Plenty of upload handlers, especially older government portals, do exactly that. So a photo that has looked upright on every screen you have seen arrives at the portal lying on its side.</p><p>This is also why the problem seems random. Photos taken with the phone held upright often have no rotation to apply and pass through fine, while one taken in landscape fails. It looks like the portal is being inconsistent when it is behaving the same way every time.</p>
+    
+  
+    <h2>How to fix it</h2>
+    <p>The reliable fix is to bake the rotation into the pixels, so the file no longer depends on a tag anyone might ignore. Any tool that reads the orientation tag and applies it before saving does this. Our resizer does it on every image that passes through, which is why a sideways photo comes out the right way up without you asking.</p><p>If you would rather do it manually, open the photo in your phone&#39;s editor, rotate it a full turn, and save. Most editors rewrite the pixels and clear the tag in the process. Simply viewing the photo rotated does not help, because nothing is written back to the file.</p>
+    
+  
+    <h2>How to check before you upload</h2>
+    <p>Email the photo to yourself and open it in a browser rather than a gallery app. Browsers are stricter about orientation than phone galleries, so if it looks wrong there it will very likely look wrong to the portal. Alternatively, drop it into any web based resizer and look at the preview.</p>
+    
+  
+
+  
+
+  
+
+<aside class="ad" aria-label="Advertisement">
+  <span class="ad__label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9986755295957814"
+       data-ad-slot=""
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</aside>
+
+
+
+  
+  <h2>Resize for a specific exam</h2>
+  <ul class="related">
+    
+    <li><a href="/ssc-photo-size">SSC
+      photograph, 350x450 px,
+      20-50 KB</a></li>
+    
+    <li><a href="/ssc-signature-size">SSC
+      signature, 400x200 px,
+      10-20 KB</a></li>
+    
+    <li><a href="/ibps-photo-size">IBPS Bank and UPPSC UPSSSC
+      photograph, 200x230 px,
+      20-50 KB</a></li>
+    
+    <li><a href="/ibps-signature-size">IBPS Bank and UPPSC UPSSSC
+      signature, 140x60 px,
+      10-20 KB</a></li>
+    
+    <li><a href="/ibps-thumb-impression-size">IBPS Bank
+      left thumb, 240x240 px,
+      20-50 KB</a></li>
+    
+    <li><a href="/ibps-handwritten-declaration-size">IBPS Bank
+      declaration, 800x400 px,
+      50-100 KB</a></li>
+    
+  </ul>
+  
+
+  
+  <h2>More guides</h2>
+  <ul class="related">
+    
+    <li><a href="/guides/how-to-reduce-photo-size-to-20-kb">How to reduce a photo to 20 KB</a></li>
+    
+    <li><a href="/guides/photo-rejected-in-online-form">Why your photo keeps getting rejected</a></li>
+    
+    <li><a href="/guides/how-to-scan-signature-with-phone">Scanning a signature with your phone</a></li>
+    
+    <li><a href="/guides/passport-size-photo-at-home">Taking a passport size photo at home</a></li>
+    
+  </ul>
+  
+
+</main>
+
+
+<footer>
+  <div class="footer__cols">
+    <div>
+      <h2>FormFit</h2>
+      <p>Resize a photo or signature to the exact pixel size and KB range an
+         exam form asks for. Everything runs in your browser, so your image is
+         never uploaded.</p>
+    </div>
+    <div>
+      <h2>Sizes</h2>
+      <ul>
+        <li><a href="/">Resizer</a></li>
+        <li><a href="/guide">All exam sizes</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="/guides">All guides</a></li>
+        <li><a href="/guides/photo-rejected-in-online-form">Photo rejected?</a></li>
+        <li><a href="/guides/how-to-reduce-photo-size-to-20-kb">Reduce to 20 KB</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms of use</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer__base">Sizes are compiled from published notifications and
+     can change. Always check your own notice before uploading.</p>
+</footer>
+
+
+</body>
+</html>

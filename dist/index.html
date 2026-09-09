@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Exam Form Photo and Signature Resizer - Exact px and KB | FormFit</title>
+<meta name="description" content="Resize a photo or signature to the exact pixel size and KB range your exam form asks for. SSC, IBPS, UPSC, NEET and Railway presets. Free and works on mobile.">
+<link rel="canonical" href="https://www.formfit.in/">
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Exam Form Photo and Signature Resizer - Exact px and KB">
+<meta property="og:description" content="Resize a photo or signature to the exact pixel size and KB range your exam form asks for. SSC, IBPS, UPSC, NEET and Railway presets. Free and works on mobile.">
+<meta property="og:url" content="https://www.formfit.in/">
+<meta property="og:site_name" content="FormFit">
+<meta property="og:locale" content="en_IN">
+<meta property="og:image" content="https://www.formfit.in/static/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.formfit.in/static/img/og-image.png">
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9986755295957814"
+        crossorigin="anonymous"></script>
+
+
+<link rel="icon" href="/static/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png">
+<link rel="manifest" href="/static/img/site.webmanifest">
+<meta name="theme-color" content="#1f4e79">
+
+<link rel="stylesheet" href="/static/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FormFit",
+  "url": "https://www.formfit.in/",
+  "logo": "https://www.formfit.in/static/img/mark.png",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+}
+</script>
+
+
+
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="/">
+    <img class="wordmark__mark" src="/static/img/mark.png" alt="" width="31" height="31">
+    FormFit
+  </a>
+  <p class="masthead__line">Photo and signature sizing for exam forms</p>
+  <nav class="masthead__nav">
+    <a href="/guide">Size list</a>
+    <a href="/guides">Guides</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+
+
+<main>
+
+  <section class="intro">
+    <h1>Your form wants an exact size. Hand over the photo and take back exactly that.</h1>
+    
+    <p>Pick your exam, drop in the picture, and get a JPG that matches the pixel
+       size and the KB range the portal will accept. Nothing leaves your device.</p>
+    
+  </section>
+
+  <section class="bench">
+
+    <div class="studio">
+      <div class="studio__frame" id="dropzone" tabindex="0" role="button"
+           aria-label="Choose a photo or signature to resize">
+        <span class="mark mark--tl" aria-hidden="true"></span>
+        <span class="mark mark--tr" aria-hidden="true"></span>
+        <span class="mark mark--bl" aria-hidden="true"></span>
+        <span class="mark mark--br" aria-hidden="true"></span>
+
+        <div class="studio__empty" id="emptyState">
+          <svg class="studio__icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M6 14h8l3-5h14l3 5h8v25H6z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <circle cx="24" cy="26" r="8" stroke="currentColor" stroke-width="2.2"/>
+          </svg>
+          <p class="studio__prompt">Drop a photo here</p>
+          <p class="studio__sub">or tap to browse, JPG, PNG or WEBP</p>
+        </div>
+
+        <img id="preview" class="studio__preview" alt="" hidden>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
+      </div>
+      <p class="studio__caption" id="fileCaption">No file chosen yet</p>
+    </div>
+
+    <div class="spec">
+      <div class="field">
+        <label for="examSelect">Which exam</label>
+        <select id="examSelect"></select>
+      </div>
+
+      <div class="field">
+        <span class="field__label">What are you uploading</span>
+        <div class="chips" id="kindChips"></div>
+      </div>
+
+      <p class="spec__note" id="presetNote"></p>
+
+      <div class="dims">
+        <div class="dims__pair">
+          <label class="num"><span>Width</span>
+            <input type="number" id="width" value="200" min="20" max="2000"><em>px</em></label>
+          <label class="num"><span>Height</span>
+            <input type="number" id="height" value="230" min="20" max="2000"><em>px</em></label>
+        </div>
+        <div class="dims__pair">
+          <label class="num"><span>Smallest</span>
+            <input type="number" id="minKb" value="20" min="1" max="5000"><em>KB</em></label>
+          <label class="num"><span>Largest</span>
+            <input type="number" id="maxKb" value="50" min="2" max="5000"><em>KB</em></label>
+        </div>
+      </div>
+
+      <details class="more">
+        <summary>More controls</summary>
+        <div class="more__body">
+          <div class="field">
+            <label for="mode">If the shape doesn't match</label>
+            <select id="mode">
+              <option value="cover">Crop the edges to fill</option>
+              <option value="contain">Keep everything, add white space</option>
+              <option value="stretch">Stretch to fit</option>
+            </select>
+          </div>
+          <label class="check"><input type="checkbox" id="whiten">
+            <span>Clean the paper behind a signature to white</span></label>
+          <label class="check"><input type="checkbox" id="grayscale">
+            <span>Convert to black and white</span></label>
+          <div class="field">
+            <label for="dpi">Print resolution</label>
+            <select id="dpi">
+              <option value="300">300 DPI</option>
+              <option value="200">200 DPI</option>
+              <option value="150">150 DPI</option>
+              <option value="72">72 DPI</option>
+            </select>
+          </div>
+        </div>
+      </details>
+
+      <button class="go" id="goBtn" disabled>Resize photo</button>
+      <p class="disclaim">Sizes change between notifications. Check the numbers against your own
+        notice before you upload.</p>
+    </div>
+  </section>
+
+  <section class="result" id="result" hidden>
+    <div class="result__shot"><img id="resultImg" alt="Your resized image"></div>
+    <div class="result__panel">
+      <h2>Ready to upload</h2>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="result__actions">
+        <a class="go go--download" id="downloadBtn" download="image.jpg">Download JPG</a>
+        <button class="ghost" id="againBtn">Start over</button>
+      </div>
+      <p class="result__meta" id="resultMeta"></p>
+    </div>
+  </section>
+
+  <p class="alert" id="alert" hidden></p>
+
+  
+
+<aside class="ad" aria-label="Advertisement">
+  <span class="ad__label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9986755295957814"
+       data-ad-slot=""
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</aside>
+
+
+
+  
+
+</main>
+
+
+<footer>
+  <div class="footer__cols">
+    <div>
+      <h2>FormFit</h2>
+      <p>Resize a photo or signature to the exact pixel size and KB range an
+         exam form asks for. Everything runs in your browser, so your image is
+         never uploaded.</p>
+    </div>
+    <div>
+      <h2>Sizes</h2>
+      <ul>
+        <li><a href="/">Resizer</a></li>
+        <li><a href="/guide">All exam sizes</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="/guides">All guides</a></li>
+        <li><a href="/guides/photo-rejected-in-online-form">Photo rejected?</a></li>
+        <li><a href="/guides/how-to-reduce-photo-size-to-20-kb">Reduce to 20 KB</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms of use</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer__base">Sizes are compiled from published notifications and
+     can change. Always check your own notice before uploading.</p>
+</footer>
+
+
+<script id="presetData" type="application/json">[{"exam": "SSC", "h": 450, "id": "ssc-photo", "kind": "Photograph", "label": "SSC photo", "max_kb": 50, "min_kb": 20, "note": "CGL, CHSL, MTS, GD", "slug": "ssc-photo-size", "w": 350}, {"exam": "SSC", "h": 200, "id": "ssc-sign", "kind": "Signature", "label": "SSC signature", "max_kb": 20, "min_kb": 10, "note": "Black ink on white paper", "slug": "ssc-signature-size", "w": 400}, {"exam": "IBPS / Bank", "h": 230, "id": "ibps-photo", "kind": "Photograph", "label": "IBPS Bank photo", "max_kb": 50, "min_kb": 20, "note": "PO, Clerk, SO, RRB", "slug": "ibps-photo-size", "w": 200}, {"exam": "IBPS / Bank", "h": 60, "id": "ibps-sign", "kind": "Signature", "label": "IBPS Bank signature", "max_kb": 20, "min_kb": 10, "note": "PO, Clerk, SO, RRB", "slug": "ibps-signature-size", "w": 140}, {"exam": "IBPS / Bank", "h": 240, "id": "ibps-thumb", "kind": "Left thumb", "label": "IBPS Bank thumb impression", "max_kb": 50, "min_kb": 20, "note": "Thumb impression", "slug": "ibps-thumb-impression-size", "w": 240}, {"exam": "IBPS / Bank", "h": 400, "id": "ibps-declaration", "kind": "Declaration", "label": "IBPS Bank declaration", "max_kb": 100, "min_kb": 50, "note": "Handwritten declaration", "slug": "ibps-handwritten-declaration-size", "w": 800}, {"exam": "UPSC", "h": 350, "id": "upsc-photo", "kind": "Photograph", "label": "UPSC photo", "max_kb": 300, "min_kb": 20, "note": "Civil Services, CDS, NDA", "slug": "upsc-photo-size", "w": 350}, {"exam": "UPSC", "h": 350, "id": "upsc-sign", "kind": "Signature", "label": "UPSC signature", "max_kb": 300, "min_kb": 20, "note": "Civil Services, CDS, NDA", "slug": "upsc-signature-size", "w": 350}, {"exam": "NTA", "h": 500, "id": "nta-photo", "kind": "Photograph", "label": "NEET JEE photo", "max_kb": 200, "min_kb": 10, "note": "NEET, JEE, CUET, UGC NET", "slug": "neet-jee-photo-size", "w": 400}, {"exam": "NTA", "h": 200, "id": "nta-sign", "kind": "Signature", "label": "NEET JEE signature", "max_kb": 30, "min_kb": 4, "note": "NEET, JEE, CUET, UGC NET", "slug": "neet-jee-signature-size", "w": 400}, {"exam": "RRB / Railway", "h": 240, "id": "rrb-photo", "kind": "Photograph", "label": "RRB Railway photo", "max_kb": 40, "min_kb": 15, "note": "NTPC, Group D, ALP", "slug": "rrb-railway-photo-size", "w": 320}, {"exam": "RRB / Railway", "h": 240, "id": "rrb-sign", "kind": "Signature", "label": "RRB Railway signature", "max_kb": 30, "min_kb": 10, "note": "NTPC, Group D, ALP", "slug": "rrb-railway-signature-size", "w": 320}, {"exam": "UPPSC / UPSSSC", "h": 230, "id": "uppsc-photo", "kind": "Photograph", "label": "UPPSC UPSSSC photo", "max_kb": 50, "min_kb": 20, "note": "UP state exams", "slug": "uppsc-photo-size", "w": 200}, {"exam": "UPPSC / UPSSSC", "h": 60, "id": "uppsc-sign", "kind": "Signature", "label": "UPPSC UPSSSC signature", "max_kb": 20, "min_kb": 10, "note": "UP state exams", "slug": "uppsc-signature-size", "w": 140}, {"exam": "Passport", "h": 531, "id": "passport", "kind": "Photograph", "label": "Passport photo", "max_kb": 300, "min_kb": 20, "note": "35 x 45 mm at 300 DPI", "slug": "passport-photo-size", "w": 413}]</script>
+<script id="preselect" type="application/json">null</script>
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>
