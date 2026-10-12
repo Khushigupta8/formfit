@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import icon, ad, photo, trail, body, faq, exercise_card, workout_card with context %}
+{% from "_macros.html" import icon, ad, photo, trail, body, faq, exercise_card, workout_card, byline, author_card with context %}
 {% block content %}
 
 <section class="pagehead">
@@ -9,7 +9,7 @@
     <p class="eyebrow">{{ x.muscle }} exercise</p>
     <h1>{{ h1 }}</h1>
     <p class="pagehead__lede">{{ x.intro }}</p>
-    <p class="byline">{{ icon('book') }} By the <a href="/about">FormFit Editorial Team</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
+    {{ byline(read_min) }}
   </div>
 </section>
 
@@ -54,6 +54,7 @@
 
       {{ body(x.body, ads=False) }}
       {{ faq(x.faq) }}
+      {{ author_card() }}
     </section>
 
     {{ ad('end') }}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, workout_card, calc_card with context %}
+{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, workout_card, calc_card, byline, author_card with context %}
 {% block content %}
 
 <section class="pagehead">
@@ -9,7 +9,7 @@
     <p class="eyebrow">{{ w.level }} workout plan</p>
     <h1>{{ h1 }}</h1>
     <p class="pagehead__lede">{{ w.intro }}</p>
-    <p class="byline">{{ icon('book') }} By the <a href="/about">FormFit Editorial Team</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
+    {{ byline(read_min) }}
   </div>
 </section>
 
@@ -53,6 +53,7 @@
       {{ toc(w.body) }}
       {{ body(w.body) }}
       {{ faq(w.faq) }}
+      {{ author_card() }}
       <p class="disclaim">{{ icon('heart') }} Check with a doctor before starting a new training
         programme if you have a medical condition or injury. See our <a href="/disclaimer">medical disclaimer</a>.</p>
     </article>

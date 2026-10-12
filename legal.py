@@ -27,6 +27,23 @@ LEGAL = [
                 "paid for by advertising, which is labelled and kept away from "
                 "the calculators themselves.",
             ]),
+            ("Who runs FormFit", [
+                "FormFit is built and run by <strong>Khushi Gupta</strong>. I "
+                "train in the gym myself, and I edit everything published here: "
+                "the calculators, the workout plans, the exercise pages and the "
+                "guides.",
+                "The aim is simple. When you put your numbers into a fitness "
+                "calculator, you should get the formula behind the answer, an "
+                "honest note on how far to trust it, and a clear idea of what to "
+                "do next, without anyone trying to sell you something.",
+                {"photos": [
+                    ("/static/img/team/khushi-2.webp", "Khushi Gupta in the gym, mirror photo beside a plate-loaded machine"),
+                    ("/static/img/team/khushi-3.webp", "Khushi Gupta sitting on a plate-loaded chest press machine"),
+                    ("/static/img/team/khushi-1.webp", "Khushi Gupta in the gym, mirror photo beside a loaded barbell"),
+                ]},
+                "If you have a question, a correction or an idea for the site, "
+                "you can reach me at <a href=\"mailto:{email}\">{email}</a>.",
+            ]),
             ("How the site started", [
                 "FormFit began in September 2026 as a small tool for resizing photos and "
                 "signatures for Indian exam application forms. It was useful, but "

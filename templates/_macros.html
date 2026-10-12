@@ -74,6 +74,8 @@
   </table></div>
   {% elif b.tip %}<div class="tip">{{ icon('bolt') }}<p>{{ b.tip|safe }}</p></div>
   {% elif b.formula %}<p class="formula">{{ b.formula }}</p>
+  {% elif b.photos %}
+  <div class="gallery">{% for src, alt in b.photos %}<figure><img src="{{ src }}" alt="{{ alt }}" loading="lazy" decoding="async" width="900" height="1200"></figure>{% endfor %}</div>
   {% endif %}
 {% endfor %}
 {%- endmacro %}
@@ -204,4 +206,25 @@
   {% endif %}
   {% if f.hint %}<span class="field__hint">{{ f.hint }}</span>{% endif %}
 </div>
+{%- endmacro %}
+
+
+{# ---------------------------------------------------------------------------
+   Author: byline and the card at the end of articles.
+   --------------------------------------------------------------------------- #}
+{% macro byline(read_min=None) -%}
+<p class="byline"><img class="byline__avatar" src="{{ author.avatar }}" alt="" width="28" height="28">
+  By <a href="{{ author.url }}">{{ author.name }}</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
+{%- endmacro %}
+
+{% macro author_card() -%}
+<aside class="author">
+  <img src="{{ author.avatar }}" alt="{{ author.name }}" width="72" height="72" loading="lazy">
+  <div>
+    <p class="kicker">About the author</p>
+    <p class="author__name"><a href="{{ author.url }}">{{ author.name }}</a></p>
+    <p class="author__role">{{ author.role }}</p>
+    <p class="author__bio">{{ author.bio }}</p>
+  </div>
+</aside>
 {%- endmacro %}

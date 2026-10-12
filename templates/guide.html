@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, guide_card, calc_card with context %}
+{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, guide_card, calc_card, byline, author_card with context %}
 {% block content %}
 
 <section class="pagehead">
@@ -9,7 +9,7 @@
     <p class="eyebrow">{{ g.category }}</p>
     <h1>{{ h1 }}</h1>
     <p class="pagehead__lede">{{ g.intro }}</p>
-    <p class="byline">{{ icon('book') }} By the <a href="/about">FormFit Editorial Team</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
+    {{ byline(read_min) }}
   </div>
 </section>
 
@@ -25,6 +25,7 @@
       {% endif %}
       {{ body(g.body) }}
       {{ faq(g.faq) }}
+      {{ author_card() }}
       <p class="disclaim">{{ icon('heart') }} General information for healthy adults, not medical advice.
         See our <a href="/disclaimer">medical disclaimer</a>.</p>
     </article>

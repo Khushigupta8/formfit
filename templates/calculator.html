@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, field, calc_card, guide_card with context %}
+{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, field, calc_card, guide_card, byline, author_card with context %}
 {% block content %}
 
 <section class="pagehead pagehead--calc">
@@ -55,6 +55,7 @@
         <ol>{% for s in calc.sources %}<li>{{ s }}</li>{% endfor %}</ol>
       </section>
       {% endif %}
+      {{ author_card() }}
       <p class="disclaim">{{ icon('heart') }} Results are estimates for healthy adults
         and are not medical advice. See our <a href="/disclaimer">medical disclaimer</a>.</p>
     </article>

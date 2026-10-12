@@ -33,6 +33,18 @@ TAGLINE = "Fitness calculators and training guides"
 REVIEWED = "October 2026"
 MODIFIED = "2026-10-12"
 
+# The person behind the site. Shown in bylines, author cards and the
+# Article schema, which is how Google connects content to a real author.
+AUTHOR = {
+    "name": "Khushi Gupta",
+    "role": "Founder and editor, FormFit",
+    "url": "/about",
+    "avatar": "/static/img/team/khushi-avatar.webp",
+    "bio": ("Khushi Gupta built and runs FormFit. She trains in the gym herself, "
+            "and edits every calculator, plan and guide on the site, with one aim: "
+            "every number comes with the formula behind it and a clear next step."),
+}
+
 # Google Search Console > Add property > HTML tag: paste the content="..."
 # value here. Optional if you verify by DNS instead.
 GSC_VERIFICATION = ""
@@ -183,8 +195,9 @@ def article_schema(title, desc, url, image):
         "description": desc,
         "mainEntityOfPage": url,
         "image": "{}/static/img/photos/{}.webp".format(SITE_URL, image),
-        "author": {"@type": "Organization", "name": SITE_NAME + " Editorial Team",
-                   "url": SITE_URL + "/about"},
+        "author": {"@type": "Person", "name": AUTHOR["name"],
+                   "url": SITE_URL + AUTHOR["url"],
+                   "image": SITE_URL + AUTHOR["avatar"]},
         "publisher": {"@type": "Organization", "name": SITE_NAME,
                       "logo": {"@type": "ImageObject",
                                "url": SITE_URL + "/static/img/logo.png"}},
@@ -216,7 +229,7 @@ def render(template, **kw):
     return render_template(
         template,
         site_name=SITE_NAME, site_url=SITE_URL, tagline=TAGLINE, reviewed=REVIEWED,
-        modified=MODIFIED, gsc_verification=GSC_VERIFICATION,
+        modified=MODIFIED, gsc_verification=GSC_VERIFICATION, author=AUTHOR,
         adsense=ADSENSE_ID, ad_slots=AD_SLOTS,
         ad_preview=AD_PREVIEW or app.debug,
         categories=C.CATEGORIES, calcs=C.CALCS, by_cat=C.by_cat,
@@ -249,6 +262,8 @@ def index():
             "@context": "https://schema.org", "@type": "Organization",
             "name": SITE_NAME, "url": SITE_URL + "/",
             "logo": SITE_URL + "/static/img/logo.png",
+            "founder": {"@type": "Person", "name": AUTHOR["name"],
+                        "url": SITE_URL + AUTHOR["url"]},
         }])
 
 
