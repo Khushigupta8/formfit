@@ -107,6 +107,25 @@ PHOTO_ALT = {
 app.jinja_env.globals["alt"] = lambda key: PHOTO_ALT.get(key, "")
 
 
+_HASHES = {}
+
+
+def asset(path):
+    """/static/<path>?v=<content hash>.
+
+    Static files are served with a one-year immutable cache header, so a
+    changed file must get a new URL or returning visitors keep the old one.
+    """
+    if path not in _HASHES:
+        import hashlib
+        with open(os.path.join(app.static_folder, path), "rb") as f:
+            _HASHES[path] = hashlib.md5(f.read()).hexdigest()[:10]
+    return "/static/{}?v={}".format(path, _HASHES[path])
+
+
+app.jinja_env.globals["asset"] = asset
+
+
 def words(item):
     """Rough word count of everything readable on a page, for read times."""
     n = len(item.get("intro", "").split())

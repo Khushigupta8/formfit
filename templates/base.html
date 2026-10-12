@@ -33,12 +33,12 @@
 <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
 {% endif %}
 <link rel="preload" href="/static/fonts/archivo-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="icon" href="/static/img/favicon.ico" sizes="any">
-<link rel="icon" href="/static/img/mark.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
-<link rel="manifest" href="/static/img/site.webmanifest">
+<link rel="icon" href="{{ asset('img/favicon.ico') }}" sizes="any">
+<link rel="icon" href="{{ asset('img/mark.svg') }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}">
+<link rel="manifest" href="{{ asset('img/site.webmanifest') }}">
 <meta name="theme-color" content="#0c0e11">
-<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 {# Ad script only on pages that carry ads, so Auto ads can't appear on the
    legal pages either. #}
@@ -57,7 +57,7 @@
 <header class="nav">
   <div class="nav__inner">
     <a class="logo" href="/" aria-label="{{ site_name }} home">
-      <img src="/static/img/mark.svg" alt="" width="34" height="34">
+      <img src="{{ asset('img/mark.svg') }}" alt="" width="34" height="34">
       <span>Form<b>Fit</b></span>
     </a>
 
@@ -95,7 +95,7 @@
   <div class="foot__inner">
     <div class="foot__brand">
       <a class="logo logo--light" href="/">
-        <img src="/static/img/mark.svg" alt="" width="34" height="34">
+        <img src="{{ asset('img/mark.svg') }}" alt="" width="34" height="34">
         <span>Form<b>Fit</b></span>
       </a>
       <p>Free calculators, workout plans and evidence-based guides for people who
@@ -135,7 +135,7 @@
   </div>
 </footer>
 
-<script src="/static/js/site.js" defer></script>
+<script src="{{ asset('js/site.js') }}" defer></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
