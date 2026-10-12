@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, calc_card, workout_card, exercise_card, guide_card with context %}
+{% block bodyclass %}home{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero__bg">{{ photo('hero', 'Athlete gripping a loaded barbell before a deadlift', eager=True, sizes='100vw') }}</div>
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow">Free fitness calculators &amp; training guides</p>
+      <h1>Train smarter.<br><span>Know your numbers.</span></h1>
+      <p class="hero__lede">BMI, calories, macros, body fat, one rep max and more,
+        built for people who lift. Every number comes with the formula behind it
+        and a plan for what to do next.</p>
+      <div class="hero__actions">
+        <a class="btn btn--volt" href="/calculators">Browse all calculators {{ icon('arrow') }}</a>
+        <a class="btn btn--ghost" href="/workouts">Get a workout plan</a>
+      </div>
+      <ul class="hero__trust">
+        <li>{{ icon('lock') }} Nothing you enter leaves your device</li>
+        <li>{{ icon('book') }} Published formulas, cited</li>
+        <li>{{ icon('check') }} Free, no sign-up</li>
+      </ul>
+    </div>
+
+    <div class="goal" aria-label="Pick your goal">
+      <p class="goal__head">What's your goal?</p>
+      {% set goals = [
+        ('fat', 'Lose fat', ['calorie-calculator', 'weight-loss-calculator', 'body-fat-calculator'], ('/workouts/fat-loss-workout-plan', 'Fat loss workout plan')),
+        ('muscle', 'Build muscle', ['macro-calculator', 'protein-calculator', 'ffmi-calculator'], ('/workouts/push-pull-legs', 'Push pull legs split')),
+        ('strength', 'Get stronger', ['one-rep-max-calculator', 'plate-calculator', 'wilks-calculator'], ('/workouts/5x5-strength-program', '5x5 strength program')),
+        ('health', 'Get healthier', ['bmi-calculator', 'heart-rate-zone-calculator', 'waist-to-hip-ratio-calculator'], ('/workouts/beginner-full-body-workout', 'Beginner full body plan')),
+      ] %}
+      <div class="goal__tabs">
+        {% for key, label, _, _ in goals %}
+        <input type="radio" name="goal" id="goal-{{ key }}" {% if loop.first %}checked{% endif %}>
+        <label for="goal-{{ key }}">{{ label }}</label>
+        {% endfor %}
+        {% for key, label, tools, plan in goals %}
+        <div class="goal__panel" data-goal="{{ key }}">
+          {% for s in tools %}{% set c = (calcs|selectattr('slug', 'equalto', s)|first) %}
+          <a class="goal__tool" href="/{{ c.slug }}"><span class="goal__icon">{{ icon(c.icon) }}</span>
+            <span><b>{{ c.name }}</b><small>{{ c.blurb }}</small></span></a>
+          {% endfor %}
+          <a class="goal__plan" href="{{ plan[0] }}">{{ icon('calendar') }} Then follow the {{ plan[1] }} {{ icon('arrow') }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap stats__row">
+    <p><b>{{ calcs|length }}</b> calculators</p>
+    <p><b>{{ workouts|length }}</b> workout plans</p>
+    <p><b>16</b> exercises with full technique</p>
+    <p><b>15</b> in-depth guides</p>
+  </div>
+</section>
+
+<section class="wrap block">
+  <div class="block__head">
+    <div><p class="kicker">Most used</p><h2>Popular calculators</h2></div>
+    <a class="more" href="/calculators">All {{ calcs|length }} calculators {{ icon('arrow') }}</a>
+  </div>
+  <div class="grid grid--4">
+    {% for c in popular %}{{ calc_card(c) }}{% endfor %}
+  </div>
+</section>
+
+<div class="wrap">{{ ad('in_feed') }}</div>
+
+<section class="wrap block">
+  <div class="block__head"><div><p class="kicker">By category</p><h2>Every tool, sorted</h2></div></div>
+  <div class="cats">
+    {% for key, name, desc in categories %}
+    <div class="cat">
+      <h3>{{ name }}</h3>
+      <p>{{ desc }}</p>
+      <ul>{% for c in by_cat(key) %}<li><a href="/{{ c.slug }}">{{ icon(c.icon) }}{{ c.name }}</a></li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap block">
+    <div class="block__head">
+      <div><p class="kicker">Programs</p><h2>Workout plans that tell you exactly what to do</h2></div>
+      <a class="more" href="/workouts">All plans {{ icon('arrow') }}</a>
+    </div>
+    <div class="grid grid--3">
+      {% for w in workouts[:3] %}{{ workout_card(w) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="wrap split">
+  <div class="split__img">{{ photo('healthy-meal', 'A plate of eggs, avocado and vegetables', sizes='(min-width: 900px) 50vw, 100vw') }}</div>
+  <div class="split__copy">
+    <p class="kicker">Start here</p>
+    <h2>Every goal starts with one number: your maintenance calories.</h2>
+    <p>Lose fat, build muscle or recomp, you need to know what you burn in a
+       normal day first. The TDEE calculator gives you that in under a minute,
+       then the macro calculator turns it into grams of protein, carbs and fat.</p>
+    <div class="split__steps">
+      <a href="/tdee-calculator"><b>1</b> Find your TDEE</a>
+      <a href="/macro-calculator"><b>2</b> Set your macros</a>
+      <a href="/guides/how-to-calculate-calories-for-weight-loss"><b>3</b> Adjust as you go</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap block">
+  <div class="block__head">
+    <div><p class="kicker">Exercise library</p><h2>Learn the lifts that matter</h2></div>
+    <a class="more" href="/exercises">All exercises {{ icon('arrow') }}</a>
+  </div>
+  <div class="grid grid--4">
+    {% for x in exercises %}{{ exercise_card(x) }}{% endfor %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap block">
+    <div class="block__head">
+      <div><p class="kicker">Guides</p><h2>Straight answers, backed by research</h2></div>
+      <a class="more" href="/guides">All guides {{ icon('arrow') }}</a>
+    </div>
+    <div class="grid grid--3">
+      {% for g in guides %}{{ guide_card(g) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="wrap">{{ ad('end') }}</div>
+
+<section class="wrap why">
+  <div><span class="why__icon">{{ icon('lock') }}</span><h3>Private by design</h3>
+    <p>Calculators run in your browser. Your weight, measurements and lifts are
+       never sent to a server.</p></div>
+  <div><span class="why__icon">{{ icon('book') }}</span><h3>Shows its working</h3>
+    <p>Every result names the formula and the study it came from, with honest notes
+       on where it falls short.</p></div>
+  <div><span class="why__icon">{{ icon('bolt') }}</span><h3>Fast on any phone</h3>
+    <p>No app, no account, no waiting. Pages load fast and work on the gym floor
+       with one bar of signal.</p></div>
+</section>
+
+{% endblock %}

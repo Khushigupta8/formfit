@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "_macros.html" import body with context %}
+{% block content %}
+<section class="pagehead pagehead--plain">
+  <div class="wrap pagehead__inner">
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">Last updated {{ updated }}</p>
+  </div>
+</section>
+<div class="wrap">
+  <article class="prose prose--narrow">
+    {{ body(doc.body, ads=False, email=email) }}
+  </article>
+</div>
+{% endblock %}

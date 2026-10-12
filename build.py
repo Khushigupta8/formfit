@@ -13,9 +13,7 @@ import shutil
 import stat
 import sys
 
-from app import PAGES, PRESETS, app
-import articles as A
-import legal as L
+from app import all_urls, app
 
 OUT = "dist"
 
@@ -68,20 +66,11 @@ def main():
 
     ok = 0
     with app.test_client() as c:
-        # Folder-per-page gives clean URLs (/ssc-photo-size) on any static host.
-        ok += write(c, "/", "index.html")
-        ok += write(c, "/guide", "guide/index.html")
-        ok += write(c, "/download", "download/index.html")
-        for g in PAGES:
-            ok += write(c, "/" + g["slug"], g["slug"] + "/index.html")
-        ok += write(c, "/sitemap.xml", "sitemap.xml")
-        ok += write(c, "/robots.txt", "robots.txt")
-        ok += write(c, "/ads.txt", "ads.txt")
-        ok += write(c, "/guides", "guides/index.html")
-        for a in A.ARTICLES:
-            ok += write(c, "/guides/" + a["slug"], "guides/" + a["slug"] + "/index.html")
-        for p in L.LEGAL:
-            ok += write(c, "/" + p["slug"], p["slug"] + "/index.html")
+        # Folder-per-page gives clean URLs (/bmi-calculator) on any static host.
+        for path, _ in all_urls():
+            ok += write(c, path, "index.html" if path == "/" else path.strip("/") + "/index.html")
+        for f in ("sitemap.xml", "robots.txt", "ads.txt"):
+            ok += write(c, "/" + f, f)
         ok += write(c, "/this-page-does-not-exist", "404.html")
 
     shutil.copytree("static", os.path.join(OUT, "static"))
@@ -99,15 +88,6 @@ def main():
         os.path.getsize(os.path.join(r, f))
         for r, _, fs in os.walk(OUT) for f in fs
     )
-    live = {g["slug"] for g in PAGES}
-    orphans = [p["slug"] for p in PRESETS if p["slug"] not in live]
-    if orphans:
-        print("NOTE: these preset slugs have no page of their own, because their")
-        print("      spec is identical to another exam and the pages were merged:")
-        for o in orphans:
-            print("        /" + o)
-        print("      Make sure vercel.json redirects them, or old links will 404.")
-
     print("Built {} pages into {}/  ({:.0f} KB total)".format(ok, OUT, total / 1024))
     print("Deploy that folder. Nothing else needed.")
 

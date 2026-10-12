@@ -1,0 +1,207 @@
+{# ---------------------------------------------------------------------------
+   Icons: 24px stroke icons, inherit currentColor.
+   --------------------------------------------------------------------------- #}
+{% macro icon(name) -%}
+<svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+{%- if name == 'scale' -%}<rect x="3" y="4" width="18" height="16" rx="4"/><path d="M8 9a5 5 0 0 1 8 0"/><path d="M12 9l1.5-2"/>
+{%- elif name == 'ruler' -%}<path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/>
+{%- elif name == 'target' -%}<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+{%- elif name == 'body' -%}<circle cx="12" cy="5" r="2.5"/><path d="M5 9h14M12 9v5m0 0-3 7m3-7 3 7"/>
+{%- elif name == 'bicep' -%}<path d="M5 20c-1-6 1-11 5-14l3 1-1 3-2 1c0 3 1 5 3 5 2-3 6-3 8 0v4z"/>
+{%- elif name == 'flame' -%}<path d="M12 21c4 0 7-2.6 7-7 0-4-3-6-4-9-1 2-2 3-3 3 0-2-1-4-3-5 0 4-4 6-4 11 0 4.4 3 7 7 7z"/>
+{%- elif name == 'apple' -%}<path d="M12 7c-3-2-8-1-8 5 0 5 3 9 5 9 1 0 2-.6 3-.6s2 .6 3 .6c2 0 5-4 5-9 0-6-5-7-8-5z"/><path d="M12 7c0-2 1-4 3-4"/>
+{%- elif name == 'pie' -%}<path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/>
+{%- elif name == 'egg' -%}<path d="M12 3c-4 0-7 6-7 11a7 7 0 0 0 14 0c0-5-3-11-7-11z"/>
+{%- elif name == 'bolt' -%}<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>
+{%- elif name == 'trend' -%}<path d="m3 7 6 6 4-4 8 8"/><path d="M15 17h6v-6"/>
+{%- elif name == 'drop' -%}<path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/>
+{%- elif name == 'dumbbell' -%}<path d="M6 7v10M3 9.5v5M18 7v10M21 9.5v5M6 12h12"/>
+{%- elif name == 'plate' -%}<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3v3M12 18v3"/>
+{%- elif name == 'trophy' -%}<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4c0 3 2 5 4 5M16 6h4c0 3-2 5-4 5M12 13v4M8 21h8M9 17h6"/>
+{%- elif name == 'heart' -%}<path d="M12 20s-8-4.6-8-10.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5C20 15.4 12 20 12 20z"/><path d="M4 12h4l2-3 3 6 2-3h5"/>
+{%- elif name == 'chev' -%}<path d="m6 9 6 6 6-6"/>
+{%- elif name == 'arrow' -%}<path d="M5 12h14M13 6l6 6-6 6"/>
+{%- elif name == 'clock' -%}<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{%- elif name == 'calendar' -%}<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>
+{%- elif name == 'lock' -%}<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+{%- elif name == 'check' -%}<path d="m5 12 5 5 9-10"/>
+{%- elif name == 'x' -%}<path d="M6 6l12 12M18 6 6 18"/>
+{%- elif name == 'book' -%}<path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>
+{%- elif name == 'level' -%}<path d="M5 20v-5M12 20V10M19 20V4"/>
+{%- else -%}<circle cx="12" cy="12" r="9"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
+
+
+{# ---------------------------------------------------------------------------
+   Ad placement.
+
+   Policy notes: every unit is labelled "Advertisement", separated from the
+   content around it, never adjacent to a calculate button or result figure,
+   and none appear on legal pages (show_ads=False). Units only render when an
+   ID is set in AD_SLOTS in app.py; until then the placement is an empty,
+   hidden container that ?adpreview outlines.
+   --------------------------------------------------------------------------- #}
+{% macro ad(name, kind=None) -%}
+{% if show_ads and adsense %}
+{% set unit = ad_slots.get(name) %}
+<aside class="ad ad--{{ kind or name }}{% if unit %} ad--live{% endif %}" data-ad="{{ name }}" aria-label="Advertisement">
+  <span class="ad__label">Advertisement</span>
+  {% if unit %}
+  <ins class="adsbygoogle" style="display:block" data-ad-client="{{ adsense }}" data-ad-slot="{{ unit }}"
+       data-ad-format="{{ 'vertical' if name == 'sidebar' else 'auto' }}" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  {% endif %}
+</aside>
+{% endif %}
+{%- endmacro %}
+
+
+{# ---------------------------------------------------------------------------
+   Article body: list of (heading, blocks). In-article ads go after the 2nd
+   and 5th sections of long pieces, never before the reader reaches content.
+   --------------------------------------------------------------------------- #}
+{% macro blocks(items, email='') -%}
+{% for b in items %}
+  {% if b is string %}<p>{{ b|replace('{email}', email)|safe }}</p>
+  {% elif b.list %}<ul>{% for li in b.list %}<li>{{ li|replace('{email}', email)|safe }}</li>{% endfor %}</ul>
+  {% elif b.olist %}<ol>{% for li in b.olist %}<li>{{ li|safe }}</li>{% endfor %}</ol>
+  {% elif b.table %}
+  <div class="table"><table>
+    <thead><tr>{% for h in b.table.head %}<th>{{ h|safe }}</th>{% endfor %}</tr></thead>
+    <tbody>{% for r in b.table.rows %}<tr>{% for c in r %}<td>{{ c|safe }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>
+  {% elif b.tip %}<div class="tip">{{ icon('bolt') }}<p>{{ b.tip|safe }}</p></div>
+  {% elif b.formula %}<p class="formula">{{ b.formula }}</p>
+  {% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro body(sections, ads=True, email='') -%}
+{% for heading, items in sections %}
+<section class="prose__sec">
+  <h2 id="{{ heading|slugify }}">{{ heading }}</h2>
+  {{ blocks(items, email) }}
+</section>
+{% if ads and sections|length > 3 and loop.index in (2, 5) and not loop.last %}{{ ad('in_article') }}{% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro toc(sections) -%}
+{% if sections|length > 3 %}
+<nav class="toc" aria-label="On this page">
+  <p class="toc__head">On this page</p>
+  <ol>{% for heading, _ in sections %}<li><a href="#{{ heading|slugify }}">{{ heading }}</a></li>{% endfor %}</ol>
+</nav>
+{% endif %}
+{%- endmacro %}
+
+{% macro faq(items) -%}
+{% if items %}
+<section class="faq">
+  <h2 id="faq">Frequently asked questions</h2>
+  {% for q, a in items %}
+  <details{% if loop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>
+  {% endfor %}
+</section>
+{% endif %}
+{%- endmacro %}
+
+{% macro trail(items) -%}
+<nav class="crumbs" aria-label="Breadcrumb">
+  {% for name, url in items %}{% if not loop.last %}<a href="{{ url|replace(site_url, '') or '/' }}">{{ name }}</a><span>/</span>{% else %}<span aria-current="page">{{ name }}</span>{% endif %}{% endfor %}
+</nav>
+{%- endmacro %}
+
+{# ---------------------------------------------------------------------------
+   Photo with responsive sources.
+   --------------------------------------------------------------------------- #}
+{% macro photo(key, alt='', eager=False, sizes='(min-width: 900px) 50vw, 100vw') -%}
+<img src="/static/img/photos/{{ key }}-sm.webp"
+     srcset="/static/img/photos/{{ key }}-sm.webp 640w, /static/img/photos/{{ key }}.webp 1200w"
+     sizes="{{ sizes }}" alt="{{ alt }}" width="1200" height="800"
+     {% if eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+{%- endmacro %}
+
+{# ---------------------------------------------------------------------------
+   Cards
+   --------------------------------------------------------------------------- #}
+{% macro calc_card(c) -%}
+<a class="ccard" href="/{{ c.slug }}">
+  <span class="ccard__icon">{{ icon(c.icon) }}</span>
+  <span class="ccard__name">{{ c.name }}</span>
+  <span class="ccard__blurb">{{ c.blurb }}</span>
+  <span class="ccard__go">Open calculator {{ icon('arrow') }}</span>
+</a>
+{%- endmacro %}
+
+{% macro photo_card(href, img, kicker, title, text='', meta=[]) -%}
+<a class="pcard" href="{{ href }}">
+  <span class="pcard__img">{{ photo(img, alt(img), sizes='(min-width: 900px) 33vw, 100vw') }}</span>
+  <span class="pcard__body">
+    <span class="kicker">{{ kicker }}</span>
+    <span class="pcard__title">{{ title }}</span>
+    {% if text %}<span class="pcard__text">{{ text }}</span>{% endif %}
+    {% if meta %}<span class="pcard__meta">{% for m in meta %}<span>{{ m }}</span>{% endfor %}</span>{% endif %}
+  </span>
+</a>
+{%- endmacro %}
+
+{% macro guide_card(g) -%}
+{{ photo_card('/guides/' ~ g.slug, g.image, g.category, g.h1, g.desc) }}
+{%- endmacro %}
+
+{% macro workout_card(w) -%}
+{{ photo_card('/workouts/' ~ w.slug, w.image, w.level ~ ' · ' ~ w.goal, w.name, w.desc,
+              [w.days ~ ' days/week', w.session]) }}
+{%- endmacro %}
+
+{% macro exercise_card(x) -%}
+<a class="xcard" href="/exercises/{{ x.slug }}" data-muscle="{{ x.muscle }}">
+  <span class="xcard__img">{{ photo(x.image, alt(x.image), sizes='(min-width: 900px) 25vw, 50vw') }}</span>
+  <span class="xcard__body">
+    <span class="kicker">{{ x.muscle }} · {{ x.level }}</span>
+    <span class="xcard__name">{{ x.name }}</span>
+    <span class="xcard__eq">{{ x.equipment }}</span>
+  </span>
+</a>
+{%- endmacro %}
+
+{# ---------------------------------------------------------------------------
+   Calculator form fields. calc.js reads data-type to convert units.
+   --------------------------------------------------------------------------- #}
+{% macro field(f) -%}
+<div class="field field--{{ f.type }}"{% if f.only %} data-only="{{ f.only }}"{% endif %}>
+  {% if f.type == 'sex' %}
+  <span class="field__label">{{ f.label }}</span>
+  <div class="seg" role="radiogroup" aria-label="{{ f.label }}">
+    <label><input type="radio" name="sex" value="male" checked><span>Male</span></label>
+    <label><input type="radio" name="sex" value="female"><span>Female</span></label>
+  </div>
+  {% elif f.type == 'select' %}
+  <label class="field__label" for="f-{{ f.name }}">{{ f.label }}</label>
+  <select id="f-{{ f.name }}" name="{{ f.name }}">
+    {% for v, l in f.options %}<option value="{{ v }}"{% if v == f.default %} selected{% endif %}>{{ l }}</option>{% endfor %}
+  </select>
+  {% elif f.type == 'height' %}
+  <span class="field__label">{{ f.label }}</span>
+  <div class="unit-m inputs">
+    <label class="inp"><input type="number" inputmode="decimal" name="{{ f.name }}" data-type="height" value="{{ '' if f.optional else f.default }}" min="100" max="250" step="any" aria-label="{{ f.label }} in centimetres"><span>cm</span></label>
+  </div>
+  <div class="unit-i inputs">
+    <label class="inp"><input type="number" inputmode="numeric" name="{{ f.name }}_ft" data-type="ft" min="3" max="8" aria-label="{{ f.label }} feet"><span>ft</span></label>
+    <label class="inp"><input type="number" inputmode="decimal" name="{{ f.name }}_in" data-type="in" min="0" max="11.9" step="any" aria-label="{{ f.label }} inches"><span>in</span></label>
+  </div>
+  {% else %}
+  <label class="field__label" for="f-{{ f.name }}">{{ f.label }}</label>
+  <div class="inputs">
+    <label class="inp"><input id="f-{{ f.name }}" type="number" inputmode="decimal" name="{{ f.name }}" data-type="{{ f.type }}"
+      value="{{ '' if f.optional else f.default }}" step="any"
+      {% if f.min is defined %}min="{{ f.min }}"{% endif %} {% if f.max is defined %}max="{{ f.max }}"{% endif %}>
+      <span data-unit="{{ f.type }}">{% if f.type == 'age' %}years{% elif f.type == 'number' %}{{ f.unit or '' }}{% elif f.type == 'length' %}cm{% else %}kg{% endif %}</span></label>
+  </div>
+  {% endif %}
+  {% if f.hint %}<span class="field__hint">{{ f.hint }}</span>{% endif %}
+</div>
+{%- endmacro %}

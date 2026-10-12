@@ -3,13 +3,123 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/ssc-photo-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ssc-signature-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ibps-photo-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ibps-signature-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ibps-thumb-impression-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ibps-handwritten-declaration-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/upsc-photo-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/upsc-signature-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/neet-jee-photo-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/neet-jee-signature-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/rrb-railway-photo-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/rrb-railway-signature-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/passport-photo-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/uppsc-photo-size",
-      "destination": "/ibps-photo-size",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/uppsc-signature-size",
-      "destination": "/ibps-signature-size",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/guide",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/download",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/how-to-reduce-photo-size-to-20-kb",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/guides/how-to-scan-signature-with-phone",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/guides/jpg-png-heic-which-format-for-forms",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/guides/passport-size-photo-at-home",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/guides/photo-rejected-in-online-form",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/guides/what-is-dpi-in-exam-form-photo",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/guides/why-phone-photos-upload-sideways",
+      "destination": "/guides",
       "permanent": true
     }
   ],
@@ -20,6 +130,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }

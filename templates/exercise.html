@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, trail, body, faq, exercise_card, workout_card with context %}
+{% block content %}
+
+<section class="pagehead">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <p class="eyebrow">{{ x.muscle }} exercise</p>
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">{{ x.intro }}</p>
+    <p class="byline">{{ icon('book') }} By the <a href="/about">FormFit Editorial Team</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <main class="layout__main">
+    <dl class="facts facts--4">
+      <div><dt>{{ icon('target') }} Primary</dt><dd>{{ x.muscle }}</dd></div>
+      <div><dt>{{ icon('body') }} Also works</dt><dd>{{ x.secondary|join(', ') }}</dd></div>
+      <div><dt>{{ icon('dumbbell') }} Equipment</dt><dd>{{ x.equipment }}</dd></div>
+      <div><dt>{{ icon('level') }} Level</dt><dd>{{ x.level }}</dd></div>
+    </dl>
+
+    <section class="howto">
+      <h2 id="how-to">How to do it</h2>
+      <ol class="steps">{% for s in x.steps %}<li>{{ s|safe }}</li>{% endfor %}</ol>
+      <div class="cues">
+        <p class="cues__head">{{ icon('bolt') }} Coaching cues</p>
+        <ul>{% for c in x.cues %}<li>{{ c }}</li>{% endfor %}</ul>
+      </div>
+    </section>
+
+    {{ ad('below_tool') }}
+
+    <section class="prose">
+      <h2 id="mistakes">Common mistakes and fixes</h2>
+      <div class="mistakes">
+        {% for m, fix in x.mistakes %}
+        <div class="mistake"><p class="mistake__bad">{{ icon('x') }} {{ m }}</p><p class="mistake__fix">{{ icon('check') }} {{ fix|safe }}</p></div>
+        {% endfor %}
+      </div>
+
+      <h2 id="sets-and-reps">Sets and reps</h2>
+      <div class="table"><table>
+        <thead><tr><th>Goal</th><th>Prescription</th></tr></thead>
+        <tbody>{% for k, v in x.programming.items() %}<tr><td>{{ k|capitalize }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody>
+      </table></div>
+      <p>Pick a starting weight with the <a href="/one-rep-max-calculator">one rep max calculator</a>,
+         and load the bar with the <a href="/plate-calculator">plate calculator</a>.</p>
+
+      <h2 id="variations">Variations</h2>
+      <ul class="variations">{% for n, note in x.variations %}<li><b>{{ n }}</b> {{ note|safe }}</li>{% endfor %}</ul>
+
+      {{ body(x.body, ads=False) }}
+      {{ faq(x.faq) }}
+    </section>
+
+    {{ ad('end') }}
+
+    {% if plans %}
+    <section class="block"><h2 class="block__title">Plans that use the {{ x.name|lower }}</h2>
+      <div class="grid grid--3">{% for p in plans %}{{ workout_card(p) }}{% endfor %}</div></section>
+    {% endif %}
+    <section class="block"><h2 class="block__title">Related exercises</h2>
+      <div class="grid grid--4">{% for r in (related + same_muscle)|unique(attribute='slug')|list %}{% if loop.index <= 4 %}{{ exercise_card(r) }}{% endif %}{% endfor %}</div></section>
+  </main>
+  <aside class="layout__side">{% include "_sidebar.html" %}</aside>
+</div>
+{% endblock %}

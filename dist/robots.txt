@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /download
 
 Sitemap: https://www.formfit.in/sitemap.xml

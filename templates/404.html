@@ -1,12 +1,15 @@
 {% extends "base.html" %}
+{% from "_macros.html" import calc_card with context %}
 {% block content %}
-<main class="guide">
-  <h1>That page isn't here</h1>
-  <p>The link may be wrong. Pick your exam from the list below.</p>
-  <ul class="related">
-    {% for p in presets %}
-    <li><a href="/{{ p.slug }}">{{ p.exam_label }} {{ p.primary.kind.lower() }}, {{ p.primary.w }}x{{ p.primary.h }} px, {{ p.primary.min_kb }}-{{ p.primary.max_kb }} KB</a></li>
-    {% endfor %}
-  </ul>
-</main>
+<section class="pagehead pagehead--plain">
+  <div class="wrap pagehead__inner">
+    <p class="eyebrow">Error 404</p>
+    <h1>That page skipped leg day.</h1>
+    <p class="pagehead__lede">It doesn't exist, or it moved. FormFit used to be an exam photo
+      resizer and is now a fitness site, so older links land here. Try one of these instead.</p>
+  </div>
+</section>
+<div class="wrap block">
+  <div class="grid grid--4">{% for c in popular %}{{ calc_card(c) }}{% endfor %}</div>
+</div>
 {% endblock %}

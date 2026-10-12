@@ -1,33 +1,27 @@
 {% extends "base.html" %}
-{% from "_ad.html" import slot with context %}
-
+{% from "_macros.html" import icon, ad, photo, trail, guide_card with context %}
 {% block content %}
-<main class="guide">
+<section class="pagehead pagehead--short">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <h1>{{ h1 }}{% if topic %} guides{% endif %}</h1>
+    <p class="pagehead__lede">{% if topic %}{{ topic.desc }}{% else %}Plain-English guides to training,
+      nutrition, fat loss and recovery, with the research behind them and the numbers you need.{% endif %}</p>
+    <nav class="jump">
+      <a href="/guides"{% if not topic %} aria-current="page"{% endif %}>All</a>
+      {% for t in guide_topics %}<a href="/guides/topic/{{ t.slug }}"{% if topic and topic.slug == t.slug %} aria-current="page"{% endif %}>{{ t.name }}</a>{% endfor %}
+    </nav>
+  </div>
+</section>
 
-  <h1>Guides</h1>
-  <p class="lede">Plain answers to the problems that stop people at the upload
-     step of an application form.</p>
-
-  <ul class="cards">
-    {% for a in articles %}
-    <li>
-      <a href="/guides/{{ a.slug }}">
-        <h2>{{ a.h1 }}</h2>
-        <p>{{ a.desc }}</p>
-      </a>
-    </li>
+<div class="wrap block">
+  <div class="grid grid--3">
+    {% for g in guides %}
+      {{ guide_card(g) }}
+      {% if loop.index == 6 and not loop.last %}</div>{{ ad('in_feed') }}<div class="grid grid--3">{% endif %}
     {% endfor %}
-  </ul>
-
-  {{ slot("end") }}
-
-  <h2>Or go straight to your exam</h2>
-  <ul class="related">
-    {% for g in pages %}
-    <li><a href="/{{ g.slug }}">{{ g.exam_label }} {{ g.primary.kind.lower() }}, {{ g.primary.w }}x{{ g.primary.h }} px,
-      {{ g.primary.min_kb }}-{{ g.primary.max_kb }} KB</a></li>
-    {% endfor %}
-  </ul>
-
-</main>
+  </div>
+  {{ ad('end') }}
+</div>
 {% endblock %}

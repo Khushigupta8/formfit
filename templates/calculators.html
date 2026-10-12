@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, trail, calc_card with context %}
+{% block content %}
+<section class="pagehead pagehead--short">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">{{ calcs|length }} free calculators for training, nutrition and body
+      composition. Each one runs on your device, takes metric or imperial, and explains
+      the formula behind the answer.</p>
+    <nav class="jump">{% for key, name, _ in categories %}<a href="#{{ key }}">{{ name }}</a>{% endfor %}</nav>
+  </div>
+</section>
+
+<div class="wrap">
+  {% for key, name, desc in categories %}
+  <section class="block" id="{{ key }}">
+    <div class="block__head"><div><h2>{{ name }}</h2><p class="block__sub">{{ desc }}</p></div></div>
+    <div class="grid grid--3">{% for c in by_cat(key) %}{{ calc_card(c) }}{% endfor %}</div>
+  </section>
+  {% if loop.index == 2 %}{{ ad('in_feed') }}{% endif %}
+  {% endfor %}
+  {{ ad('end') }}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, trail, workout_card with context %}
+{% block content %}
+<section class="pagehead pagehead--short">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">Complete programmes with every exercise, set, rep and rest period
+      written out, plus exactly how to progress from week to week. Pick one that matches
+      your schedule and run it for at least eight weeks.</p>
+  </div>
+</section>
+
+<div class="wrap block">
+  <div class="picker">
+    <div><b>New to the gym?</b><span>Start with the <a href="/workouts/beginner-full-body-workout">beginner full body plan</a>.</span></div>
+    <div><b>Training at home?</b><span>Use the <a href="/workouts/home-dumbbell-workout">dumbbell-only plan</a>.</span></div>
+    <div><b>Want to get strong?</b><span>Run the <a href="/workouts/5x5-strength-program">5x5 program</a>.</span></div>
+  </div>
+  <div class="grid grid--3">
+    {% for w in workouts %}
+      {{ workout_card(w) }}
+      {% if loop.index == 3 %}</div>{{ ad('in_feed') }}<div class="grid grid--3">{% endif %}
+    {% endfor %}
+  </div>
+  {{ ad('end') }}
+</div>
+{% endblock %}

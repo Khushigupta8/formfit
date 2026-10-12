@@ -1,0 +1,12 @@
+{
+  "name": "formfit",
+  "version": "2.0.0",
+  "private": true,
+  "description": "FormFit - free gym and fitness calculators, workout plans and guides. Flask templates frozen to static HTML.",
+  "scripts": {
+    "dev": "python app.py",
+    "build": "python build.py",
+    "preview": "python build.py && python -m http.server 5001 --directory dist",
+    "seo": "python seo_check.py"
+  }
+}

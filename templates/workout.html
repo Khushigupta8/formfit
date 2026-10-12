@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, workout_card, calc_card with context %}
+{% block content %}
+
+<section class="pagehead">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <p class="eyebrow">{{ w.level }} workout plan</p>
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">{{ w.intro }}</p>
+    <p class="byline">{{ icon('book') }} By the <a href="/about">FormFit Editorial Team</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <main class="layout__main">
+    <dl class="facts">
+      <div><dt>{{ icon('level') }} Level</dt><dd>{{ w.level }}</dd></div>
+      <div><dt>{{ icon('calendar') }} Days / week</dt><dd>{{ w.days }}</dd></div>
+      <div><dt>{{ icon('clock') }} Session</dt><dd>{{ w.session }}</dd></div>
+      <div><dt>{{ icon('target') }} Goal</dt><dd>{{ w.goal }}</dd></div>
+      <div><dt>{{ icon('trend') }} Length</dt><dd>{{ w.weeks }} weeks</dd></div>
+      <div><dt>{{ icon('dumbbell') }} Equipment</dt><dd>{{ w.equipment }}</dd></div>
+    </dl>
+
+    <section class="schedule" id="schedule">
+      <h2>The weekly schedule</h2>
+      {% for d in w.schedule %}
+      <div class="day{% if not d.exercises %} day--rest{% endif %}">
+        <div class="day__head"><h3>{{ d.day }}</h3><p>{{ d.focus }}</p></div>
+        {% if d.exercises %}
+        <div class="table"><table>
+          <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Rest</th></tr></thead>
+          <tbody>
+          {% for name, sets, reps, rest, slug in d.exercises %}
+          <tr><td>{% if slug and slug in ex %}<a href="/exercises/{{ slug }}">{{ name }}</a>{% else %}{{ name }}{% endif %}</td>
+              <td>{{ sets }}</td><td>{{ reps }}</td><td>{{ rest }}</td></tr>
+          {% endfor %}
+          </tbody>
+        </table></div>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <p class="schedule__note">{{ icon('dumbbell') }} Not sure what weight to use? Do one set you could
+        just about finish, then put it into the <a href="/one-rep-max-calculator">one rep max calculator</a>
+        and use the percentage chart.</p>
+    </section>
+
+    {{ ad('below_tool') }}
+
+    <article class="prose">
+      {{ toc(w.body) }}
+      {{ body(w.body) }}
+      {{ faq(w.faq) }}
+      <p class="disclaim">{{ icon('heart') }} Check with a doctor before starting a new training
+        programme if you have a medical condition or injury. See our <a href="/disclaimer">medical disclaimer</a>.</p>
+    </article>
+
+    {{ ad('end') }}
+
+    {% set tools = [] %}{% for s in w.related_calcs %}{% if s in calc_by_slug %}{% set _ = tools.append(calc_by_slug[s]) %}{% endif %}{% endfor %}
+    {% if tools %}
+    <section class="block"><h2 class="block__title">Calculators for this plan</h2>
+      <div class="grid grid--3">{% for c in tools %}{{ calc_card(c) }}{% endfor %}</div></section>
+    {% endif %}
+    <section class="block"><h2 class="block__title">Other workout plans</h2>
+      <div class="grid grid--3">{% for o in others %}{{ workout_card(o) }}{% endfor %}</div></section>
+  </main>
+  <aside class="layout__side">{% include "_sidebar.html" %}</aside>
+</div>
+{% endblock %}

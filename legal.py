@@ -1,101 +1,181 @@
 """
-Trust pages. AdSense will not approve a site without these, and the privacy
-policy has to actually describe what happens - cookies, third party ad
-vendors, and what you do with uploads.
+Trust pages. AdSense reviewers look for these, and for a health site the
+medical disclaimer matters as much as the privacy policy.
 
-CONTACT_EMAIL below is a placeholder. Put a real, working address in before
-you apply, because reviewers check that it is reachable.
+Body format is the same block format the guides use. "{email}" anywhere in
+the text is replaced with CONTACT_EMAIL. Keep CONTACT_EMAIL a real inbox you
+read: reviewers do check that it works.
 """
 
 CONTACT_EMAIL = "devkhushii08@gmail.com"
+UPDATED = "12 October 2026"
 
 LEGAL = [
+    {
+        "slug": "about",
+        "title": "About FormFit",
+        "h1": "About FormFit",
+        "desc": ("FormFit builds free, private fitness calculators and plain-English "
+                 "training guides for people who lift, run and train."),
+        "body": [
+            ("What FormFit is", [
+                "FormFit is a free toolkit for people who train. It started as a "
+                "set of calculators we kept rebuilding in spreadsheets: how much "
+                "to eat on a cut, what a set of five says about a one rep max, "
+                "which plates go on the bar. Now they live in one place, work on "
+                "any phone, and come with the explanation behind every number.",
+                "Alongside the calculators you will find workout plans with full "
+                "weekly schedules, an exercise library with step-by-step "
+                "technique, and guides on nutrition, fat loss, muscle gain and "
+                "recovery.",
+            ]),
+            ("How we write and check content", [
+                "Every calculator uses a published, peer-reviewed formula, and "
+                "each page names the formula and the paper it comes from, so you "
+                "can check our working. Where researchers disagree we say so "
+                "rather than pick a side and present it as settled.",
+                "Guides are written by the FormFit editorial team from the "
+                "research literature and position stands from bodies such as the "
+                "International Society of Sports Nutrition, the American College "
+                "of Sports Medicine and the World Health Organization. We update "
+                "pages when better evidence comes along and correct mistakes as "
+                "soon as they are reported.",
+                {"list": [
+                    "No calculator result is a diagnosis. They are estimates for "
+                    "healthy adults and say so on every page.",
+                    "We do not sell supplements, coaching or meal plans, so we "
+                    "have nothing to push you towards.",
+                    "Advertising is clearly labelled and never placed where it "
+                    "could be mistaken for a button or a result.",
+                ]},
+            ]),
+            ("Your data stays with you", [
+                "Every calculator runs inside your browser. The numbers you type "
+                "are not sent to us or stored on any server. The only thing the "
+                "site remembers is whether you prefer metric or imperial units, "
+                "and that lives in your own browser.",
+            ]),
+            ("Get in touch", [
+                "Spotted an error, or want a calculator we don't have yet? Write "
+                "to <a href=\"mailto:{email}\">{email}</a>. We read everything.",
+            ]),
+        ],
+    },
+    {
+        "slug": "contact",
+        "title": "Contact FormFit",
+        "h1": "Contact us",
+        "desc": "How to reach the FormFit team with corrections, suggestions or questions.",
+        "body": [
+            ("Email", [
+                "The fastest way to reach us is email: "
+                "<a href=\"mailto:{email}\">{email}</a>. We usually reply within "
+                "two working days.",
+            ]),
+            ("What to write to us about", [
+                {"list": [
+                    "<strong>Corrections.</strong> If a formula, number or claim on "
+                    "the site looks wrong, tell us the page and what you think it "
+                    "should say. Corrections get priority.",
+                    "<strong>Suggestions.</strong> Calculators, exercises or guides "
+                    "you would like to see.",
+                    "<strong>Privacy requests.</strong> Questions about the data "
+                    "described in our <a href=\"/privacy\">privacy policy</a>.",
+                    "<strong>Advertising and partnerships.</strong> Put "
+                    "\"Partnership\" in the subject line.",
+                ]},
+            ]),
+            ("What we can't help with", [
+                "We can't give personal medical, dietary or injury advice by "
+                "email. If you have a health condition, pain, or are pregnant, "
+                "please speak to a doctor or a registered dietitian. Our "
+                "<a href=\"/disclaimer\">medical disclaimer</a> explains why.",
+            ]),
+        ],
+    },
     {
         "slug": "privacy",
         "title": "Privacy Policy",
         "h1": "Privacy policy",
-        "desc": ("How FormFit handles your images, what cookies are used for "
+        "desc": ("How FormFit handles your data, which cookies are used for "
                  "advertising, and the choices you have."),
         "body": [
-            ("Your images never leave your device", [
-                "This is the part that matters most, so it comes first. When you "
-                "resize a photo or signature here, the work happens inside your "
-                "own web browser using your device's processor. The image file is "
-                "not uploaded to us. It is not transmitted over the network at "
-                "all.",
-                "Because nothing is sent, there is nothing for us to store, "
-                "nothing to delete on a schedule, and nothing that could be "
-                "exposed if our hosting were ever compromised.",
-                "We therefore hold no photographs, no signatures, and no "
-                "thumbprints belonging to anyone.",
+            ("The short version", [
+                "Calculators run in your browser and the numbers you enter are "
+                "never sent to us. We do not have accounts, logins or a "
+                "newsletter. The site is paid for by advertising from Google "
+                "AdSense, which uses cookies as described below.",
             ]),
-            ("The upload kit, and what your own browser keeps", [
-                "Most exam forms want more than one image, so the site keeps a "
-                "short record of which ones you have finished and holds on to the "
-                "resized files, letting you take them all away together later. "
-                "That record and those files are written to your browser's local "
-                "storage on your own device.",
-                "This is storage that belongs to your browser, not to us. The "
-                "files stay on the device that made them, they are not "
-                "transmitted anywhere, and we have no way to read them. Nobody "
-                "using another device or another browser can see them either.",
-                "They are kept until you remove them. Clearing your browsing "
-                "data for this site deletes both the record and the files. "
-                "Browsing in a private or incognito window discards everything "
-                "when the window closes.",
-                "The resized file being handed to you on the download page is "
-                "held for the life of that browser tab and no longer.",
+            ("What you type into calculators", [
+                "Your height, weight, age, measurements and lifts are processed "
+                "by JavaScript on your own device. They are not transmitted over "
+                "the network, logged, or stored by us.",
+                "We save one preference in your browser's local storage: whether "
+                "you use metric or imperial units. It never leaves your device "
+                "and you can clear it at any time by clearing site data in your "
+                "browser.",
             ]),
-            ("What we do collect", [
-                "Our host records standard server logs when a page is requested. "
-                "These typically include an IP address, the page requested, a "
-                "timestamp, and the browser's user agent string. They are used to "
-                "keep the site running and to detect abuse.",
-                "We do not ask you to create an account, and we do not collect "
-                "names, email addresses or phone numbers unless you choose to "
-                "write to us.",
+            ("Server logs", [
+                "Our hosting provider records standard request logs when a page "
+                "is loaded: IP address, page requested, time, referring page and "
+                "browser user agent. These are used to keep the site running and "
+                "secure, and are deleted on the host's normal schedule.",
             ]),
             ("Advertising and cookies", [
-                "This site displays advertising supplied by Google AdSense.",
-                "Third party vendors, including Google, use cookies to serve ads "
-                "based on your prior visits to this and other websites. Google's "
-                "use of advertising cookies enables it and its partners to serve "
-                "ads to you based on your visit to this site and other sites on "
-                "the internet.",
-                "You can opt out of personalised advertising by visiting Google's "
-                "Ads Settings at https://www.google.com/settings/ads. You may also "
-                "opt out of a third party vendor's use of cookies for personalised "
-                "advertising at https://www.aboutads.info/choices/.",
-                "Third party vendors and ad networks other than Google may also "
-                "serve ads on this site. You can visit "
-                "https://optout.networkadvertising.org/ to opt out of some of "
-                "these vendors' use of cookies.",
-                "If you are in the European Economic Area, the United Kingdom or "
-                "Switzerland, you will be shown a consent notice before "
-                "personalised advertising cookies are set, and you can change your "
-                "choice at any time.",
+                "This site shows advertising supplied by Google AdSense.",
+                {"list": [
+                    "Third-party vendors, including Google, use cookies to serve "
+                    "ads based on a user's prior visits to this website or other "
+                    "websites.",
+                    "Google's use of advertising cookies enables it and its "
+                    "partners to serve ads to you based on your visit to this "
+                    "site and/or other sites on the internet.",
+                    "You may opt out of personalised advertising by visiting "
+                    "<a href=\"https://www.google.com/settings/ads\" rel=\"nofollow noopener\">"
+                    "Google Ads Settings</a>. You can also opt out of some "
+                    "third-party vendors' use of cookies for personalised "
+                    "advertising at <a href=\"https://www.aboutads.info/choices/\" "
+                    "rel=\"nofollow noopener\">aboutads.info</a>.",
+                    "Other third-party vendors or ad networks may also serve ads "
+                    "on this site. A list of the vendors Google works with is "
+                    "available in your ad settings and in Google's published "
+                    "list of ad technology providers.",
+                ]},
+                "Learn more about how Google uses information from sites that "
+                "use its services at <a href=\"https://policies.google.com/technologies/partner-sites\" "
+                "rel=\"nofollow noopener\">policies.google.com/technologies/partner-sites</a>.",
             ]),
-            ("Analytics", [
-                "We may use privacy-respecting analytics to count page views and "
-                "understand which guides are useful. This does not identify you "
-                "personally and is not combined with the advertising data "
-                "described above.",
+            ("Consent in the UK, EEA and Switzerland", [
+                "Visitors from the European Economic Area, the United Kingdom and "
+                "Switzerland are shown a consent message, provided through "
+                "Google's certified consent management platform, before any "
+                "personalised advertising cookies are set. You can change your "
+                "choice at any time from the privacy link that message leaves on "
+                "the page. If you decline, you may still see non-personalised "
+                "ads, which use cookies only for frequency capping, fraud "
+                "prevention and measurement.",
+            ]),
+            ("US state privacy rights", [
+                "If you live in a US state with a consumer privacy law, such as "
+                "California, you can opt out of the sale or sharing of personal "
+                "information for targeted advertising using the options Google "
+                "displays on this site, or by using Google Ads Settings above. "
+                "We do not sell personal information in any other way.",
             ]),
             ("Children", [
-                "This site is a utility aimed at people filling in examination "
-                "forms and is not directed at children under 13. We do not "
-                "knowingly collect personal information from children.",
+                "FormFit is written for adults. We do not knowingly collect "
+                "information from children under 13 (or under 16 in the EEA and "
+                "UK). Calculators such as BMI are not designed for under-18s, as "
+                "each page explains.",
             ]),
-            ("Your choices", [
-                "You can block or delete cookies through your browser settings. "
-                "Doing so will not affect the resizer, because it does not depend "
-                "on cookies to function. It may affect which advertisements you "
-                "see.",
+            ("Links to other sites", [
+                "Some pages link to research papers and other websites. We are "
+                "not responsible for their privacy practices.",
             ]),
             ("Changes and contact", [
-                "If this policy changes we will update the date shown at the "
-                "bottom of this page. For any question about privacy, write to "
-                "{email} and we will respond.",
+                "If this policy changes, the new version will be posted here with "
+                "a new date. Questions or requests: "
+                "<a href=\"mailto:{email}\">{email}</a>.",
             ]),
         ],
     },
@@ -103,132 +183,89 @@ LEGAL = [
         "slug": "terms",
         "title": "Terms of Use",
         "h1": "Terms of use",
-        "desc": "The terms under which FormFit is provided, and its limits.",
+        "desc": "The terms that apply when you use FormFit's calculators, plans and guides.",
         "body": [
-            ("Using this site", [
-                "FormFit is provided free of charge for personal use. You may use "
-                "it to prepare images for examination and application forms. You "
-                "may not attempt to disrupt the service, run automated bulk "
-                "requests against it, or republish its content as your own.",
+            ("Using the site", [
+                "FormFit is free to use for personal, non-commercial purposes. By "
+                "using it you agree to these terms. If you don't agree, please "
+                "don't use the site.",
             ]),
-            ("Accuracy of the sizes we list", [
-                "The dimensions and file size limits shown on this site are "
-                "compiled from published examination notifications and are offered "
-                "as a convenience. Examination bodies revise their requirements "
-                "between cycles and occasionally between papers in the same cycle.",
-                "The official notification for your examination is the only "
-                "authoritative source. Always check the numbers there before you "
-                "upload. We accept no responsibility for an application rejected "
-                "because a specification changed after we published it.",
+            ("Not medical advice", [
+                "Everything on FormFit is general information for healthy adults. "
+                "It is not medical, nutritional or physiotherapy advice and does "
+                "not replace a professional who knows your history. Read the full "
+                "<a href=\"/disclaimer\">medical disclaimer</a>.",
             ]),
-            ("No warranty", [
-                "The tool is provided as is. We do not guarantee that a file "
-                "produced here will be accepted by any particular portal, because "
-                "acceptance depends on that portal's own rules and behaviour, "
-                "which are outside our control.",
-                "To the extent permitted by law, we are not liable for any loss "
-                "arising from use of this site, including a missed application "
-                "deadline.",
+            ("Accuracy", [
+                "Calculators use published formulas that produce estimates. Real "
+                "people vary, sometimes by a lot. We work to keep pages accurate "
+                "but make no guarantee that any result or statement is correct, "
+                "complete or current.",
             ]),
-            ("Advertising", [
-                "This site is supported by advertising. Advertisements are "
-                "supplied by third parties and their presence does not constitute "
-                "an endorsement by us of the advertiser, its products, or its "
-                "services. Any dealing you have with an advertiser is between you "
-                "and them.",
+            ("Exercise at your own risk", [
+                "Physical training carries a risk of injury. You are responsible "
+                "for choosing loads you can handle safely, using spotters and "
+                "safety equipment, and stopping if something hurts. FormFit is "
+                "not liable for any injury, loss or damage arising from use of "
+                "the site, to the extent the law allows.",
             ]),
-            ("Intellectual property", [
-                "The text, design and code of this site belong to us. Images you "
-                "process remain entirely yours, and since they never reach our "
-                "servers we could make no claim over them even if we wished to.",
+            ("Content and copyright", [
+                "The text, calculators and design of FormFit are owned by us. "
+                "Photographs are used under the Unsplash licence. You may link to "
+                "any page and quote short passages with a link back; please don't "
+                "republish whole pages.",
             ]),
-            ("Contact", [
-                "Questions about these terms can be sent to {email}.",
+            ("Advertising and third-party links", [
+                "The site displays third-party advertising. We don't endorse "
+                "advertised products, and any dealings you have with advertisers "
+                "are between you and them.",
+            ]),
+            ("Changes", [
+                "We may update these terms. The date at the top of the page shows "
+                "the latest version. Questions: <a href=\"mailto:{email}\">{email}</a>.",
             ]),
         ],
     },
     {
-        "slug": "about",
-        "title": "About FormFit",
-        "h1": "About FormFit",
-        "desc": ("Why FormFit exists, how it works, and who maintains it."),
+        "slug": "disclaimer",
+        "title": "Medical Disclaimer",
+        "h1": "Medical disclaimer",
+        "desc": ("FormFit's calculators and guides are general information, not "
+                 "medical advice. Read this before acting on any result."),
         "body": [
-            ("Why this exists", [
-                "Every examination season, a large number of candidates get as far "
-                "as the photograph upload and stop. The form wants an exact pixel "
-                "size and a file weight inside a narrow band, the error message "
-                "explains nothing, and the existing tools are either slow, "
-                "smothered in advertising, or ask you to hand your photograph to "
-                "an unknown server.",
-                "FormFit does one job. You pick your examination, it fills in the "
-                "correct numbers, and it hands back a file that matches. There is "
-                "no sign up and no charge.",
+            ("Information, not advice", [
+                "The calculators, workout plans and articles on FormFit are for "
+                "general educational purposes. They are not a substitute for "
+                "advice from a doctor, registered dietitian, physiotherapist or "
+                "other qualified professional who can assess you in person.",
             ]),
-            ("How it works", [
-                "All the image processing runs in your browser. When you choose a "
-                "file, your device reads it, resizes it, and searches for the "
-                "highest JPEG quality that still lands inside the required "
-                "kilobyte range. If the result falls below the minimum, it adds "
-                "JPEG comment padding, which changes the file size without "
-                "altering a single pixel.",
-                "It also reads the orientation tag that phone cameras write, which "
-                "is why photographs that arrive sideways at other portals come out "
-                "the right way up here.",
-                "Nothing is uploaded. That is a deliberate design decision rather "
-                "than a limitation, because the safest way to handle somebody's "
-                "photograph and signature is never to receive it.",
+            ("Results are estimates", [
+                "Every calculator is built on a population-level formula. It "
+                "describes averages, and you are not an average. A BMI, body fat "
+                "or calorie figure can be several percent off for an individual, "
+                "and more for athletes, older adults, and people with certain "
+                "medical conditions.",
             ]),
-            ("Where the sizes come from", [
-                "The presets are compiled from published examination "
-                "notifications. We check them against official documents, but "
-                "requirements change and mistakes are possible, so every page "
-                "tells you to verify against your own notice. If you find a "
-                "number that is wrong, please tell us and we will correct it.",
+            ("Talk to a professional first if", [
+                {"list": [
+                    "you are pregnant or breastfeeding",
+                    "you are under 18",
+                    "you have heart, kidney, liver or metabolic disease, diabetes "
+                    "or high blood pressure, or take medication for any of them",
+                    "you have, or have had, an eating disorder",
+                    "you are returning from injury or surgery, or feel pain, "
+                    "dizziness or chest discomfort when exercising",
+                ]},
             ]),
-            ("How it is funded", [
-                "The site carries advertising, which covers hosting and the time "
-                "spent keeping the presets current. There is no paid tier and no "
-                "feature held back behind one.",
+            ("Stop and seek help", [
+                "Stop exercising and get medical help immediately if you have "
+                "chest pain, severe breathlessness, fainting, or pain that is "
+                "sharp or getting worse.",
             ]),
-            ("Contact", [
-                "Corrections, requests for an examination we have not covered, and "
-                "anything else: {email}.",
-            ]),
-        ],
-    },
-    {
-        "slug": "contact",
-        "title": "Contact",
-        "h1": "Contact us",
-        "desc": "How to reach FormFit for corrections, requests or any question.",
-        "body": [
-            ("Write to us", [
-                "Email {email} and we read everything that arrives. We usually "
-                "reply within two or three working days.",
-            ]),
-            ("Reporting a wrong size", [
-                "This is the most useful thing you can send us. If a page lists a "
-                "specification that does not match your notification, tell us the "
-                "examination, the page you were looking at, and what your notice "
-                "actually says. A link to the notification PDF helps enormously. "
-                "We correct these quickly because a wrong number here can cost "
-                "somebody an application.",
-            ]),
-            ("Requesting an examination", [
-                "If we do not cover your examination, send us its name and the "
-                "photograph and signature requirements from the notification and "
-                "we will add a preset for it.",
-            ]),
-            ("Something not working", [
-                "Tell us which browser and device you were using and what you "
-                "expected to happen. If a particular image fails, please describe "
-                "it rather than attaching it. We would rather not receive your "
-                "photograph, and we do not need it to diagnose most problems.",
-            ]),
-            ("Advertising and other enquiries", [
-                "Advertising on this site is handled through Google AdSense, so we "
-                "do not sell placements directly. For anything else, the same "
-                "address reaches us.",
+            ("No professional relationship", [
+                "Using FormFit or writing to us does not create a doctor-patient "
+                "or coach-client relationship. Questions: "
+                "<a href=\"mailto:{email}\">{email}</a>.",
             ]),
         ],
     },

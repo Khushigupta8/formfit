@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, trail, exercise_card with context %}
+{% block content %}
+<section class="pagehead pagehead--short">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">Step-by-step technique, coaching cues, common mistakes and sets
+      and reps for the {{ exercises|length }} exercises that build most of a good programme.</p>
+  </div>
+</section>
+
+<div class="wrap block">
+  <div class="filter" role="group" aria-label="Filter by muscle">
+    <button type="button" class="is-on" data-filter="all">All</button>
+    {% for m in muscles %}<button type="button" data-filter="{{ m }}">{{ m }}</button>{% endfor %}
+  </div>
+  <div class="grid grid--4" id="xgrid">
+    {% for x in exercises %}{{ exercise_card(x) }}{% endfor %}
+  </div>
+  {{ ad('in_feed') }}
+  <section class="prose prose--narrow">
+    <h2>How to use the library</h2>
+    <p>Most well-built programmes are made of a handful of compound lifts (a squat,
+       a hinge, a horizontal and vertical push, a horizontal and vertical pull) plus
+       a few accessories. Learn those patterns first. Each page shows how to set up,
+       the cues coaches use, and the mistakes that cost lifters the most progress.</p>
+    <p>If you want the exercises arranged into a weekly routine, every one of them
+       appears in at least one of our <a href="/workouts">workout plans</a>.</p>
+  </section>
+</div>
+{% endblock %}

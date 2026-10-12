@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon, ad, photo, trail, body, toc, faq, field, calc_card, guide_card with context %}
+{% block content %}
+
+<section class="pagehead pagehead--calc">
+  <div class="pagehead__bg">{{ photo(image, alt(image), eager=True, sizes='100vw') }}</div>
+  <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
+    <h1>{{ h1 }}</h1>
+    <p class="pagehead__lede">{{ calc.intro }}</p>
+    <ul class="chips">
+      <li>{{ icon('check') }} Free</li>
+      <li>{{ icon('lock') }} Private: runs on your device</li>
+      {% if calc.units %}<li>{{ icon('ruler') }} Metric &amp; imperial</li>{% endif %}
+      <li>{{ icon('calendar') }} Reviewed {{ reviewed }}</li>
+    </ul>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <main class="layout__main">
+
+    <section class="tool" id="calculator" data-calc="{{ calc.id }}">
+      <form class="tool__form" novalidate autocomplete="off">
+        <div class="tool__top">
+          <h2 class="tool__title">{{ icon(calc.icon) }} Your details</h2>
+          {% if calc.units %}
+          <div class="seg seg--units" role="radiogroup" aria-label="Units">
+            <label><input type="radio" name="units" value="metric" checked><span>Metric</span></label>
+            <label><input type="radio" name="units" value="imperial"><span>Imperial</span></label>
+          </div>
+          {% endif %}
+        </div>
+        <div class="tool__fields">
+          {% for f in calc.fields %}{{ field(f) }}{% endfor %}
+        </div>
+        <button class="btn btn--volt btn--block" type="submit">Calculate {{ icon('arrow') }}</button>
+      </form>
+      <div class="tool__result" aria-live="polite">
+        <div class="result result--empty">
+          <p>Enter your details to see your result.</p>
+        </div>
+      </div>
+    </section>
+
+    {{ ad('below_tool') }}
+
+    <article class="prose">
+      {{ toc(calc.body) }}
+      {{ body(calc.body) }}
+      {{ faq(calc.faq) }}
+      {% if calc.sources %}
+      <section class="sources">
+        <h2>References</h2>
+        <ol>{% for s in calc.sources %}<li>{{ s }}</li>{% endfor %}</ol>
+      </section>
+      {% endif %}
+      <p class="disclaim">{{ icon('heart') }} Results are estimates for healthy adults
+        and are not medical advice. See our <a href="/disclaimer">medical disclaimer</a>.</p>
+    </article>
+
+    {{ ad('end') }}
+
+    {% if guides %}
+    <section class="block">
+      <h2 class="block__title">Read next</h2>
+      <div class="grid grid--3">{% for g in guides %}{{ guide_card(g) }}{% endfor %}</div>
+    </section>
+    {% endif %}
+
+    <section class="block">
+      <h2 class="block__title">Related calculators</h2>
+      <div class="grid grid--3">{% for c in related %}{{ calc_card(c) }}{% endfor %}</div>
+    </section>
+  </main>
+
+  <aside class="layout__side">
+    {% include "_sidebar.html" %}
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="/static/js/calc.js" defer></script>{% endblock %}
