@@ -376,7 +376,8 @@ def guides_topic(topic):
         page_title="{} Guides".format(t["name"]),
         page_desc=t["desc"], canonical=url, h1=t["name"],
         breadcrumb=crumbs(("Guides", SITE_URL + "/guides"), (t["name"], url)),
-        image=t["image"])
+        image=t["image"],
+        show_ads=False)     # mostly a list of links: keep ads on content pages
 
 
 @app.route("/guides/<slug>")

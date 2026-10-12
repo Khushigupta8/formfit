@@ -47,7 +47,7 @@
 {% if show_ads and adsense %}
 {% set unit = ad_slots.get(name) %}
 <aside class="ad ad--{{ kind or name }}{% if unit %} ad--live{% endif %}" data-ad="{{ name }}" aria-label="Advertisement">
-  <span class="ad__label">Advertisement</span>
+  <span class="ad__label">Advertisements</span>
   {% if unit %}
   <ins class="adsbygoogle" style="display:block" data-ad-client="{{ adsense }}" data-ad-slot="{{ unit }}"
        data-ad-format="{{ 'vertical' if name == 'sidebar' else 'auto' }}" data-full-width-responsive="true"></ins>

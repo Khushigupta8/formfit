@@ -15,49 +15,95 @@ LEGAL = [
         "slug": "about",
         "title": "About FormFit",
         "h1": "About FormFit",
-        "desc": ("FormFit builds free, private fitness calculators and plain-English "
-                 "training guides for people who lift, run and train."),
+        "desc": ("Who runs FormFit, why it exists, how the calculators and guides "
+                 "are made and checked, and how to report a mistake."),
         "body": [
             ("What FormFit is", [
-                "FormFit is a free toolkit for people who train. It started as a "
-                "set of calculators we kept rebuilding in spreadsheets: how much "
-                "to eat on a cut, what a set of five says about a one rep max, "
-                "which plates go on the bar. Now they live in one place, work on "
-                "any phone, and come with the explanation behind every number.",
-                "Alongside the calculators you will find workout plans with full "
-                "weekly schedules, an exercise library with step-by-step "
-                "technique, and guides on nutrition, fat loss, muscle gain and "
-                "recovery.",
+                "FormFit is a free set of fitness calculators, workout plans, "
+                "exercise guides and articles for people who train. It is an "
+                "independent site, run from India, with no gym, supplement brand "
+                "or coaching business behind it.",
+                "Everything here is free to use without an account. The site is "
+                "paid for by advertising, which is labelled and kept away from "
+                "the calculators themselves.",
             ]),
-            ("How we write and check content", [
-                "Every calculator uses a published, peer-reviewed formula, and "
-                "each page names the formula and the paper it comes from, so you "
-                "can check our working. Where researchers disagree we say so "
-                "rather than pick a side and present it as settled.",
-                "Guides are written by the FormFit editorial team from the "
-                "research literature and position stands from bodies such as the "
-                "International Society of Sports Nutrition, the American College "
-                "of Sports Medicine and the World Health Organization. We update "
-                "pages when better evidence comes along and correct mistakes as "
-                "soon as they are reported.",
+            ("How the site started", [
+                "FormFit began in September 2026 as a small tool for resizing photos and "
+                "signatures for Indian exam application forms. It was useful, but "
+                "narrow, and most visitors used it once and never came back.",
+                "A month later, in October 2026, we rebuilt the site around something people use "
+                "every week: training and nutrition. The questions people ask in "
+                "the gym are mostly maths problems (how much to eat, what a set "
+                "of five says about a max, which plates go on the bar), and most "
+                "online calculators answer them without showing their working. "
+                "FormFit is our attempt to do that properly.",
+                "If you followed an old link to an exam-photo page, it now "
+                "redirects to the home page. Those tools are no longer offered.",
+            ]),
+            ("What you'll find here", [
                 {"list": [
-                    "No calculator result is a diagnosis. They are estimates for "
-                    "healthy adults and say so on every page.",
-                    "We do not sell supplements, coaching or meal plans, so we "
-                    "have nothing to push you towards.",
-                    "Advertising is clearly labelled and never placed where it "
-                    "could be mistaken for a button or a result.",
+                    "<a href=\"/calculators\">18 calculators</a> for body "
+                    "composition, calories and macros, strength training and "
+                    "cardio, in metric or imperial units.",
+                    "<a href=\"/workouts\">Workout plans</a> with every exercise, "
+                    "set, rep and rest period written out, and how to progress.",
+                    "An <a href=\"/exercises\">exercise library</a> covering setup, "
+                    "coaching cues and the most common mistakes.",
+                    "<a href=\"/guides\">Guides</a> on nutrition, fat loss, muscle "
+                    "gain and recovery that explain the evidence in plain English.",
                 ]},
             ]),
-            ("Your data stays with you", [
-                "Every calculator runs inside your browser. The numbers you type "
-                "are not sent to us or stored on any server. The only thing the "
-                "site remembers is whether you prefer metric or imperial units, "
-                "and that lives in your own browser.",
+            ("How we make and check content", [
+                "<strong>Calculators use published formulas.</strong> Every "
+                "calculator is built on a peer-reviewed or widely used formula "
+                "(Mifflin-St Jeor, the US Navy tape method, Epley, DOTS and so "
+                "on). Each page names the formula, shows it, and explains where "
+                "it is weak. The maths is tested in code, and the worked examples "
+                "on each page are checked against what the calculator returns.",
+                "<strong>Guides lean on research and position stands.</strong> "
+                "We draw on published research and on statements from bodies "
+                "such as the International Society of Sports Nutrition, the "
+                "American College of Sports Medicine and the World Health "
+                "Organization. Where the evidence is mixed we say so.",
+                "<strong>We use AI tools in drafting.</strong> AI writing tools "
+                "help us draft and structure some articles. We decide what goes "
+                "on the site, check formulas and figures, and correct anything "
+                "that turns out to be wrong. We would rather tell you this than "
+                "have you wonder.",
+                "<strong>Pages carry a review date.</strong> Each calculator, "
+                "guide, plan and exercise page shows when it was last reviewed, "
+                "and we update pages when better evidence or a reader's "
+                "correction comes in.",
             ]),
-            ("Get in touch", [
-                "Spotted an error, or want a calculator we don't have yet? Write "
-                "to <a href=\"mailto:{email}\">{email}</a>. We read everything.",
+            ("What FormFit is not", [
+                "FormFit is not a medical service, and nothing here is a "
+                "diagnosis or a personal prescription. The calculators give "
+                "estimates for healthy adults. If you are pregnant, under 18, "
+                "managing a medical condition or recovering from injury, please "
+                "talk to a doctor or registered dietitian first. Our "
+                "<a href=\"/disclaimer\">medical disclaimer</a> explains more.",
+            ]),
+            ("Independence and advertising", [
+                {"list": [
+                    "We don't sell supplements, coaching, programmes or meal "
+                    "plans, and no brand pays to be mentioned in our content.",
+                    "Ads are supplied by Google AdSense, are labelled "
+                    "\"Advertisements\", and never sit inside a calculator or "
+                    "next to a result.",
+                    "There are no ads on our privacy, terms or disclaimer pages.",
+                    "Calculators run in your browser, so the numbers you type are "
+                    "never sent to us. See the <a href=\"/privacy\">privacy policy</a>.",
+                ]},
+            ]),
+            ("Corrections and contact", [
+                "If you spot a wrong number, a broken calculator or a claim that "
+                "doesn't match the research, email "
+                "<a href=\"mailto:{email}\">{email}</a> with the page and what you "
+                "think it should say. Corrections are our first priority, and we "
+                "update the page and its review date when we fix something.",
+                "Suggestions for new calculators, exercises or guides are welcome "
+                "too. More ways to reach us are on the "
+                "<a href=\"/contact\">contact page</a>.",
             ]),
         ],
     },
