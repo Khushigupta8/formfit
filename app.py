@@ -52,7 +52,7 @@ AUTHOR = {
 
 # Google Search Console > Add property > HTML tag: paste the content="..."
 # value here. Optional if you verify by DNS instead.
-GSC_VERIFICATION = ""
+GSC_VERIFICATION = "gPBQ8bmUt4BbMQK48qeyGC9fGojOJecb8Lwdb6kwA-w"
 
 # Bing Webmaster Tools > Add site > HTML Meta Tag: the msvalidate.01 value.
 # (Or skip it: Bing can import the site straight from Search Console.)
