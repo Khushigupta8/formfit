@@ -19,6 +19,57 @@
     });
   }
 
+  // Contact form: send with fetch and show the result in place.
+  var form = document.querySelector(".cform");
+  if (form) {
+    form.ts.value = Date.now();
+    var status = form.querySelector(".cform__status");
+    var btn = form.querySelector("button[type=submit]");
+    var show = function (msg) { status.textContent = msg; status.hidden = !msg; };
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      Array.prototype.forEach.call(form.querySelectorAll(".cform__err"), function (x) {
+        x.textContent = "";
+        var f = form[x.getAttribute("data-for")];
+        if (f) f.removeAttribute("aria-invalid");
+      });
+      show("");
+      var data = {};
+      Array.prototype.forEach.call(form.elements, function (el) { if (el.name) data[el.name] = el.value; });
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+      fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data)
+      }).then(function (r) {
+        return r.json().catch(function () { return { ok: false }; });
+      }).then(function (res) {
+        if (res.ok) {
+          form.reset();
+          var ok = document.getElementById("sent");
+          ok.classList.add("is-on");
+          ok.scrollIntoView({ block: "center" });
+          return;
+        }
+        var errs = res.errors || {};
+        Object.keys(errs).forEach(function (k) {
+          var slot = form.querySelector('.cform__err[data-for="' + k + '"]');
+          if (slot) slot.textContent = errs[k];
+          if (form[k]) form[k].setAttribute("aria-invalid", "true");
+        });
+        var first = form.querySelector("[aria-invalid=true]");
+        if (first) first.focus();
+        show(res.error || "Something went wrong. Please try again.");
+      }).catch(function () {
+        show("Couldn't reach the server. Check your connection and try again.");
+      }).then(function () {
+        btn.disabled = false;
+        btn.textContent = "Send message";
+      });
+    });
+  }
+
   // Close the mobile menu after following an in-page link.
   var toggle = document.getElementById("navtoggle");
   if (toggle) document.querySelector(".nav__menu").addEventListener("click", function (e) {

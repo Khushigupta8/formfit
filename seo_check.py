@@ -3,7 +3,8 @@ SEO audit of the built site. Run after build.py:   npm run seo
 
 Checks every page in dist/ for the things that quietly cost rankings:
 title and description length, duplicates, exactly one H1, canonical,
-social tags, valid JSON-LD, images without alt, and broken internal links.
+social tags, valid JSON-LD, breadcrumbs, image alt / WebP / lazy loading,
+broken internal links, and that every indexable page is in sitemap.xml.
 """
 
 import json
@@ -54,9 +55,13 @@ def main():
             descs[d].append(url)
             if '<link rel="canonical"' not in h:
                 bad("no canonical")
+            if url != "/" and "BreadcrumbList" not in h:
+                bad("no BreadcrumbList schema")
             for tag in ("og:title", "og:description", "og:image", "og:url", "twitter:card"):
                 if tag not in h:
                     bad("missing " + tag)
+        elif '<link rel="canonical"' in h:
+            bad("canonical on a noindex page")
         h1s = len(re.findall(r"<h1[\s>]", h))
         if h1s != 1:
             bad("{} <h1> tags".format(h1s))
@@ -65,13 +70,29 @@ def main():
                 json.loads(block)
             except ValueError:
                 bad("invalid JSON-LD")
+        photos = 0
         for img in re.findall(r"<img\b[^>]*>", h):
-            if "alt=" not in img:
-                bad("img without alt")
+            src = re.search(r'src="([^"?]+)', img).group(1)
+            logo = src.endswith("mark.svg")      # sits beside the "FormFit" wordmark
+            if "alt=" not in img or ('alt=""' in img and not logo):
+                bad("img without alt: " + src)
+            if not src.endswith((".webp", ".svg")):
+                bad("img not WebP: " + src)
+            if not logo:
+                photos += 1
+                eager = "byline__avatar" in img or 'fetchpriority="high"' in img
+                if photos > 1 and not eager and 'loading="lazy"' not in img:
+                    bad("img below the fold not lazy: " + src)
         for link in re.findall(r'(?:href|src)="(/[^"#?]*)', h):
             clean = link.rstrip("/")
             if not (link in files or clean + "/index.html" in files or clean == ""):
                 bad("broken link " + link)
+
+    sitemap = open(os.path.join(OUT, "sitemap.xml"), encoding="utf-8").read()
+    listed = {re.sub(r"^https?://[^/]+", "", u) or "/"
+              for u in re.findall(r"<loc>([^<]+)</loc>", sitemap) if "/static/" not in u}
+    for url in sorted({u.rstrip("/") or "/" for urls in titles.values() for u in urls} - listed):
+        problems.append("{:45} indexable but missing from sitemap.xml".format(url))
 
     for t, urls in titles.items():
         if len(urls) > 1:

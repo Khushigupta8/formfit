@@ -8,7 +8,7 @@ read: reviewers do check that it works.
 """
 
 CONTACT_EMAIL = "devkhushii08@gmail.com"
-UPDATED = "12 October 2026"
+UPDATED = "17 October 2026"
 
 LEGAL = [
     {
@@ -131,9 +131,9 @@ LEGAL = [
         "desc": "How to reach the FormFit team with corrections, suggestions or questions.",
         "body": [
             ("Email", [
-                "The fastest way to reach us is email: "
-                "<a href=\"mailto:{email}\">{email}</a>. We usually reply within "
-                "two working days.",
+                "Prefer email? Write to "
+                "<a href=\"mailto:{email}\">{email}</a>. The form above lands in "
+                "the same inbox, and we usually reply within two working days.",
             ]),
             ("What to write to us about", [
                 {"list": [
@@ -166,7 +166,8 @@ LEGAL = [
             ("The short version", [
                 "Calculators run in your browser and the numbers you enter are "
                 "never sent to us. We do not have accounts, logins or a "
-                "newsletter. The site is paid for by advertising from Google "
+                "newsletter. If you use the contact form, we receive what you "
+                "write in it, and nothing else. The site is paid for by advertising from Google "
                 "AdSense, which uses cookies as described below.",
             ]),
             ("What you type into calculators", [
@@ -177,6 +178,15 @@ LEGAL = [
                 "you use metric or imperial units. It never leaves your device "
                 "and you can clear it at any time by clearing site data in your "
                 "browser.",
+            ]),
+            ("The contact form", [
+                "When you send a message through the <a href=\"/contact\">contact "
+                "form</a>, the name, email address, topic and message you enter are "
+                "emailed to our inbox so we can reply. They are not stored in a "
+                "database, added to a mailing list, or shared with anyone else. "
+                "The email is delivered through our email provider and kept in our "
+                "inbox for as long as we need it to handle your message. To have a "
+                "message deleted, email <a href=\"mailto:{email}\">{email}</a>.",
             ]),
             ("Server logs", [
                 "Our hosting provider records standard request logs when a page "

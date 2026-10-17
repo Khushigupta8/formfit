@@ -7,6 +7,7 @@
     "dev": "python app.py",
     "build": "python build.py",
     "preview": "python build.py && python -m http.server 5001 --directory dist",
-    "seo": "python seo_check.py"
+    "seo": "python seo_check.py",
+    "indexnow": "python indexnow.py"
   }
 }

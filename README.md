@@ -7,7 +7,9 @@ browser, so there is no server at runtime.
     npm run build      write the static site to dist/
     npm run preview    build, then serve dist/ at http://localhost:5001
     npm run seo        audit every built page (titles, descriptions, H1s,
-                       canonicals, social tags, JSON-LD, alt text, links)
+                       canonicals, social tags, JSON-LD, breadcrumbs, alt text,
+                       WebP, lazy loading, links, sitemap coverage)
+    npm run indexnow   after a deploy is live: ping Bing/Yandex to recrawl
 
 The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.txt).
 
@@ -24,6 +26,11 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
 - Descriptive alt text per photo (PHOTO_ALT in app.py).
 - Search Console: paste your HTML-tag token into GSC_VERIFICATION in app.py,
   or verify by DNS. Then submit https://www.formfit.in/sitemap.xml.
+- Bing Webmaster Tools: import from Search Console, or paste the msvalidate.01
+  token into BING_VERIFICATION. IndexNow (indexnow.py, key in INDEXNOW_KEY,
+  key file built to /<key>.txt) pings Bing, Yandex, Seznam and Naver.
+- Old URLs redirect with a real 301 (statusCode in vercel.json; Vercel's
+  "permanent" would send a 308).
 - MODIFIED / REVIEWED in app.py drive the dates; bump them when you update content.
 
 ## Files
@@ -36,6 +43,8 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
     exercises.py        16 exercises
     workouts.py         6 workout plans
     legal.py            about, contact, privacy, terms, medical disclaimer
+    api/contact.py      contact form endpoint (Vercel function)
+    indexnow.py         submit URLs to IndexNow after a deploy
     templates/          Jinja templates; _macros.html holds icons, ads, cards
     static/js/calc.js   all calculator maths (metric internally)
     static/js/site.js   ad preview, exercise filter, mobile menu
@@ -54,6 +63,26 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
     /about /contact /privacy /terms /disclaimer
 
 Old exam-resizer URLs 301-redirect to the home page (see `vercel.json`).
+
+## Contact form
+
+`/contact` posts to `api/contact.py`, a Vercel serverless function that emails
+the message over SMTP (standard library only). app.py serves the same code at
+`/api/contact` for local preview. It has a honeypot and a 3-second minimum fill
+time against bots; nothing is stored.
+
+Until these are set in Vercel > Settings > Environment Variables (then
+redeploy), the form answers "not set up yet, please email us":
+
+| Variable     | Example                                   |
+|--------------|-------------------------------------------|
+| `SMTP_HOST`  | `smtp.gmail.com`                          |
+| `SMTP_PORT`  | `465` (SSL) or `587` (STARTTLS)           |
+| `SMTP_USER`  | the sending mailbox                       |
+| `SMTP_PASS`  | Gmail: an App Password (needs 2-step verification) |
+| `CONTACT_TO` | inbox for messages (defaults to SMTP_USER) |
+
+After deploying, send yourself a test message from the live /contact page.
 
 ## Ads
 

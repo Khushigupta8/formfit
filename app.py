@@ -12,7 +12,9 @@ import os
 import re
 from datetime import date
 
-from flask import Flask, Response, abort, render_template, request
+from flask import Flask, Response, abort, jsonify, redirect, render_template, request
+
+from api import contact as contact_api
 
 import calculators as C
 import exercises as E
@@ -48,6 +50,14 @@ AUTHOR = {
 # Google Search Console > Add property > HTML tag: paste the content="..."
 # value here. Optional if you verify by DNS instead.
 GSC_VERIFICATION = ""
+
+# Bing Webmaster Tools > Add site > HTML Meta Tag: the msvalidate.01 value.
+# (Or skip it: Bing can import the site straight from Search Console.)
+BING_VERIFICATION = ""
+
+# IndexNow key. build.py publishes it at /<key>.txt, which proves to Bing,
+# Yandex and the other IndexNow engines that pings from indexnow.py are ours.
+INDEXNOW_KEY = "d15cec9436761ca7f897f3d777d371d5"
 
 # AdSense publisher ID. Empty string turns every ad tag off.
 ADSENSE_ID = "ca-pub-9986755295957814"
@@ -229,7 +239,7 @@ def render(template, **kw):
     return render_template(
         template,
         site_name=SITE_NAME, site_url=SITE_URL, tagline=TAGLINE, reviewed=REVIEWED,
-        modified=MODIFIED, gsc_verification=GSC_VERIFICATION, author=AUTHOR,
+        modified=MODIFIED, gsc_verification=GSC_VERIFICATION, bing_verification=BING_VERIFICATION, author=AUTHOR,
         adsense=ADSENSE_ID, ad_slots=AD_SLOTS,
         ad_preview=AD_PREVIEW or app.debug,
         categories=C.CATEGORIES, calcs=C.CALCS, by_cat=C.by_cat,
@@ -257,11 +267,18 @@ def index():
         guides=G.GUIDES[:6],
         schema=[{
             "@context": "https://schema.org", "@type": "WebSite",
-            "name": SITE_NAME, "url": SITE_URL + "/",
+            "name": SITE_NAME, "url": SITE_URL + "/", "inLanguage": "en",
+            "description": TAGLINE,
+            "publisher": {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL + "/"},
         }, {
             "@context": "https://schema.org", "@type": "Organization",
             "name": SITE_NAME, "url": SITE_URL + "/",
             "logo": SITE_URL + "/static/img/logo.png",
+            "description": TAGLINE + " for people who train.",
+            "email": L.CONTACT_EMAIL,
+            "contactPoint": {"@type": "ContactPoint", "contactType": "customer support",
+                             "email": L.CONTACT_EMAIL, "url": SITE_URL + "/contact",
+                             "availableLanguage": "English"},
             "founder": {"@type": "Person", "name": AUTHOR["name"],
                         "url": SITE_URL + AUTHOR["url"]},
         }])
@@ -422,14 +439,27 @@ def top_level(slug):
         return calc_page(C.BY_SLUG[slug])
     if slug in L.BY_SLUG:
         doc = L.BY_SLUG[slug]
+        url = "{}/{}".format(SITE_URL, slug)
         return render(
             "legal.html", doc=doc,
             page_title=doc["title"], page_desc=doc["desc"],
-            canonical="{}/{}".format(SITE_URL, slug), h1=doc["h1"],
+            canonical=url, h1=doc["h1"],
+            breadcrumb=crumbs((doc["h1"], url)),
+            topics=contact_api.TOPICS,
             email=L.CONTACT_EMAIL,
             updated=L.UPDATED,
             show_ads=False)     # policy: no ads on utility and legal pages
     abort(404)
+
+
+@app.route("/api/contact", methods=["POST"])
+def contact_post():
+    """Local stand-in for api/contact.py, which serves this URL on Vercel."""
+    data = request.get_json(silent=True) if request.is_json else request.form.to_dict()
+    status, out = contact_api.handle(data or {})
+    if request.is_json or request.accept_mimetypes.best == "application/json":
+        return jsonify(out), status
+    return redirect("/contact#sent", 303) if out["ok"] else (out["error"], status)
 
 
 # ---------------------------------------------------------------------------
@@ -490,6 +520,13 @@ def ads_txt():
 def robots():
     return Response("User-agent: *\nAllow: /\n\nSitemap: {}/sitemap.xml\n".format(SITE_URL),
                     mimetype="text/plain")
+
+
+@app.route("/<key>.txt")
+def indexnow_key(key):
+    if key != INDEXNOW_KEY:
+        abort(404)
+    return Response(INDEXNOW_KEY, mimetype="text/plain")
 
 
 @app.route("/favicon.ico")

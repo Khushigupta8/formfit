@@ -1,13 +1,51 @@
 {% extends "base.html" %}
-{% from "_macros.html" import body with context %}
+{% from "_macros.html" import body, trail with context %}
 {% block content %}
 <section class="pagehead pagehead--plain">
   <div class="wrap pagehead__inner">
+    {{ trail(breadcrumb) }}
     <h1>{{ h1 }}</h1>
     <p class="pagehead__lede">Last updated {{ updated }}</p>
   </div>
 </section>
 <div class="wrap">
+  {% if doc.slug == 'contact' %}
+  {# Posts to api/contact.py (a Vercel function). site.js sends it with
+     fetch; without JS the browser posts it and lands back on #sent. #}
+  <section class="prose prose--narrow" aria-labelledby="form-head">
+    <h2 id="form-head">Send us a message</h2>
+    <p id="sent" class="cform__ok" role="status">Thanks, your message is on its way. We usually reply within two working days.</p>
+    <form class="cform" action="/api/contact" method="post" novalidate>
+      <div class="cform__row">
+        <label class="field">
+          <span class="field__label">Your name</span>
+          <input name="name" type="text" autocomplete="name" maxlength="100" required>
+          <span class="cform__err" data-for="name"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Your email</span>
+          <input name="email" type="email" autocomplete="email" maxlength="254" required>
+          <span class="cform__err" data-for="email"></span>
+        </label>
+      </div>
+      <label class="field">
+        <span class="field__label">What it's about</span>
+        <select name="topic">{% for t in topics %}<option>{{ t }}</option>{% endfor %}</select>
+      </label>
+      <label class="field">
+        <span class="field__label">Message</span>
+        <textarea name="message" rows="6" minlength="10" maxlength="5000" required></textarea>
+        <span class="cform__err" data-for="message"></span>
+      </label>
+      {# Honeypot: hidden from people, filled in by bots. #}
+      <label class="cform__hp" aria-hidden="true">Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+      <input type="hidden" name="ts" value="">
+      <p class="field__hint">We use your details only to reply. See our <a href="/privacy">privacy policy</a>.</p>
+      <button class="btn btn--volt" type="submit">Send message</button>
+      <p class="cform__status" role="alert" hidden></p>
+    </form>
+  </section>
+  {% endif %}
   <article class="prose prose--narrow">
     {{ body(doc.body, ads=False, email=email) }}
   </article>

@@ -13,7 +13,7 @@ import shutil
 import stat
 import sys
 
-from app import all_urls, app
+from app import INDEXNOW_KEY, all_urls, app
 
 OUT = "dist"
 
@@ -69,7 +69,7 @@ def main():
         # Folder-per-page gives clean URLs (/bmi-calculator) on any static host.
         for path, _ in all_urls():
             ok += write(c, path, "index.html" if path == "/" else path.strip("/") + "/index.html")
-        for f in ("sitemap.xml", "robots.txt", "ads.txt"):
+        for f in ("sitemap.xml", "robots.txt", "ads.txt", INDEXNOW_KEY + ".txt"):
             ok += write(c, "/" + f, f)
         ok += write(c, "/this-page-does-not-exist", "404.html")
 

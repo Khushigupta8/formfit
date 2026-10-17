@@ -8,122 +8,122 @@
     {
       "source": "/ssc-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/ssc-signature-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/ibps-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/ibps-signature-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/ibps-thumb-impression-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/ibps-handwritten-declaration-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/upsc-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/upsc-signature-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/neet-jee-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/neet-jee-signature-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/rrb-railway-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/rrb-railway-signature-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/passport-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/uppsc-photo-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/uppsc-signature-size",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guide",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/download",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/how-to-reduce-photo-size-to-20-kb",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/how-to-scan-signature-with-phone",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/jpg-png-heic-which-format-for-forms",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/passport-size-photo-at-home",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/photo-rejected-in-online-form",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/what-is-dpi-in-exam-form-photo",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/guides/why-phone-photos-upload-sideways",
       "destination": "/guides",
-      "permanent": true
+      "statusCode": 301
     }
   ],
   "headers": [

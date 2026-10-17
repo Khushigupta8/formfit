@@ -213,7 +213,7 @@
    Author: byline and the card at the end of articles.
    --------------------------------------------------------------------------- #}
 {% macro byline(read_min=None) -%}
-<p class="byline"><img class="byline__avatar" src="{{ author.avatar }}" alt="" width="28" height="28">
+<p class="byline"><img class="byline__avatar" src="{{ author.avatar }}" alt="Photo of {{ author.name }}" width="28" height="28">
   By <a href="{{ author.url }}">{{ author.name }}</a> <span>·</span> Reviewed {{ reviewed }}{% if read_min %} <span>·</span> {{ icon('clock') }} {{ read_min }} min read{% endif %}</p>
 {%- endmacro %}
 

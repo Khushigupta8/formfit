@@ -11,6 +11,7 @@
 
 
 
+
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="FormFit">
@@ -34,10 +35,12 @@
 <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png?v=41b6c0d077">
 <link rel="manifest" href="/static/img/site.webmanifest?v=b505889b86">
 <meta name="theme-color" content="#0c0e11">
-<link rel="stylesheet" href="/static/css/style.css?v=83684c5b36">
+<link rel="stylesheet" href="/static/css/style.css?v=a18a4f1375">
 
 
 
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://www.formfit.in/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://www.formfit.in/contact", "name": "Contact us", "position": 2}]}</script>
 
 </head>
 <body class="">
@@ -131,17 +134,56 @@
 
 <section class="pagehead pagehead--plain">
   <div class="wrap pagehead__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a><span>/</span><span aria-current="page">Contact us</span>
+</nav>
     <h1>Contact us</h1>
-    <p class="pagehead__lede">Last updated 12 October 2026</p>
+    <p class="pagehead__lede">Last updated 17 October 2026</p>
   </div>
 </section>
 <div class="wrap">
+  
+  
+  <section class="prose prose--narrow" aria-labelledby="form-head">
+    <h2 id="form-head">Send us a message</h2>
+    <p id="sent" class="cform__ok" role="status">Thanks, your message is on its way. We usually reply within two working days.</p>
+    <form class="cform" action="/api/contact" method="post" novalidate>
+      <div class="cform__row">
+        <label class="field">
+          <span class="field__label">Your name</span>
+          <input name="name" type="text" autocomplete="name" maxlength="100" required>
+          <span class="cform__err" data-for="name"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Your email</span>
+          <input name="email" type="email" autocomplete="email" maxlength="254" required>
+          <span class="cform__err" data-for="email"></span>
+        </label>
+      </div>
+      <label class="field">
+        <span class="field__label">What it's about</span>
+        <select name="topic"><option>Correction</option><option>Suggestion</option><option>Privacy request</option><option>Partnership</option><option>Other</option></select>
+      </label>
+      <label class="field">
+        <span class="field__label">Message</span>
+        <textarea name="message" rows="6" minlength="10" maxlength="5000" required></textarea>
+        <span class="cform__err" data-for="message"></span>
+      </label>
+      
+      <label class="cform__hp" aria-hidden="true">Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+      <input type="hidden" name="ts" value="">
+      <p class="field__hint">We use your details only to reply. See our <a href="/privacy">privacy policy</a>.</p>
+      <button class="btn btn--volt" type="submit">Send message</button>
+      <p class="cform__status" role="alert" hidden></p>
+    </form>
+  </section>
+  
   <article class="prose prose--narrow">
     
 <section class="prose__sec">
   <h2 id="email">Email</h2>
   
-  <p>The fastest way to reach us is email: <a href="mailto:devkhushii08@gmail.com">devkhushii08@gmail.com</a>. We usually reply within two working days.</p>
+  <p>Prefer email? Write to <a href="mailto:devkhushii08@gmail.com">devkhushii08@gmail.com</a>. The form above lands in the same inbox, and we usually reply within two working days.</p>
   
 
 </section>
@@ -219,7 +261,7 @@
   </div>
 </footer>
 
-<script src="/static/js/site.js?v=f604000914" defer></script>
+<script src="/static/js/site.js?v=7859d9eb1f" defer></script>
 
 </body>
 </html>
