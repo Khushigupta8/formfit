@@ -126,20 +126,35 @@
 
   var CALC = {};
 
+  /* WHO (TRS 894, 2000) and the Asia-Pacific / Indian consensus cut-offs
+   * (WHO WPRO 2000; Misra et al., JAPI 2009): healthy tops out at 22.9. */
+  var BMI_CUTS = {
+    who: { top: 24.9, cuts: [18.5, 25, 30, 35, 40], bands: [[3.5, "#7cb6f2"], [6.5, "#9ad433"], [5, "#f5c542"], [10, "#f08a4b"]],
+           ticks: ["15", "18.5", "25", "30", "40"], name: "WHO international" },
+    asian: { top: 22.9, cuts: [18.5, 23, 25, 30, Infinity], bands: [[3.5, "#7cb6f2"], [4.5, "#9ad433"], [2, "#f5c542"], [15, "#f08a4b"]],
+             ticks: ["15", "18.5", "23", "25", "40"], name: "Asian / Indian" }
+  };
+  function bmiCat(bmi, std) {
+    var c = BMI_CUTS[std].cuts, asian = std === "asian";
+    return bmi < c[0] ? ["Underweight", "mid"] : bmi < c[1] ? ["Healthy weight", ""] :
+      bmi < c[2] ? ["Overweight", "mid"] : bmi < c[3] ? ["Obese (class I)", "warn"] :
+      bmi < c[4] ? ["Obese (class II)", "warn"] : ["Obese (class III)", "warn"];
+  }
+
   CALC.bmi = function (v) {
     if (!need(v.height, v.weight)) return;
-    var m = v.height / 100, bmi = v.weight / (m * m);
-    var cat = bmi < 18.5 ? ["Underweight", "mid"] : bmi < 25 ? ["Healthy weight", ""] :
-      bmi < 30 ? ["Overweight", "mid"] : bmi < 35 ? ["Obese (class I)", "warn"] :
-      bmi < 40 ? ["Obese (class II)", "warn"] : ["Obese (class III)", "warn"];
-    var lo = 18.5 * m * m, hi = 24.9 * m * m;
+    var std = BMI_CUTS[v.standard] ? v.standard : "who", other = std === "who" ? "asian" : "who";
+    var s = BMI_CUTS[std], m = v.height / 100, bmi = v.weight / (m * m);
+    var cat = bmiCat(bmi, std);
+    var lo = 18.5 * m * m, hi = s.top * m * m;
     return big("Your BMI", fmt(bmi, 1), "kg/m²") + badge(cat[0], cat[1]) +
-      gauge(bmi, 15, 40, [[3.5, "#7cb6f2"], [6.5, "#9ad433"], [5, "#f5c542"], [10, "#f08a4b"]],
-        ["15", "18.5", "25", "30", "40"]) +
+      gauge(bmi, 15, 40, s.bands, s.ticks) +
       rows([["Healthy weight for your height", wt(lo, 1) + " – " + wt(hi, 1), true],
+            ["Category (" + BMI_CUTS[other].name + ")", bmiCat(bmi, other)[0]],
             ["BMI Prime", fmt(bmi / 25, 2)],
-            ["Category thresholds", "18.5 / 25 / 30"]]) +
-      note("BMI can't tell muscle from fat. If you lift, check your <a href=\"/body-fat-calculator\">body fat</a> or <a href=\"/ffmi-calculator\">FFMI</a> too.");
+            ["Category thresholds", std === "asian" ? "18.5 / 23 / 25" : "18.5 / 25 / 30"]]) +
+      note((std === "who" ? "South Asian, East Asian or Southeast Asian? Switch to Asian / Indian cut-offs: health risk starts rising from a BMI of 23. " : "") +
+        "BMI can't tell muscle from fat. If you lift, check your <a href=\"/body-fat-calculator\">body fat</a> or <a href=\"/ffmi-calculator\">FFMI</a> too.");
   };
 
   CALC.bodyfat = function (v) {

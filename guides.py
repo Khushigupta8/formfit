@@ -1,12 +1,13 @@
 """
-Guides. The articles themselves live in guides_a.py and guides_b.py; this
-module merges them and adds the topic pages.
+Guides. The articles themselves live in guides_a.py, guides_b.py and
+guides_india.py; this module merges them and adds the topic pages.
 """
 
 import guides_a
 import guides_b
+import guides_india
 
-GUIDES = guides_a.GUIDES + guides_b.GUIDES
+GUIDES = guides_a.GUIDES + guides_b.GUIDES + guides_india.GUIDES
 BY_SLUG = {g["slug"]: g for g in GUIDES}
 
 

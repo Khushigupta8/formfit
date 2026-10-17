@@ -39,7 +39,7 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
     calculators.py      the 18 calculators: names, fields, categories
     calc_content_a.py   article, FAQ and references for calculators 1-9
     calc_content_b.py   ... and 10-18
-    guides.py           merges guides_a.py + guides_b.py, defines guide topics
+    guides.py           merges guides_a.py + guides_b.py + guides_india.py, defines guide topics
     exercises.py        16 exercises
     workouts.py         6 workout plans
     legal.py            about, contact, privacy, terms, medical disclaimer
@@ -51,14 +51,14 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
     static/img/photos/  Unsplash photos (free commercial licence), WebP, 2 sizes
     static/img/mark.svg the logo mark; PNG icons and og-image are made from it
 
-## Site structure (70 indexable pages)
+## Site structure (76 indexable pages)
 
     /                               home
     /calculators                    hub
     /<name>-calculator              18 calculators, each with a ~1,000 word article
     /workouts, /workouts/<slug>     6 plans with full weekly schedules
     /exercises, /exercises/<slug>   16 exercises: steps, cues, mistakes
-    /guides, /guides/<slug>         15 long-form guides
+    /guides, /guides/<slug>         21 long-form guides (6 India-focused)
     /guides/topic/<topic>           5 topic pages
     /about /contact /privacy /terms /disclaimer
 

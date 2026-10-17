@@ -10,13 +10,13 @@ here must match what static/js does, so change both together.
 CONTENT = {
     # ------------------------------------------------------------------
     "bmi-calculator": {
-        "title": "BMI Calculator - Body Mass Index for Adults",
-        "desc": ("Work out your body mass index in metric or imperial units, "
-                 "see your WHO weight category, your healthy weight range and "
-                 "BMI Prime in seconds."),
+        "title": "BMI Calculator with Asian & Indian BMI Cut-offs",
+        "desc": ("Free BMI calculator in kg and cm or lb and ft. See your "
+                 "category on WHO or Asian/Indian cut-offs (healthy 18.5-22.9) "
+                 "and your healthy weight range."),
         "intro": ("Enter your height and weight to get your body mass index, "
-                  "the WHO category it falls in and the weight range that "
-                  "counts as healthy for your height."),
+                  "your category on the WHO or the Asian/Indian cut-offs, and "
+                  "the weight range that counts as healthy for your height."),
         "body": [
             ("What BMI actually measures", [
                 "Body mass index is a ratio of your weight to the square of "
@@ -43,9 +43,12 @@ CONTENT = {
                 "barefoot against a wall. A 2 cm (about 1 in) error in height "
                 "moves BMI by roughly half a point, so it is worth getting "
                 "right.",
-                "You get four things back: your BMI to one decimal place, "
-                "your WHO category, the weight range that would put you "
-                "between 18.5 and 24.9 at your height, and your BMI Prime.",
+                "Choose the cut-offs that fit you: WHO international, or "
+                "Asian / Indian if you are of South, East or Southeast Asian "
+                "background. You get your BMI to one decimal place, your "
+                "category on both standards, the weight range that is healthy "
+                "for your height (18.5 to 24.9 on WHO, 18.5 to 22.9 on the "
+                "Asian cut-offs) and your BMI Prime.",
             ]),
             ("The formula", [
                 "The maths is the same one Adolphe Quetelet described in the "
@@ -87,11 +90,32 @@ CONTENT = {
                 "populations. It suggested public health action points of "
                 "<strong>23</strong> for increased risk and "
                 "<strong>27.5</strong> for high risk.",
-                "If you are of South Asian, East Asian or Southeast Asian "
-                "background, treat a BMI of 23 to 27.5 as worth acting on, "
-                "even though the standard table still calls it healthy or "
-                "overweight. Many national guidelines, including India's, "
-                "already use these lower thresholds.",
+                "India's 2009 consensus guidelines for obesity (Misra et al., "
+                "published in the Journal of the Association of Physicians of "
+                "India) adopted lower cut-offs for Indian adults, in line with "
+                "the WHO Asia-Pacific classification. These are the cut-offs "
+                "the calculator uses when you pick <strong>Asian / "
+                "Indian</strong>:",
+                {"table": {"head": ["BMI", "WHO international", "Asian / Indian"],
+                           "rows": [["Below 18.5", "Underweight", "Underweight"],
+                                    ["18.5 - 22.9", "Healthy weight", "Healthy weight"],
+                                    ["23.0 - 24.9", "Healthy weight", "Overweight"],
+                                    ["25.0 - 29.9", "Overweight", "Obese class I"],
+                                    ["30.0 and above", "Obese", "Obese class II"]]}},
+                "In practice this changes the healthy weight for a given "
+                "height quite a lot. At 165 cm (5 ft 5 in), the WHO healthy "
+                "range runs up to 67.8 kg, but the Asian range stops at "
+                "62.3 kg. At 175 cm (5 ft 9 in), it is 76.3 kg on WHO and "
+                "70.1 kg on the Asian cut-offs.",
+                "The reason is body composition. At the same BMI, South Asian "
+                "adults tend to carry more body fat, and more of it around the "
+                "abdomen, than white Europeans. Type 2 diabetes, high blood "
+                "pressure and heart disease start showing up at lower BMIs as "
+                "a result, which is why a BMI of 23 to 24.9 already counts as "
+                "overweight for Indians.",
+                {"tip": "Indian guidelines also use a lower waist cut-off: "
+                        "risk rises above 90 cm (35.4 in) for men and 80 cm "
+                        "(31.5 in) for women."},
             ]),
             ("Why lifters often get misclassified", [
                 "BMI cannot tell muscle from fat. A 180 cm (5 ft 11 in) man "
@@ -149,6 +173,16 @@ CONTENT = {
              "BMI Prime is your BMI divided by 25, the upper limit of the "
              "healthy range. A value of 1.0 sits on that limit, and anything "
              "above it shows how far over it you are as a percentage."),
+            ("What is a normal BMI for Indians?",
+             "Under India's consensus guidelines, a normal BMI for adults is "
+             "18.5 to 22.9. A BMI of 23 to 24.9 counts as overweight and 25 or "
+             "more as obese, lower than the WHO international cut-offs of 25 "
+             "and 30."),
+            ("Why is BMI different for Asians?",
+             "Asian populations tend to carry more body fat, particularly "
+             "around the abdomen, at the same BMI. Diabetes and heart disease "
+             "risk therefore rise at lower BMIs, so the WHO and Indian "
+             "guidelines use lower cut-offs for Asian adults."),
             ("How often should I check my BMI?",
              "Once a month is plenty. Day to day weight swings of 1 to 2 kg "
              "from water and food make more frequent checks noisy and "
@@ -156,6 +190,8 @@ CONTENT = {
         ],
         "sources": [
             "World Health Organization. Obesity: preventing and managing the global epidemic. WHO Technical Report Series 894, 2000",
+            "Misra A, Chowbey P, Makkar BM et al. Consensus statement for diagnosis of obesity, abdominal obesity and the metabolic syndrome for Asian Indians and recommendations for physical activity, medical and surgical management. J Assoc Physicians India. 2009;57:163-170",
+            "WHO Western Pacific Region, IASO, IOTF. The Asia-Pacific perspective: redefining obesity and its treatment. 2000",
             "WHO Expert Consultation. Appropriate body-mass index for Asian populations and its implications for policy and intervention strategies. Lancet. 2004;363(9403):157-163",
             "Keys A, Fidanza F, Karvonen MJ et al. Indices of relative weight and obesity. J Chronic Dis. 1972;25(6):329-343",
         ],
