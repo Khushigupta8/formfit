@@ -29,6 +29,9 @@ import workouts as W
 SITE_NAME = "FormFit"
 SITE_URL = "https://www.formfit.in"       # no trailing slash
 TAGLINE = "Fitness calculators and training guides"
+# Other names people search for the site by. "FormFit" alone is shared with
+# several brands, so the domain form helps Google tell this site apart.
+ALT_NAMES = ["FormFit.in", "Form Fit"]
 
 # Shown as "Reviewed <date>" on content pages, and used as the sitemap
 # lastmod / article modified date. Bump both when you review content.
@@ -266,13 +269,19 @@ def index():
         workouts=W.WORKOUTS, exercises=E.EXERCISES[:8],
         guides=G.GUIDES[:6],
         schema=[{
+            # name + alternateName is what Google uses for the site name shown
+            # in results, and what ties "FormFit" searches to this domain.
             "@context": "https://schema.org", "@type": "WebSite",
-            "name": SITE_NAME, "url": SITE_URL + "/", "inLanguage": "en",
+            "@id": SITE_URL + "/#website",
+            "name": SITE_NAME, "alternateName": ALT_NAMES,
+            "url": SITE_URL + "/", "inLanguage": "en",
             "description": TAGLINE,
-            "publisher": {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL + "/"},
+            "publisher": {"@id": SITE_URL + "/#organization"},
         }, {
             "@context": "https://schema.org", "@type": "Organization",
-            "name": SITE_NAME, "url": SITE_URL + "/",
+            "@id": SITE_URL + "/#organization",
+            "name": SITE_NAME, "alternateName": ALT_NAMES, "url": SITE_URL + "/",
+            "image": SITE_URL + "/static/img/og-image.png",
             "logo": SITE_URL + "/static/img/logo.png",
             "description": TAGLINE + " for people who train.",
             "email": L.CONTACT_EMAIL,
