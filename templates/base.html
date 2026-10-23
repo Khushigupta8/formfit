@@ -67,6 +67,21 @@
 
     <button type="button" class="nav__install" data-install hidden>{{ icon('download') }}<span>Install<span class="nav__install-app"> app</span></span></button>
 
+    {# Dropped in under the header by site.js shortly after the page loads,
+       for visitors who haven't installed FormFit or said "Not now" lately. #}
+    <div class="install-pop" role="dialog" aria-labelledby="install-pop-title" hidden>
+      <img src="{{ asset('img/mark.svg') }}" alt="" width="44" height="44">
+      <div class="install-pop__body">
+        <p class="install-pop__title" id="install-pop-title">Install the FormFit app</p>
+        <p class="install-pop__text">Opens from your home screen, and every calculator works offline.</p>
+        <div class="install-pop__actions">
+          <button type="button" class="btn btn--volt btn--sm" data-install-pop>{{ icon('download') }} Install</button>
+          <button type="button" class="install-pop__later">Not now</button>
+        </div>
+      </div>
+      <button type="button" class="install-pop__close" aria-label="Close">&times;</button>
+    </div>
+
     <input type="checkbox" id="navtoggle" class="nav__toggle" aria-label="Open menu">
     <label for="navtoggle" class="nav__burger" aria-hidden="true"><span></span></label>
 

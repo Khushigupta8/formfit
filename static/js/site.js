@@ -161,27 +161,54 @@
     deferred = e;
     if (!installed) showInstall(true);
   });
+  var install = function () {
+    hidePop();
+    if (deferred) {
+      deferred.prompt();
+      deferred.userChoice.then(function (r) {
+        deferred = null;
+        if (r.outcome === "accepted") showInstall(false);
+      });
+      return;
+    }
+    if (!help || !help.showModal) return;
+    help.querySelector(".install-help__steps").innerHTML = steps();
+    if (toggle) toggle.checked = false;
+    help.showModal();
+  };
   Array.prototype.forEach.call(installs, function (b) {
-    b.addEventListener("click", function () {
-      if (deferred) {
-        deferred.prompt();
-        deferred.userChoice.then(function (r) {
-          deferred = null;
-          if (r.outcome === "accepted") showInstall(false);
-        });
-        return;
-      }
-      if (!help || !help.showModal) return;
-      help.querySelector(".install-help__steps").innerHTML = steps();
-      if (toggle) toggle.checked = false;
-      help.showModal();
-    });
+    b.addEventListener("click", install);
   });
+
+  // Install pop-up under the header, shown shortly after load. "Not now"
+  // or the close button keeps it away for a week on this device.
+  var pop = document.querySelector(".install-pop");
+  var POP_KEY = "ff-install-pop-dismissed";
+  var POP_QUIET = 7 * 24 * 60 * 60 * 1000;
+  function hidePop() { if (pop) pop.hidden = true; }
+  function dismissPop() {
+    hidePop();
+    try { localStorage.setItem(POP_KEY, String(Date.now())); } catch (e) {}
+  }
+  if (pop && !installed) {
+    var dismissed = 0;
+    try { dismissed = +localStorage.getItem(POP_KEY) || 0; } catch (e) {}
+    pop.querySelector("[data-install-pop]").addEventListener("click", install);
+    pop.querySelector(".install-pop__later").addEventListener("click", dismissPop);
+    pop.querySelector(".install-pop__close").addEventListener("click", dismissPop);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !pop.hidden) dismissPop(); });
+    if (toggle) toggle.addEventListener("change", function () { if (toggle.checked) hidePop(); });
+    if (Date.now() - dismissed > POP_QUIET) setTimeout(function () {
+      if (!installed && !document.querySelector(".update") && !(help && help.open)) pop.hidden = false;
+    }, 1200);
+  }
   if (help) help.addEventListener("click", function (e) {
     if (e.target === help) help.close();     // tap outside the box closes it
   });
   window.addEventListener("appinstalled", function () {
     deferred = null;
+    installed = true;
     showInstall(false);
+    hidePop();
   });
 })();

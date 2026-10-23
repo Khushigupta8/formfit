@@ -38,7 +38,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="FormFit">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="/static/css/style.css?v=4f874fa6ad">
+<link rel="stylesheet" href="/static/css/style.css?v=252a255c18">
 
 
 
@@ -59,6 +59,20 @@
     </a>
 
     <button type="button" class="nav__install" data-install hidden><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span>Install<span class="nav__install-app"> app</span></span></button>
+
+    
+    <div class="install-pop" role="dialog" aria-labelledby="install-pop-title" hidden>
+      <img src="/static/img/mark.svg?v=bf4caf9db6" alt="" width="44" height="44">
+      <div class="install-pop__body">
+        <p class="install-pop__title" id="install-pop-title">Install the FormFit app</p>
+        <p class="install-pop__text">Opens from your home screen, and every calculator works offline.</p>
+        <div class="install-pop__actions">
+          <button type="button" class="btn btn--volt btn--sm" data-install-pop><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg> Install</button>
+          <button type="button" class="install-pop__later">Not now</button>
+        </div>
+      </div>
+      <button type="button" class="install-pop__close" aria-label="Close">&times;</button>
+    </div>
 
     <input type="checkbox" id="navtoggle" class="nav__toggle" aria-label="Open menu">
     <label for="navtoggle" class="nav__burger" aria-hidden="true"><span></span></label>
@@ -280,7 +294,7 @@
   </form>
 </dialog>
 
-<script src="/static/js/site.js?v=763301f675" defer></script>
+<script src="/static/js/site.js?v=02843582bd" defer></script>
 
 </body>
 </html>
