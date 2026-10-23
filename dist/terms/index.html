@@ -37,8 +37,8 @@
 <meta name="theme-color" content="#0c0e11">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="FormFit">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="stylesheet" href="/static/css/style.css?v=40b1a320d1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="/static/css/style.css?v=4039e2d146">
 
 
 
@@ -57,6 +57,8 @@
       <img src="/static/img/mark.svg?v=bf4caf9db6" alt="FormFit logo" width="34" height="34">
       <span>Form<span class="logo__fit">Fit</span></span>
     </a>
+
+    <button type="button" class="nav__install" data-install hidden><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span>Install<span class="nav__install-app"> app</span></span></button>
 
     <input type="checkbox" id="navtoggle" class="nav__toggle" aria-label="Open menu">
     <label for="navtoggle" class="nav__burger" aria-hidden="true"><span></span></label>
@@ -264,12 +266,22 @@
        Talk to a doctor before starting a new diet or training programme.</p>
     <p class="foot__legal">
       <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Medical disclaimer</a>
-      <button type="button" class="foot__install" hidden>Install the app</button>
+      <button type="button" class="foot__install" data-install hidden>Install the app</button>
     </p>
   </div>
 </footer>
 
-<script src="/static/js/site.js?v=b5cf20a999" defer></script>
+
+<dialog class="install-help" aria-labelledby="install-help-title">
+  <form method="dialog">
+    <p class="install-help__title" id="install-help-title">Install FormFit</p>
+    <p class="install-help__steps"></p>
+    <p class="install-help__note">Once installed, FormFit opens like an app and every calculator works offline.</p>
+    <button class="btn btn--volt btn--sm" value="close">Got it</button>
+  </form>
+</dialog>
+
+<script src="/static/js/site.js?v=ecf554f45f" defer></script>
 
 </body>
 </html>

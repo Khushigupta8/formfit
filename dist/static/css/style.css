@@ -189,8 +189,10 @@ p { margin: 0 0 1em; }
   .nav__toggle:checked + .nav__burger span::after { top: 0; transform: rotate(-45deg); }
   .nav__menu {
     display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; align-items: stretch;
-    background: var(--ink); padding: 10px 20px 24px; max-height: calc(100vh - 68px); overflow: auto; gap: 0;
+    background: var(--ink); padding: 10px 20px 24px; gap: 0;
+    max-height: calc(100vh - 68px); max-height: calc(100dvh - 68px); overflow: auto; overscroll-behavior: contain;
   }
+  body:has(.nav__toggle:checked) { overflow: hidden; }
   .nav__toggle:checked ~ .nav__menu { display: flex; }
   .nav__link { padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,.08); border-radius: 0; font-size: 1.05rem; }
   .nav__link .i { display: none; }
@@ -346,7 +348,8 @@ p { margin: 0 0 1em; }
 .chips { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.08); color: #dfe2e6; }
 .chips .i { width: 15px; height: 15px; color: var(--volt); }
-.byline { display: flex; align-items: center; gap: 8px; margin: 20px 0 0; color: #a9afb7; font-size: .9rem; }
+.byline { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 20px 0 0; color: #a9afb7; font-size: .9rem; }
+.byline > span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .byline .i { width: 16px; height: 16px; color: var(--volt); }
 .byline a { color: #fff; }
 .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
@@ -630,6 +633,59 @@ p { margin: 0 0 1em; }
 .foot__install:hover { text-decoration: underline; }
 @media (max-width: 1000px) { .foot__inner { grid-template-columns: 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } }
 @media (max-width: 520px) { .foot__inner { grid-template-columns: 1fr; } }
+
+/* Install button (navbar) and the per-browser help dialog */
+.nav__install { order: 3; display: inline-flex; align-items: center; gap: 6px; font: 600 .9rem var(--sans); color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 8px 14px; cursor: pointer; white-space: nowrap; }
+.nav__install:hover { border-color: var(--volt); color: var(--volt); }
+.nav__install .i { width: 17px; height: 17px; }
+.nav__install[hidden] { display: none; }
+@media (max-width: 960px) {
+  .nav__install { order: 0; margin-left: auto; min-height: 40px; }
+  .nav__install:not([hidden]) ~ .nav__burger { margin-left: 4px; }
+}
+@media (max-width: 480px) {
+  .nav__install { padding: 7px 12px; font-size: .85rem; }
+  .nav__install-app { display: none; }
+}
+@media (max-width: 340px) { .nav__install > span { display: none; } }
+.install-help { border: 0; border-radius: var(--r); padding: 0; max-width: min(420px, calc(100vw - 32px)); background: var(--card); color: var(--text); box-shadow: var(--shadow); }
+.install-help::backdrop { background: rgba(12,14,17,.6); }
+.install-help form { padding: 24px; }
+.install-help__title { font: 800 1.3rem var(--head); margin: 0 0 12px; }
+.install-help__steps { margin: 0 0 12px; line-height: 1.6; }
+.install-help__note { color: var(--muted); font-size: .9rem; margin: 0 0 18px; }
+
+/* ==========================================================================
+   Phones and touch screens
+   ========================================================================== */
+
+/* Get to the tool sooner: tighter page heads and smaller badges. */
+@media (max-width: 620px) {
+  .pagehead__inner { padding-top: 24px; padding-bottom: 36px; }
+  .crumbs { margin-bottom: 14px; }
+  .chips { margin-top: 16px; gap: 6px; }
+  .chips li { font-size: .8rem; padding: 5px 10px; }
+}
+
+/* Fingers need ~44px targets. Buttons grow; text links get a bigger hit
+   area through padding cancelled by negative margin, so the layout stays put. */
+@media (pointer: coarse) {
+  .seg span { padding: 12px 16px; }
+  .filter button { padding: 12px 18px; }
+  .jump a { display: inline-block; padding: 11px 16px; }
+  .inline-tools a { padding: 11px 14px; }
+  .more { min-height: 44px; }
+  .crumbs a, .foot__legal a, .foot__share a { display: inline-block; padding: 12px 0; margin: -12px 0; }
+  .foot .foot__share a { margin-left: 10px; }
+  .foot__share { line-height: 2.6; }
+  .foot li { margin-bottom: 0; }
+  .foot li a { display: inline-block; padding: 10px 0; }
+  .foot__install { padding: 12px 0; margin: -12px 0; }
+  .mega a { padding-top: 11px; padding-bottom: 11px; }
+  .cat li a { padding: 10px 0; }
+  .toc li a { display: inline-block; padding: 8px 0; }
+  .logo { padding: 5px 0; }
+}
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
 
