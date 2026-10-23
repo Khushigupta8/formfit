@@ -103,9 +103,16 @@
     var firefox = /Firefox|FxiOS/.test(ua);
     var safari = /Safari/.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS/.test(ua);
     var name = navigator.brave ? "Brave" : /OPR\//.test(ua) ? "Opera" : /SamsungBrowser/.test(ua) ? "Samsung Internet" : "your browser";
-    if (ios) return "Tap the <b>Share</b> button (the square with an arrow), scroll down and tap <b>Add to Home Screen</b>, then <b>Add</b>.";
-    if (android && firefox) return "Tap the <b>menu</b> (&#8942;), then <b>Add to Home screen</b> (or <b>Install</b>).";
-    if (android) return "In " + name + ", tap the <b>menu</b> (&#8942; or &#9776;), then <b>Install app</b> or <b>Add to Home screen</b>.";
+    // Browsers built into other apps (Instagram, Facebook, the Google app,
+    // Android WebViews...) can't install anything. WhatsApp's can't be
+    // detected, hence the extra line on the phone instructions below.
+    var inApp = /FBAN|FBAV|FB_IAB|Instagram|LinkedInApp|Snapchat|Line\/|MicroMessenger|Twitter|TikTok|musical_ly|GSA\/|; wv\)/.test(ua);
+    var browser = ios ? "Safari" : "Chrome";
+    if (inApp) return "You've opened FormFit inside another app, and apps can't be installed from there. Open the <b>menu</b> (&#8942; or &middot;&middot;&middot;) and choose <b>Open in " + browser + "</b> (or <b>Open in browser</b>), then tap <b>Install</b> again.";
+    var fromApp = "<br><br>Opened this from WhatsApp or another app? First tap <b>&#8942;</b> or the compass icon and choose <b>Open in " + browser + "</b>.";
+    if (ios) return "Tap the <b>Share</b> button (the square with an arrow), scroll down and tap <b>Add to Home Screen</b>, then <b>Add</b>." + fromApp;
+    if (android && firefox) return "Tap the <b>menu</b> (&#8942;), then <b>Add to Home screen</b> (or <b>Install</b>)." + fromApp;
+    if (android) return "In " + name + ", tap the <b>menu</b> (&#8942; or &#9776;), then <b>Install app</b> or <b>Add to Home screen</b>." + fromApp;
     if (safari) return "In the Safari menu bar, choose <b>File &rarr; Add to Dock</b>. (Needs macOS Sonoma or later.)";
     if (firefox) return "Firefox on a computer may not offer installing websites. If you see an install option in the address bar or menu, use it; otherwise open formfit.in in Chrome, Edge or Brave to install it.";
     return "In " + name + ", click the <b>install icon</b> at the right end of the address bar (a screen with a down arrow), or open the <b>menu</b> and choose <b>Install FormFit</b> (it can sit under <i>Save and share</i> or <i>Apps</i>).";
