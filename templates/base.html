@@ -151,6 +151,17 @@
   </div>
 </footer>
 
+{# Shown by site.js when the browser has no install prompt of its own
+   (Safari, Firefox, Brave...): the steps for that browser instead. #}
+<dialog class="install-help" aria-labelledby="install-help-title">
+  <form method="dialog">
+    <p class="install-help__title" id="install-help-title">Install FormFit</p>
+    <p class="install-help__steps"></p>
+    <p class="install-help__note">Once installed, FormFit opens like an app and every calculator works offline.</p>
+    <button class="btn btn--volt btn--sm" value="close">Got it</button>
+  </form>
+</dialog>
+
 <script src="{{ asset('js/site.js') }}" defer></script>
 {% block scripts %}{% endblock %}
 </body>
