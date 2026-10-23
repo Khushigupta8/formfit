@@ -83,64 +83,29 @@
     });
   }
 
-  // Install buttons (navbar + footer). Chrome, Edge and Samsung Internet
-  // fire beforeinstallprompt, and the button opens that native prompt.
-  // Safari, Firefox, Brave and others don't, but can still install from
-  // their own menus, so there the button explains how for that browser.
+  // Install buttons (navbar + footer). They appear only when the browser
+  // fires beforeinstallprompt (Chrome, Edge, Samsung Internet...), so a tap
+  // always opens the real install prompt. Elsewhere they stay hidden and
+  // the browser's own menu remains the way in.
   var installs = document.querySelectorAll("[data-install]");
-  var help = document.querySelector(".install-help");
   var deferred = null;
-  var installed = window.matchMedia("(display-mode: standalone)").matches ||
-    window.matchMedia("(display-mode: window-controls-overlay)").matches ||
-    navigator.standalone === true;
   var showInstall = function (on) {
     Array.prototype.forEach.call(installs, function (b) { b.hidden = !on; });
   };
-  var steps = function () {
-    var ua = navigator.userAgent;
-    var ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    var android = /Android/.test(ua);
-    var firefox = /Firefox|FxiOS/.test(ua);
-    var safari = /Safari/.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS/.test(ua);
-    var name = navigator.brave ? "Brave" : /OPR\//.test(ua) ? "Opera" : /SamsungBrowser/.test(ua) ? "Samsung Internet" : "your browser";
-    // Browsers built into other apps (Instagram, Facebook, the Google app,
-    // Android WebViews...) can't install anything. WhatsApp's can't be
-    // detected, hence the extra line on the phone instructions below.
-    var inApp = /FBAN|FBAV|FB_IAB|Instagram|LinkedInApp|Snapchat|Line\/|MicroMessenger|Twitter|TikTok|musical_ly|GSA\/|; wv\)/.test(ua);
-    var browser = ios ? "Safari" : "Chrome";
-    if (inApp) return "You've opened FormFit inside another app, and apps can't be installed from there. Open the <b>menu</b> (&#8942; or &middot;&middot;&middot;) and choose <b>Open in " + browser + "</b> (or <b>Open in browser</b>), then tap <b>Install</b> again.";
-    var fromApp = "<br><br>Opened this from WhatsApp or another app? First tap <b>&#8942;</b> or the compass icon and choose <b>Open in " + browser + "</b>.";
-    if (ios) return "Tap the <b>Share</b> button (the square with an arrow), scroll down and tap <b>Add to Home Screen</b>, then <b>Add</b>." + fromApp;
-    if (android && firefox) return "Tap the <b>menu</b> (&#8942;), then <b>Add to Home screen</b> (or <b>Install</b>)." + fromApp;
-    if (android) return "In " + name + ", tap the <b>menu</b> (&#8942; or &#9776;), then <b>Install app</b> or <b>Add to Home screen</b>." + fromApp;
-    if (safari) return "In the Safari menu bar, choose <b>File &rarr; Add to Dock</b>. (Needs macOS Sonoma or later.)";
-    if (firefox) return "Firefox on a computer may not offer installing websites. If you see an install option in the address bar or menu, use it; otherwise open formfit.in in Chrome, Edge or Brave to install it.";
-    return "In " + name + ", click the <b>install icon</b> at the right end of the address bar (a screen with a down arrow), or open the <b>menu</b> and choose <b>Install FormFit</b> (it can sit under <i>Save and share</i> or <i>Apps</i>).";
-  };
-  if (!installed) showInstall(true);
   window.addEventListener("beforeinstallprompt", function (e) {
     e.preventDefault();
     deferred = e;
-    if (!installed) showInstall(true);
+    showInstall(true);
   });
   Array.prototype.forEach.call(installs, function (b) {
     b.addEventListener("click", function () {
-      if (deferred) {
-        deferred.prompt();
-        deferred.userChoice.then(function (r) {
-          deferred = null;
-          if (r.outcome === "accepted") showInstall(false);
-        });
-        return;
-      }
-      if (!help || !help.showModal) return;
-      help.querySelector(".install-help__steps").innerHTML = steps();
-      if (toggle) toggle.checked = false;
-      help.showModal();
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.then(function (r) {
+        deferred = null;
+        if (r.outcome === "accepted") showInstall(false);
+      });
     });
-  });
-  if (help) help.addEventListener("click", function (e) {
-    if (e.target === help) help.close();     // tap outside the box closes it
   });
   window.addEventListener("appinstalled", function () {
     deferred = null;

@@ -8,11 +8,11 @@
    - Other origins (AdSense) and non-GET requests are left alone. */
 "use strict";
 
-var VERSION = "53d973739d";
+var VERSION = "a26172807b";
 var CORE = "formfit-core-" + VERSION;
 var PAGES = "formfit-pages-" + VERSION;
 var STATIC = "formfit-static";
-var PRECACHE = ["/", "/calculators", "/offline", "/bmi-calculator", "/body-fat-calculator", "/ideal-weight-calculator", "/lean-body-mass-calculator", "/ffmi-calculator", "/waist-to-hip-ratio-calculator", "/tdee-calculator", "/calorie-calculator", "/macro-calculator", "/protein-calculator", "/bmr-calculator", "/weight-loss-calculator", "/water-intake-calculator", "/one-rep-max-calculator", "/plate-calculator", "/wilks-calculator", "/heart-rate-zone-calculator", "/calories-burned-calculator", "/static/css/style.css?v=14f7a66f66", "/static/js/site.js?v=30dfefd2fd", "/static/js/calc.js?v=c7a8f7252c", "/static/img/mark.svg?v=bf4caf9db6", "/static/img/favicon.ico?v=f278306083", "/static/fonts/archivo-latin-500-normal.woff2", "/static/fonts/archivo-latin-700-normal.woff2", "/static/fonts/archivo-latin-800-normal.woff2", "/static/fonts/ibm-plex-mono-latin-400-normal.woff2", "/static/fonts/ibm-plex-mono-latin-500-normal.woff2", "/static/fonts/ibm-plex-mono-latin-600-normal.woff2", "/static/fonts/ibm-plex-sans-latin-400-normal.woff2", "/static/fonts/ibm-plex-sans-latin-500-normal.woff2", "/static/fonts/ibm-plex-sans-latin-600-normal.woff2"];
+var PRECACHE = ["/", "/calculators", "/offline", "/bmi-calculator", "/body-fat-calculator", "/ideal-weight-calculator", "/lean-body-mass-calculator", "/ffmi-calculator", "/waist-to-hip-ratio-calculator", "/tdee-calculator", "/calorie-calculator", "/macro-calculator", "/protein-calculator", "/bmr-calculator", "/weight-loss-calculator", "/water-intake-calculator", "/one-rep-max-calculator", "/plate-calculator", "/wilks-calculator", "/heart-rate-zone-calculator", "/calories-burned-calculator", "/static/css/style.css?v=72bbf53541", "/static/js/site.js?v=6e1f04d088", "/static/js/calc.js?v=c7a8f7252c", "/static/img/mark.svg?v=bf4caf9db6", "/static/img/favicon.ico?v=f278306083", "/static/fonts/archivo-latin-500-normal.woff2", "/static/fonts/archivo-latin-700-normal.woff2", "/static/fonts/archivo-latin-800-normal.woff2", "/static/fonts/ibm-plex-mono-latin-400-normal.woff2", "/static/fonts/ibm-plex-mono-latin-500-normal.woff2", "/static/fonts/ibm-plex-mono-latin-600-normal.woff2", "/static/fonts/ibm-plex-sans-latin-400-normal.woff2", "/static/fonts/ibm-plex-sans-latin-500-normal.woff2", "/static/fonts/ibm-plex-sans-latin-600-normal.woff2"];
 var MAX_PAGES = 60;
 var MAX_STATIC = 120;
 var NETWORK_TIMEOUT = 4000;
