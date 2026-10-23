@@ -41,8 +41,12 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
   the hubs, CSS/JS and fonts, so all 18 calculators work offline. Pages are
   network-first with a cache fallback, then `/offline`. Its version is a hash
   of the source, so each build that changes anything replaces the old caches.
-- Footer "Install the app" button appears when the browser allows installing
-  (Chrome, Edge, Android). On iPhone: Share > Add to Home Screen.
+- Install buttons (navbar + footer) appear only where the browser offers a
+  one-tap install prompt (Chrome, Edge, Samsung Internet).
+- Updates: every deploy ships a new service worker. People who already have
+  FormFit open or installed get a "FormFit has been updated" bar with a
+  Refresh button. To say what changed, set UPDATE_NOTE in app.py (one line,
+  e.g. "New: creatine calculator") before building; empty shows no note.
 
 ## Files
 

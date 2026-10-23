@@ -78,9 +78,47 @@
 
   // Installable app: the service worker caches every calculator for offline use.
   if ("serviceWorker" in navigator && window.isSecureContext) {
+    // A controller already running means this visitor had an older version,
+    // so a new worker taking over is an update, not a first install.
+    var hadWorker = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener("message", function (e) {
+      if (hadWorker && e.data && e.data.type === "updated") showUpdate(e.data.note);
+    });
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("/sw.js").catch(function () {});
     });
+  }
+
+  // "FormFit has been updated" bar, with the optional UPDATE_NOTE from app.py.
+  function showUpdate(note) {
+    if (document.querySelector(".update")) return;
+    var bar = document.createElement("div");
+    bar.className = "update";
+    bar.setAttribute("role", "status");
+    var text = document.createElement("p");
+    var head = document.createElement("b");
+    head.textContent = "FormFit has been updated";
+    text.appendChild(head);
+    if (note) {
+      var sub = document.createElement("span");
+      sub.textContent = note;
+      text.appendChild(sub);
+    }
+    var reload = document.createElement("button");
+    reload.type = "button";
+    reload.className = "btn btn--volt btn--sm";
+    reload.textContent = "Refresh";
+    reload.addEventListener("click", function () { location.reload(); });
+    var close = document.createElement("button");
+    close.type = "button";
+    close.className = "update__close";
+    close.setAttribute("aria-label", "Dismiss");
+    close.textContent = "×";
+    close.addEventListener("click", function () { bar.remove(); });
+    bar.appendChild(text);
+    bar.appendChild(reload);
+    bar.appendChild(close);
+    document.body.appendChild(bar);
   }
 
   // Install buttons (navbar + footer). They appear only when the browser

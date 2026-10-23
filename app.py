@@ -38,6 +38,11 @@ ALT_NAMES = ["FormFit.in", "Form Fit"]
 REVIEWED = "October 2026"
 MODIFIED = "2026-10-12"
 
+# One line shown to people who already have FormFit open or installed, in
+# the "FormFit has been updated" bar after your next deploy, e.g.
+# "New: creatine calculator". Leave empty for just the update message.
+UPDATE_NOTE = ""
+
 # The person behind the site. Shown in bylines, author cards and the
 # Article schema, which is how Google connects content to a real author.
 AUTHOR = {
@@ -608,7 +613,8 @@ def manifest():
 
 @app.route("/sw.js")
 def service_worker():
-    res = Response(render_template("sw.js", version=sw_version(), precache=precache_urls()),
+    res = Response(render_template("sw.js", version=sw_version(), precache=precache_urls(),
+                                   note=UPDATE_NOTE),
                    mimetype="text/javascript")
     res.headers["Cache-Control"] = "no-cache"
     return res

@@ -9,6 +9,7 @@
 "use strict";
 
 var VERSION = {{ version|tojson }};
+var NOTE = {{ note|tojson }};
 var CORE = "formfit-core-" + VERSION;
 var PAGES = "formfit-pages-" + VERSION;
 var STATIC = "formfit-static";
@@ -42,7 +43,12 @@ self.addEventListener("activate", function (e) {
     return Promise.all(keys.filter(function (k) {
       return k.indexOf("formfit-") === 0 && k !== CORE && k !== PAGES && k !== STATIC;
     }).map(function (k) { return caches.delete(k); }));
-  }).then(function () { return self.clients.claim(); }));
+  }).then(function () { return self.clients.claim(); })
+    // Tell open pages a new version took over; site.js shows the update bar.
+    .then(function () { return self.clients.matchAll({ type: "window" }); })
+    .then(function (pages) {
+      pages.forEach(function (p) { p.postMessage({ type: "updated", note: NOTE }); });
+    }));
 });
 
 function trim(name, max) {

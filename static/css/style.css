@@ -635,6 +635,16 @@ p { margin: 0 0 1em; }
 @media (max-width: 1000px) { .foot__inner { grid-template-columns: 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } }
 @media (max-width: 520px) { .foot__inner { grid-template-columns: 1fr; } }
 
+/* "FormFit has been updated" bar (site.js) */
+.update { position: fixed; z-index: 60; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); max-width: 520px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 18px; background: var(--ink); color: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: var(--r); box-shadow: 0 12px 32px -8px rgba(0,0,0,.5); animation: update-in .25s ease-out; }
+.update p { flex: 1; margin: 0; font-size: .92rem; line-height: 1.4; }
+.update b { display: block; font-family: var(--head); }
+.update span { display: block; color: #a9afb7; font-size: .85rem; }
+.update .btn { flex: none; min-height: 40px; }
+.update__close { flex: none; width: 40px; height: 40px; border: 0; background: none; color: #a9afb7; font-size: 1.5rem; line-height: 1; cursor: pointer; border-radius: 8px; }
+.update__close:hover { color: #fff; background: rgba(255,255,255,.08); }
+@keyframes update-in { from { transform: translateY(20px); opacity: 0; } }
+
 /* Install button (navbar) */
 .nav__install { order: 3; display: inline-flex; align-items: center; gap: 6px; font: 600 .9rem var(--sans); color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 8px 14px; cursor: pointer; white-space: nowrap; }
 .nav__install:hover { border-color: var(--volt); color: var(--volt); }
