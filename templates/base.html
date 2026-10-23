@@ -37,8 +37,11 @@
 <link rel="icon" href="{{ asset('img/favicon.ico') }}" sizes="any">
 <link rel="icon" href="{{ asset('img/mark.svg') }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}">
-<link rel="manifest" href="{{ asset('img/site.webmanifest') }}">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#0c0e11">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 {# Ad script only on pages that carry ads, so Auto ads can't appear on the
@@ -132,6 +135,7 @@
        Talk to a doctor before starting a new diet or training programme.</p>
     <p class="foot__legal">
       <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Medical disclaimer</a><a href="/contact">Contact</a>
+      <button type="button" class="foot__install" hidden>Install the app</button>
     </p>
   </div>
 </footer>

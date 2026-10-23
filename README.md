@@ -33,6 +33,17 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
   "permanent" would send a 308).
 - MODIFIED / REVIEWED in app.py drive the dates; bump them when you update content.
 
+## Installable app (PWA)
+
+- `/manifest.webmanifest` (route in app.py): name, icons incl. maskable,
+  shortcuts to the TDEE, macro, 1RM and plate calculators.
+- `/sw.js` (templates/sw.js): on install it precaches every calculator page,
+  the hubs, CSS/JS and fonts, so all 18 calculators work offline. Pages are
+  network-first with a cache fallback, then `/offline`. Its version is a hash
+  of the source, so each build that changes anything replaces the old caches.
+- Footer "Install the app" button appears when the browser allows installing
+  (Chrome, Edge, Android). On iPhone: Share > Add to Home Screen.
+
 ## Files
 
     app.py              site config (domain, AdSense, ad slot IDs) and routes

@@ -543,6 +543,85 @@ def favicon():
     return app.send_static_file("img/favicon.ico")
 
 
+# ---------------------------------------------------------------------------
+# PWA: manifest, service worker, offline page
+# ---------------------------------------------------------------------------
+
+FONTS = sorted(f for f in os.listdir(os.path.join(app.static_folder, "fonts"))
+               if f.endswith(".woff2"))
+
+
+def precache_urls():
+    """What the service worker stores on install: every calculator, so they
+    all work offline, plus the hubs and the files those pages need."""
+    pages = ["/", "/calculators", "/offline"] + ["/" + c["slug"] for c in C.CALCS]
+    files = [asset(p) for p in ("css/style.css", "js/site.js", "js/calc.js",
+                                "img/mark.svg", "img/favicon.ico")]
+    return pages + files + ["/static/fonts/" + f for f in FONTS]
+
+
+def sw_version():
+    """Hash of the site's source, so every content or code change ships a new
+    service worker, which in turn drops the old page cache."""
+    import hashlib
+    h = hashlib.md5()
+    here = os.path.dirname(os.path.abspath(__file__))
+    for d in (here, os.path.join(here, "templates"),
+              os.path.join(app.static_folder, "css"), os.path.join(app.static_folder, "js")):
+        for f in sorted(os.listdir(d)):
+            if f.endswith((".py", ".html", ".js", ".css")):
+                with open(os.path.join(d, f), "rb") as fh:
+                    h.update(fh.read())
+    return h.hexdigest()[:10]
+
+
+@app.route("/manifest.webmanifest")
+def manifest():
+    icon = lambda f, size, purpose: {"src": asset("img/" + f), "sizes": size,
+                                     "type": "image/png", "purpose": purpose}
+    shortcut = lambda slug: {
+        "name": C.BY_SLUG[slug]["name"],
+        "short_name": C.BY_SLUG[slug]["name"].replace(" Calculator", ""),
+        "url": "/" + slug,
+        "icons": [{"src": asset("img/favicon-96x96.png"), "sizes": "96x96", "type": "image/png"}]}
+    data = {
+        "id": "/",
+        "name": "{}: {}".format(SITE_NAME, TAGLINE),
+        "short_name": SITE_NAME,
+        "description": ("Free fitness calculators, workout plans and guides. "
+                        "Every calculator works offline."),
+        "lang": "en", "dir": "ltr",
+        "start_url": "/", "scope": "/",
+        "display": "standalone",
+        "theme_color": "#0c0e11", "background_color": "#0c0e11",
+        "categories": ["health", "fitness", "sports"],
+        "icons": [icon("android-chrome-192x192.png", "192x192", "any"),
+                  icon("android-chrome-512x512.png", "512x512", "any"),
+                  icon("maskable-192.png", "192x192", "maskable"),
+                  icon("maskable-512.png", "512x512", "maskable")],
+        "shortcuts": [shortcut(s) for s in ("tdee-calculator", "macro-calculator",
+                                            "one-rep-max-calculator", "plate-calculator")],
+    }
+    import json
+    return Response(json.dumps(data, indent=2), mimetype="application/manifest+json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    res = Response(render_template("sw.js", version=sw_version(), precache=precache_urls()),
+                   mimetype="text/javascript")
+    res.headers["Cache-Control"] = "no-cache"
+    return res
+
+
+@app.route("/offline")
+def offline():
+    return render("offline.html", page_title="You're offline",
+                  page_desc="You're offline. FormFit's calculators still work.",
+                  canonical=SITE_URL + "/offline", noindex=True,
+                  show_ads=False, h1="You're offline")
+
+
 @app.errorhandler(404)
 def not_found(_):
     return render("404.html", page_title="Page not found",

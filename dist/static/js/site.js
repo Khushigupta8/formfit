@@ -75,4 +75,31 @@
   if (toggle) document.querySelector(".nav__menu").addEventListener("click", function (e) {
     if (e.target.closest("a")) toggle.checked = false;
   });
+
+  // Installable app: the service worker caches every calculator for offline use.
+  if ("serviceWorker" in navigator && window.isSecureContext) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/sw.js").catch(function () {});
+    });
+  }
+
+  // Chrome, Edge and Android fire beforeinstallprompt when the site can be
+  // installed. Offer it from a quiet footer button instead of a pop-up.
+  // (iOS has no prompt: Share > Add to Home Screen.)
+  var install = document.querySelector(".foot__install");
+  var deferred = null;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    deferred = e;
+    if (install) install.hidden = false;
+  });
+  if (install) install.addEventListener("click", function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function () { deferred = null; install.hidden = true; });
+  });
+  window.addEventListener("appinstalled", function () {
+    deferred = null;
+    if (install) install.hidden = true;
+  });
 })();

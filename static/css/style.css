@@ -617,6 +617,8 @@ p { margin: 0 0 1em; }
 .foot__base { max-width: var(--wrap); margin: 0 auto; padding: 22px 20px 32px; border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: .84rem; }
 .foot__base p { margin: 0; max-width: 46em; }
 .foot__legal { display: flex; gap: 18px; flex-wrap: wrap; }
+.foot__install { font: inherit; color: var(--volt); background: none; border: 0; padding: 0; cursor: pointer; }
+.foot__install:hover { text-decoration: underline; }
 @media (max-width: 1000px) { .foot__inner { grid-template-columns: 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } }
 @media (max-width: 520px) { .foot__inner { grid-template-columns: 1fr; } }
 

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "_macros.html" import calc_card with context %}
+{% block content %}
+<section class="pagehead pagehead--plain">
+  <div class="wrap pagehead__inner">
+    <p class="eyebrow">Offline</p>
+    <h1>No signal. Still on the clock.</h1>
+    <p class="pagehead__lede">This page isn't saved on your device yet. Every calculator works
+      without a connection, so pick one below, or reconnect and try again.</p>
+  </div>
+</section>
+<div class="wrap block">
+  <div class="grid grid--4">{% for c in calcs %}{{ calc_card(c) }}{% endfor %}</div>
+</div>
+{% endblock %}
