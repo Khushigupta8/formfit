@@ -62,7 +62,7 @@
   <div class="nav__inner">
     <a class="logo" href="/" aria-label="{{ site_name }} home">
       <img src="{{ asset('img/mark.svg') }}" alt="FormFit logo" width="34" height="34">
-      <span>Form<b>Fit</b></span>
+      <span>Form<span class="logo__fit">Fit</span></span>
     </a>
 
     <input type="checkbox" id="navtoggle" class="nav__toggle" aria-label="Open menu">
@@ -98,33 +98,42 @@
 <footer class="foot">
   <div class="foot__inner">
     <div class="foot__brand">
-      <a class="logo logo--light" href="/" aria-label="{{ site_name }} home">
+      <div class="logo logo--light">
         <img src="{{ asset('img/mark.svg') }}" alt="FormFit logo" width="34" height="34">
-        <span>Form<b>Fit</b></span>
-      </a>
+        <span>Form<span class="logo__fit">Fit</span></span>
+      </div>
       <p>Free calculators, workout plans and evidence-based guides for people who
          train. Everything runs in your browser, so the numbers you enter stay
          on your device.</p>
+      {% set share_url = canonical|urlencode %}
+      {% set share_text = page_title|urlencode %}
+      <p class="foot__share">Share this page:
+        <a href="https://wa.me/?text={{ share_text }}%20{{ share_url }}" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://twitter.com/intent/tweet?url={{ share_url }}&amp;text={{ share_text }}" target="_blank" rel="noopener">X</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
     </div>
-    {% for key, name, _ in categories[:2] %}
-    <div>
-      <p class="foot__head">{{ name }}</p>
-      <ul>{% for c in by_cat(key) %}<li><a href="/{{ c.slug }}">{{ c.name }}</a></li>{% endfor %}</ul>
-    </div>
-    {% endfor %}
+    {# The mega menu already links every calculator, so the footer links
+       sections rather than repeat 18 calculator links with the same text. #}
     <div>
       <p class="foot__head">Train</p>
       <ul>
-        {% for c in by_cat('strength') + by_cat('cardio') %}<li><a href="/{{ c.slug }}">{{ c.name }}</a></li>{% endfor %}
+        <li><a href="/calculators">Fitness calculators</a></li>
         <li><a href="/workouts">Workout plans</a></li>
         <li><a href="/exercises">Exercise library</a></li>
       </ul>
     </div>
     <div>
+      <p class="foot__head">Learn</p>
+      <ul>
+        <li><a href="/guides">Fitness guides</a></li>
+        {% for t in guide_topics %}<li><a href="/guides/topic/{{ t.slug }}">{{ t.name }}</a></li>{% endfor %}
+      </ul>
+    </div>
+    <div>
       <p class="foot__head">FormFit</p>
       <ul>
-        <li><a href="/guides">All guides</a></li>
-        {% for t in guide_topics %}<li><a href="/guides/topic/{{ t.slug }}">{{ t.name }}</a></li>{% endfor %}
         <li><a href="/about">About us</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
@@ -134,7 +143,7 @@
     <p>&copy; {{ year }} {{ site_name }}. For general information only, not medical advice.
        Talk to a doctor before starting a new diet or training programme.</p>
     <p class="foot__legal">
-      <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Medical disclaimer</a><a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Medical disclaimer</a>
       <button type="button" class="foot__install" hidden>Install the app</button>
     </p>
   </div>

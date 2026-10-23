@@ -130,24 +130,24 @@
    Cards
    --------------------------------------------------------------------------- #}
 {% macro calc_card(c) -%}
-<a class="ccard" href="/{{ c.slug }}">
+<div class="ccard card-link">
   <span class="ccard__icon">{{ icon(c.icon) }}</span>
-  <span class="ccard__name">{{ c.name }}</span>
+  <a class="ccard__name" href="/{{ c.slug }}">{{ c.name }}</a>
   <span class="ccard__blurb">{{ c.blurb }}</span>
-  <span class="ccard__go">Open calculator {{ icon('arrow') }}</span>
-</a>
+  <span class="ccard__go" aria-hidden="true">Open calculator {{ icon('arrow') }}</span>
+</div>
 {%- endmacro %}
 
 {% macro photo_card(href, img, kicker, title, text='', meta=[]) -%}
-<a class="pcard" href="{{ href }}">
+<div class="pcard card-link">
   <span class="pcard__img">{{ photo(img, alt(img), sizes='(min-width: 900px) 33vw, 100vw') }}</span>
   <span class="pcard__body">
     <span class="kicker">{{ kicker }}</span>
-    <span class="pcard__title">{{ title }}</span>
+    <a class="pcard__title" href="{{ href }}">{{ title }}</a>
     {% if text %}<span class="pcard__text">{{ text }}</span>{% endif %}
     {% if meta %}<span class="pcard__meta">{% for m in meta %}<span>{{ m }}</span>{% endfor %}</span>{% endif %}
   </span>
-</a>
+</div>
 {%- endmacro %}
 
 {% macro guide_card(g) -%}
@@ -160,14 +160,14 @@
 {%- endmacro %}
 
 {% macro exercise_card(x) -%}
-<a class="xcard" href="/exercises/{{ x.slug }}" data-muscle="{{ x.muscle }}">
+<div class="xcard card-link" data-muscle="{{ x.muscle }}">
   <span class="xcard__img">{{ photo(x.image, alt(x.image), sizes='(min-width: 900px) 25vw, 50vw') }}</span>
   <span class="xcard__body">
     <span class="kicker">{{ x.muscle }} · {{ x.level }}</span>
-    <span class="xcard__name">{{ x.name }}</span>
+    <a class="xcard__name" href="/exercises/{{ x.slug }}">{{ x.name }}</a>
     <span class="xcard__eq">{{ x.equipment }}</span>
   </span>
-</a>
+</div>
 {%- endmacro %}
 
 {# ---------------------------------------------------------------------------

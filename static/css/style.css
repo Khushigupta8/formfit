@@ -156,7 +156,7 @@ p { margin: 0 0 1em; }
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(12,14,17,.94); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.07); }
 .nav__inner { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; height: 68px; display: flex; align-items: center; gap: 24px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; font: 800 1.45rem/1 var(--head); letter-spacing: -.03em; }
-.logo b { color: var(--volt); font-weight: 800; }
+.logo__fit { color: var(--volt); }
 .logo img { border-radius: 9px; }
 .nav__menu { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .nav__link { display: inline-flex; align-items: center; gap: 4px; color: #d8dbe0; text-decoration: none; font: 600 .95rem var(--sans); padding: 10px 12px; border-radius: 8px; }
@@ -231,7 +231,7 @@ p { margin: 0 0 1em; }
 #goal-strength:checked ~ [data-goal=strength], #goal-health:checked ~ [data-goal=health] { display: block; }
 .goal__tool { display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 12px; color: #fff; text-decoration: none; background: rgba(255,255,255,.05); margin-bottom: 8px; transition: background .15s; }
 .goal__tool:hover { background: rgba(255,255,255,.12); }
-.goal__tool b { display: block; font-family: var(--head); }
+.goal__tool a { display: block; font-family: var(--head); font-weight: 700; color: inherit; text-decoration: none; }
 .goal__tool small { display: block; color: #a9afb7; font-size: .82rem; line-height: 1.4; }
 .goal__icon { width: 40px; height: 40px; flex: none; border-radius: 10px; background: var(--volt); color: var(--ink); display: grid; place-items: center; }
 .goal__plan { display: flex; align-items: center; gap: 8px; margin-top: 12px; color: var(--volt); font-weight: 600; font-size: .92rem; text-decoration: none; }
@@ -287,6 +287,14 @@ p { margin: 0 0 1em; }
 .pcard:hover img, .xcard:hover img { transform: scale(1.04); }
 .pcard__body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
 .pcard__title { font: 700 1.15rem/1.25 var(--head); margin-bottom: 6px; }
+
+/* Cards: only the title is a link, so the anchor text stays short, and its
+   ::after covers the whole card so the card is still one big target. */
+.card-link { position: relative; }
+.card-link a { color: inherit; text-decoration: none; }
+.card-link a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.card-link a:focus-visible { outline: none; }
+.card-link:focus-within { outline: 2px solid var(--volt); outline-offset: 2px; }
 .pcard__text { color: var(--muted); font-size: .92rem; line-height: 1.5; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .pcard__meta { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 .pcard__meta span { font: 500 .78rem var(--mono); background: var(--paper); border-radius: 6px; padding: 4px 8px; color: var(--muted); }
@@ -607,8 +615,9 @@ p { margin: 0 0 1em; }
 
 .foot { background: var(--ink); color: #a9afb7; margin-top: 64px; }
 .home .foot, .foot:has(+ script) { margin-top: 0; }
-.foot__inner { max-width: var(--wrap); margin: 0 auto; padding: 56px 20px 32px; display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 32px; }
+.foot__inner { max-width: var(--wrap); margin: 0 auto; padding: 56px 20px 32px; display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 32px; }
 .foot__brand p { font-size: .92rem; margin-top: 16px; max-width: 26em; }
+.foot .foot__share a { color: var(--volt); margin-left: 10px; }
 .foot__head { font: 600 .74rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; margin: 0 0 14px; }
 .foot ul { list-style: none; padding: 0; margin: 0; }
 .foot li { margin-bottom: 7px; font-size: .9rem; }

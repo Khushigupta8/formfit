@@ -267,7 +267,7 @@ def index():
         canonical=SITE_URL + "/",
         full_title=True,
         workouts=W.WORKOUTS, exercises=E.EXERCISES[:8],
-        guides=G.GUIDES[:6],
+        guides=G.GUIDES[:6], guide_count=len(G.GUIDES), exercise_count=len(E.EXERCISES),
         schema=[{
             # name + alternateName is what Google uses for the site name shown
             # in results, and what ties "FormFit" searches to this domain.

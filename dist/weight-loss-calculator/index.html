@@ -41,7 +41,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="FormFit">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="stylesheet" href="/static/css/style.css?v=47cfb4ea8f">
+<link rel="stylesheet" href="/static/css/style.css?v=40b1a320d1">
 
 
 
@@ -64,7 +64,7 @@
   <div class="nav__inner">
     <a class="logo" href="/" aria-label="FormFit home">
       <img src="/static/img/mark.svg?v=bf4caf9db6" alt="FormFit logo" width="34" height="34">
-      <span>Form<b>Fit</b></span>
+      <span>Form<span class="logo__fit">Fit</span></span>
     </a>
 
     <input type="checkbox" id="navtoggle" class="nav__toggle" aria-label="Open menu">
@@ -469,76 +469,76 @@
     
     <section class="block">
       <h2 class="block__title">Read next</h2>
-      <div class="grid grid--3"><a class="pcard" href="/guides/how-to-calculate-calories-for-weight-loss">
+      <div class="grid grid--3"><div class="pcard card-link">
   <span class="pcard__img"><img src="/static/img/photos/scale-sm.webp"
      srcset="/static/img/photos/scale-sm.webp 640w, /static/img/photos/scale.webp 1200w"
      sizes="(min-width: 900px) 33vw, 100vw" alt="Athletic woman&#39;s back in a gym" width="1200" height="800"
      loading="lazy" decoding="async"></span>
   <span class="pcard__body">
     <span class="kicker">Fat Loss</span>
-    <span class="pcard__title">How to calculate your calories for weight loss, step by step</span>
+    <a class="pcard__title" href="/guides/how-to-calculate-calories-for-weight-loss">How to calculate your calories for weight loss, step by step</a>
     <span class="pcard__text">Work out your maintenance calories, pick a sensible deficit and adjust it from real scale data. A step-by-step method with worked examples and tables.</span>
     
   </span>
-</a><a class="pcard" href="/guides/cardio-for-fat-loss-hiit-vs-liss">
+</div><div class="pcard card-link">
   <span class="pcard__img"><img src="/static/img/photos/running-sm.webp"
      srcset="/static/img/photos/running-sm.webp 640w, /static/img/photos/running.webp 1200w"
      sizes="(min-width: 900px) 33vw, 100vw" alt="Three runners silhouetted against a blue evening sky" width="1200" height="800"
      loading="lazy" decoding="async"></span>
   <span class="pcard__body">
     <span class="kicker">Fat Loss</span>
-    <span class="pcard__title">HIIT vs LISS: which cardio is better for fat loss?</span>
+    <a class="pcard__title" href="/guides/cardio-for-fat-loss-hiit-vs-liss">HIIT vs LISS: which cardio is better for fat loss?</a>
     <span class="pcard__text">HIIT or steady-state cardio for fat loss? What the research shows, calories burned, the effect on lifting, and a weekly cardio plan to follow.</span>
     
   </span>
-</a><a class="pcard" href="/guides/sleep-and-muscle-growth">
+</div><div class="pcard card-link">
   <span class="pcard__img"><img src="/static/img/photos/sleep-sm.webp"
      srcset="/static/img/photos/sleep-sm.webp 640w, /static/img/photos/sleep.webp 1200w"
      sizes="(min-width: 900px) 33vw, 100vw" alt="Man resting on a bench between sets" width="1200" height="800"
      loading="lazy" decoding="async"></span>
   <span class="pcard__body">
     <span class="kicker">Health &amp; Recovery</span>
-    <span class="pcard__title">Sleep and muscle growth: why your gains depend on it</span>
+    <a class="pcard__title" href="/guides/sleep-and-muscle-growth">Sleep and muscle growth: why your gains depend on it</a>
     <span class="pcard__text">How sleep affects muscle growth, strength and fat loss, how many hours you need, and practical steps to sleep better when you train hard and diet.</span>
     
   </span>
-</a></div>
+</div></div>
     </section>
     
 
     <section class="block">
       <h2 class="block__title">Related calculators</h2>
-      <div class="grid grid--3"><a class="ccard" href="/tdee-calculator">
+      <div class="grid grid--3"><div class="ccard card-link">
   <span class="ccard__icon"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4 0 7-2.6 7-7 0-4-3-6-4-9-1 2-2 3-3 3 0-2-1-4-3-5 0 4-4 6-4 11 0 4.4 3 7 7 7z"/></svg></span>
-  <span class="ccard__name">TDEE Calculator</span>
+  <a class="ccard__name" href="/tdee-calculator">TDEE Calculator</a>
   <span class="ccard__blurb">Total daily energy expenditure: the calories you burn on a normal day.</span>
-  <span class="ccard__go">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a><a class="ccard" href="/calorie-calculator">
+  <span class="ccard__go" aria-hidden="true">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div><div class="ccard card-link">
   <span class="ccard__icon"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-3-2-8-1-8 5 0 5 3 9 5 9 1 0 2-.6 3-.6s2 .6 3 .6c2 0 5-4 5-9 0-6-5-7-8-5z"/><path d="M12 7c0-2 1-4 3-4"/></svg></span>
-  <span class="ccard__name">Calorie Calculator</span>
+  <a class="ccard__name" href="/calorie-calculator">Calorie Calculator</a>
   <span class="ccard__blurb">Daily calories to maintain, lose or gain weight at a pace you choose.</span>
-  <span class="ccard__go">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a><a class="ccard" href="/macro-calculator">
+  <span class="ccard__go" aria-hidden="true">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div><div class="ccard card-link">
   <span class="ccard__icon"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></span>
-  <span class="ccard__name">Macro Calculator</span>
+  <a class="ccard__name" href="/macro-calculator">Macro Calculator</a>
   <span class="ccard__blurb">Protein, carbs and fat in grams for cutting, maintaining or lean bulking.</span>
-  <span class="ccard__go">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a><a class="ccard" href="/protein-calculator">
+  <span class="ccard__go" aria-hidden="true">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div><div class="ccard card-link">
   <span class="ccard__icon"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 0-7 6-7 11a7 7 0 0 0 14 0c0-5-3-11-7-11z"/></svg></span>
-  <span class="ccard__name">Protein Calculator</span>
+  <a class="ccard__name" href="/protein-calculator">Protein Calculator</a>
   <span class="ccard__blurb">How many grams of protein a day for your weight and training goal.</span>
-  <span class="ccard__go">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a><a class="ccard" href="/bmr-calculator">
+  <span class="ccard__go" aria-hidden="true">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div><div class="ccard card-link">
   <span class="ccard__icon"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
-  <span class="ccard__name">BMR Calculator</span>
+  <a class="ccard__name" href="/bmr-calculator">BMR Calculator</a>
   <span class="ccard__blurb">Basal metabolic rate by Mifflin-St Jeor, Harris-Benedict and Katch-McArdle.</span>
-  <span class="ccard__go">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a><a class="ccard" href="/water-intake-calculator">
+  <span class="ccard__go" aria-hidden="true">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div><div class="ccard card-link">
   <span class="ccard__icon"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/></svg></span>
-  <span class="ccard__name">Water Intake Calculator</span>
+  <a class="ccard__name" href="/water-intake-calculator">Water Intake Calculator</a>
   <span class="ccard__blurb">Daily water for your body weight, training and climate.</span>
-  <span class="ccard__go">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a></div>
+  <span class="ccard__go" aria-hidden="true">Open calculator <svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div></div>
     </section>
   </main>
 
@@ -575,38 +575,41 @@
 <footer class="foot">
   <div class="foot__inner">
     <div class="foot__brand">
-      <a class="logo logo--light" href="/" aria-label="FormFit home">
+      <div class="logo logo--light">
         <img src="/static/img/mark.svg?v=bf4caf9db6" alt="FormFit logo" width="34" height="34">
-        <span>Form<b>Fit</b></span>
-      </a>
+        <span>Form<span class="logo__fit">Fit</span></span>
+      </div>
       <p>Free calculators, workout plans and evidence-based guides for people who
          train. Everything runs in your browser, so the numbers you enter stay
          on your device.</p>
-    </div>
-    
-    <div>
-      <p class="foot__head">Body composition</p>
-      <ul><li><a href="/bmi-calculator">BMI Calculator</a></li><li><a href="/body-fat-calculator">Body Fat Calculator</a></li><li><a href="/ideal-weight-calculator">Ideal Weight Calculator</a></li><li><a href="/lean-body-mass-calculator">Lean Body Mass Calculator</a></li><li><a href="/ffmi-calculator">FFMI Calculator</a></li><li><a href="/waist-to-hip-ratio-calculator">Waist-to-Hip Ratio Calculator</a></li></ul>
-    </div>
-    
-    <div>
-      <p class="foot__head">Nutrition &amp; calories</p>
-      <ul><li><a href="/tdee-calculator">TDEE Calculator</a></li><li><a href="/calorie-calculator">Calorie Calculator</a></li><li><a href="/macro-calculator">Macro Calculator</a></li><li><a href="/protein-calculator">Protein Calculator</a></li><li><a href="/bmr-calculator">BMR Calculator</a></li><li><a href="/weight-loss-calculator">Weight Loss Calculator</a></li><li><a href="/water-intake-calculator">Water Intake Calculator</a></li></ul>
+      
+      
+      <p class="foot__share">Share this page:
+        <a href="https://wa.me/?text=Weight%20Loss%20Calculator%3A%20Calories%20%26%20Goal%20Date%20https%3A//www.formfit.in/weight-loss-calculator" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A//www.formfit.in/weight-loss-calculator&amp;text=Weight%20Loss%20Calculator%3A%20Calories%20%26%20Goal%20Date" target="_blank" rel="noopener">X</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.formfit.in/weight-loss-calculator" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.formfit.in/weight-loss-calculator" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
     </div>
     
     <div>
       <p class="foot__head">Train</p>
       <ul>
-        <li><a href="/one-rep-max-calculator">One Rep Max Calculator</a></li><li><a href="/plate-calculator">Barbell Plate Calculator</a></li><li><a href="/wilks-calculator">Wilks &amp; DOTS Calculator</a></li><li><a href="/heart-rate-zone-calculator">Heart Rate Zone Calculator</a></li><li><a href="/calories-burned-calculator">Calories Burned Calculator</a></li>
+        <li><a href="/calculators">Fitness calculators</a></li>
         <li><a href="/workouts">Workout plans</a></li>
         <li><a href="/exercises">Exercise library</a></li>
       </ul>
     </div>
     <div>
+      <p class="foot__head">Learn</p>
+      <ul>
+        <li><a href="/guides">Fitness guides</a></li>
+        <li><a href="/guides/topic/training">Training</a></li><li><a href="/guides/topic/muscle-building">Muscle Building</a></li><li><a href="/guides/topic/nutrition">Nutrition</a></li><li><a href="/guides/topic/fat-loss">Fat Loss</a></li><li><a href="/guides/topic/health-recovery">Health &amp; Recovery</a></li>
+      </ul>
+    </div>
+    <div>
       <p class="foot__head">FormFit</p>
       <ul>
-        <li><a href="/guides">All guides</a></li>
-        <li><a href="/guides/topic/training">Training</a></li><li><a href="/guides/topic/muscle-building">Muscle Building</a></li><li><a href="/guides/topic/nutrition">Nutrition</a></li><li><a href="/guides/topic/fat-loss">Fat Loss</a></li><li><a href="/guides/topic/health-recovery">Health &amp; Recovery</a></li>
         <li><a href="/about">About us</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
@@ -616,7 +619,7 @@
     <p>&copy; 2026 FormFit. For general information only, not medical advice.
        Talk to a doctor before starting a new diet or training programme.</p>
     <p class="foot__legal">
-      <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Medical disclaimer</a><a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Medical disclaimer</a>
       <button type="button" class="foot__install" hidden>Install the app</button>
     </p>
   </div>

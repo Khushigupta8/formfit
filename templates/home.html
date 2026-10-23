@@ -40,8 +40,8 @@
         {% for key, label, tools, plan in goals %}
         <div class="goal__panel" data-goal="{{ key }}">
           {% for s in tools %}{% set c = (calcs|selectattr('slug', 'equalto', s)|first) %}
-          <a class="goal__tool" href="/{{ c.slug }}"><span class="goal__icon">{{ icon(c.icon) }}</span>
-            <span><b>{{ c.name }}</b><small>{{ c.blurb }}</small></span></a>
+          <div class="goal__tool card-link"><span class="goal__icon">{{ icon(c.icon) }}</span>
+            <span><a href="/{{ c.slug }}">{{ c.name }}</a><small>{{ c.blurb }}</small></span></div>
           {% endfor %}
           <a class="goal__plan" href="{{ plan[0] }}">{{ icon('calendar') }} Then follow the {{ plan[1] }} {{ icon('arrow') }}</a>
         </div>
@@ -55,8 +55,8 @@
   <div class="wrap stats__row">
     <p><b>{{ calcs|length }}</b> calculators</p>
     <p><b>{{ workouts|length }}</b> workout plans</p>
-    <p><b>16</b> exercises with full technique</p>
-    <p><b>15</b> in-depth guides</p>
+    <p><b>{{ exercise_count }}</b> exercises with full technique</p>
+    <p><b>{{ guide_count }}</b> in-depth guides</p>
   </div>
 </section>
 
