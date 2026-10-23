@@ -252,7 +252,7 @@ p { margin: 0 0 1em; }
    Sections, grids, cards
    ========================================================================== */
 
-.block { padding: 56px 0 8px; }
+.block { padding-top: 56px; padding-bottom: 8px; }
 .block__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 24px; }
 .block__head h2 { margin: 0; }
 .block__sub { color: var(--muted); margin: .4em 0 0; }
@@ -620,7 +620,8 @@ p { margin: 0 0 1em; }
 .home .foot, .foot:has(+ script) { margin-top: 0; }
 .foot__inner { max-width: var(--wrap); margin: 0 auto; padding: 56px 20px 32px; display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 32px; }
 .foot__brand p { font-size: .92rem; margin-top: 16px; max-width: 26em; }
-.foot .foot__share a { color: var(--volt); margin-left: 10px; }
+.foot .foot__share { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.foot .foot__share a { color: var(--volt); }
 .foot__head { font: 600 .74rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; margin: 0 0 14px; }
 .foot ul { list-style: none; padding: 0; margin: 0; }
 .foot li { margin-bottom: 7px; font-size: .9rem; }
@@ -676,8 +677,7 @@ p { margin: 0 0 1em; }
   .inline-tools a { padding: 11px 14px; }
   .more { min-height: 44px; }
   .crumbs a, .foot__legal a, .foot__share a { display: inline-block; padding: 12px 0; margin: -12px 0; }
-  .foot .foot__share a { margin-left: 10px; }
-  .foot__share { line-height: 2.6; }
+  .foot .foot__share { row-gap: 14px; }
   .foot li { margin-bottom: 0; }
   .foot li a { display: inline-block; padding: 10px 0; }
   .foot__install { padding: 12px 0; margin: -12px 0; }
