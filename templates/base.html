@@ -61,7 +61,7 @@
 <header class="nav">
   <div class="nav__inner">
     <a class="logo" href="/" aria-label="{{ site_name }} home">
-      <img src="{{ asset('img/mark.svg') }}" alt="" width="34" height="34">
+      <img src="{{ asset('img/mark.svg') }}" alt="FormFit logo" width="34" height="34">
       <span>Form<b>Fit</b></span>
     </a>
 
@@ -98,8 +98,8 @@
 <footer class="foot">
   <div class="foot__inner">
     <div class="foot__brand">
-      <a class="logo logo--light" href="/">
-        <img src="{{ asset('img/mark.svg') }}" alt="" width="34" height="34">
+      <a class="logo logo--light" href="/" aria-label="{{ site_name }} home">
+        <img src="{{ asset('img/mark.svg') }}" alt="FormFit logo" width="34" height="34">
         <span>Form<b>Fit</b></span>
       </a>
       <p>Free calculators, workout plans and evidence-based guides for people who
@@ -108,12 +108,12 @@
     </div>
     {% for key, name, _ in categories[:2] %}
     <div>
-      <h2>{{ name }}</h2>
+      <p class="foot__head">{{ name }}</p>
       <ul>{% for c in by_cat(key) %}<li><a href="/{{ c.slug }}">{{ c.name }}</a></li>{% endfor %}</ul>
     </div>
     {% endfor %}
     <div>
-      <h2>Train</h2>
+      <p class="foot__head">Train</p>
       <ul>
         {% for c in by_cat('strength') + by_cat('cardio') %}<li><a href="/{{ c.slug }}">{{ c.name }}</a></li>{% endfor %}
         <li><a href="/workouts">Workout plans</a></li>
@@ -121,7 +121,7 @@
       </ul>
     </div>
     <div>
-      <h2>FormFit</h2>
+      <p class="foot__head">FormFit</p>
       <ul>
         <li><a href="/guides">All guides</a></li>
         {% for t in guide_topics %}<li><a href="/guides/topic/{{ t.slug }}">{{ t.name }}</a></li>{% endfor %}

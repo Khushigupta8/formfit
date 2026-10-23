@@ -609,7 +609,7 @@ p { margin: 0 0 1em; }
 .home .foot, .foot:has(+ script) { margin-top: 0; }
 .foot__inner { max-width: var(--wrap); margin: 0 auto; padding: 56px 20px 32px; display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 32px; }
 .foot__brand p { font-size: .92rem; margin-top: 16px; max-width: 26em; }
-.foot h2 { font: 600 .74rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; margin: 0 0 14px; }
+.foot__head { font: 600 .74rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; margin: 0 0 14px; }
 .foot ul { list-style: none; padding: 0; margin: 0; }
 .foot li { margin-bottom: 7px; font-size: .9rem; }
 .foot a { color: #a9afb7; text-decoration: none; }
