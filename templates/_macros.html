@@ -215,7 +215,7 @@
    --------------------------------------------------------------------------- #}
 {% macro byline(read_min=None) -%}
 <p class="byline"><img class="byline__avatar" src="{{ author.avatar }}" alt="Photo of {{ author.name }}" width="28" height="28">
-  <span>By <a href="{{ author.url }}">{{ author.name }}</a></span> <span aria-hidden="true">·</span> <span>Reviewed {{ reviewed }}</span>{% if read_min %} <span aria-hidden="true">·</span> <span>{{ icon('clock') }} {{ read_min }} min read</span>{% endif %}</p>
+  <span>By <a href="{{ author.url }}">{{ author.name }}</a></span> <span aria-hidden="true">·</span> <span>Updated <time datetime="{{ modified }}">{{ modified_human }}</time></span>{% if read_min %} <span aria-hidden="true">·</span> <span>{{ icon('clock') }} {{ read_min }} min read</span>{% endif %}</p>
 {%- endmacro %}
 
 {% macro author_card() -%}

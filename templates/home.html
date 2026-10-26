@@ -149,6 +149,19 @@
   </div>
 </section>
 
+<section class="wrap block updates">
+  <div class="block__head">
+    <div><p class="kicker">What's new</p><h2>Recent changes to FormFit</h2></div>
+    <a class="more" href="/contact">Suggest a fix or a topic {{ icon('arrow') }}</a>
+  </div>
+  <ol class="updates__list">
+    {% for c in changes %}
+    <li><time datetime="{{ c.date }}">{{ c.when }}</time>
+      <p>{{ c.note }}{% if c.paths %} · {% for p in c.paths[:3] %}<a href="{{ p }}">{{ p.rsplit('/', 1)[-1].replace('-', ' ') or 'home' }}</a>{% if not loop.last %}, {% endif %}{% endfor %}{% if c.paths|length > 3 %} and more{% endif %}{% endif %}</p></li>
+    {% endfor %}
+  </ol>
+</section>
+
 <section class="wrap why">
   <div><span class="why__icon">{{ icon('lock') }}</span><h3>Private by design</h3>
     <p>Calculators run in your browser. Your weight, measurements and lifts are

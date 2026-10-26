@@ -10,14 +10,16 @@ dist/ as plain HTML, and every calculator runs in the visitor's browser.
 
 import os
 import re
-from datetime import date
+from datetime import date, datetime
 
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request
 
 from api import contact as contact_api
 
 import calculators as C
+import changelog as CL
 import exercises as E
+from gym_notes import GYM_NOTES
 import guides as G
 import legal as L
 import workouts as W
@@ -33,10 +35,8 @@ TAGLINE = "Fitness calculators and training guides"
 # several brands, so the domain form helps Google tell this site apart.
 ALT_NAMES = ["FormFit.in", "Form Fit"]
 
-# Shown as "Reviewed <date>" on content pages, and used as the sitemap
-# lastmod / article modified date. Bump both when you review content.
-REVIEWED = "October 2026"
-MODIFIED = "2026-10-12"
+# Each page's "Updated" date, sitemap lastmod and article dateModified come
+# from changelog.py: add an entry there when you change a page.
 
 # One line shown to people who already have FormFit open or installed, in
 # the "FormFit has been updated" bar after your next deploy, e.g.
@@ -219,13 +219,19 @@ def article_schema(title, desc, url, image):
         "publisher": {"@type": "Organization", "name": SITE_NAME,
                       "logo": {"@type": "ImageObject",
                                "url": SITE_URL + "/static/img/logo.png"}},
-        "dateModified": MODIFIED,
-        "datePublished": "2026-10-12",
+        "dateModified": CL.updated(url[len(SITE_URL):] or "/"),
+        "datePublished": CL.LAUNCHED,
     }
+
+
+def human_date(iso):
+    d = datetime.strptime(iso, "%Y-%m-%d")
+    return "{} {}".format(d.day, d.strftime("%b %Y"))
 
 
 def render(template, **kw):
     """render_template with everything every page needs."""
+    modified = CL.updated(request.path)
     kw.setdefault("show_ads", True)
     kw.setdefault("image", "hero")
     kw.setdefault("schema", [])
@@ -246,8 +252,8 @@ def render(template, **kw):
         else "/static/img/og-image.png")
     return render_template(
         template,
-        site_name=SITE_NAME, site_url=SITE_URL, tagline=TAGLINE, reviewed=REVIEWED,
-        modified=MODIFIED, gsc_verification=GSC_VERIFICATION, bing_verification=BING_VERIFICATION, author=AUTHOR,
+        site_name=SITE_NAME, site_url=SITE_URL, tagline=TAGLINE,
+        modified=modified, modified_human=human_date(modified), gsc_verification=GSC_VERIFICATION, bing_verification=BING_VERIFICATION, author=AUTHOR,
         adsense=ADSENSE_ID, ad_slots=AD_SLOTS,
         ad_preview=AD_PREVIEW or app.debug,
         categories=C.CATEGORIES, calcs=C.CALCS, by_cat=C.by_cat,
@@ -273,6 +279,7 @@ def index():
         full_title=True,
         workouts=W.WORKOUTS, exercises=E.EXERCISES[:8],
         guides=G.GUIDES[:6], guide_count=len(G.GUIDES), exercise_count=len(E.EXERCISES),
+        changes=[dict(c, when=human_date(c["date"])) for c in CL.CHANGES[:5]],
         schema=[{
             # name + alternateName is what Google uses for the site name shown
             # in results, and what ties "FormFit" searches to this domain.
@@ -389,6 +396,8 @@ def exercise_page(slug):
         "exercise.html",
         x=x, page_title=x["title"], page_desc=x["desc"], canonical=url,
         h1=x["name"], image=x["image"],
+        gym=GYM_NOTES.get(slug),
+        gym_when=human_date(GYM_NOTES[slug]["date"]) if slug in GYM_NOTES else None,
         related=[E.BY_SLUG[s] for s in x.get("related", []) if s in E.BY_SLUG],
         plans=[W.BY_SLUG[s] for s in x.get("plans", []) if s in W.BY_SLUG],
         same_muscle=[e for e in E.EXERCISES if e["muscle"] == x["muscle"] and e is not x][:4],
@@ -512,7 +521,7 @@ def sitemap():
            'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
     for path, pri in all_urls():
         entry = "  <url><loc>{}{}</loc><lastmod>{}</lastmod><priority>{}</priority>".format(
-            SITE_URL, path, MODIFIED, pri)
+            SITE_URL, path, CL.updated(path), pri)
         if path in imgs:
             entry += "<image:image><image:loc>{}/static/img/photos/{}.webp</image:loc></image:image>".format(
                 SITE_URL, imgs[path])

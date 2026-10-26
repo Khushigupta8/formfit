@@ -31,7 +31,9 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
   key file built to /<key>.txt) pings Bing, Yandex, Seznam and Naver.
 - Old URLs redirect with a real 301 (statusCode in vercel.json; Vercel's
   "permanent" would send a 308).
-- MODIFIED / REVIEWED in app.py drive the dates; bump them when you update content.
+- changelog.py drives every page's "Updated" date, sitemap lastmod and
+  dateModified, plus the "What's new" list on the home page. Add an entry
+  (date, one-line note, changed paths) whenever you really change a page.
 
 ## Installable app (PWA)
 
@@ -58,6 +60,8 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
     exercises.py        16 exercises
     workouts.py         6 workout plans
     legal.py            about, contact, privacy, terms, medical disclaimer
+    changelog.py        what changed and when: page dates + home "What's new"
+    gym_notes.py        first-hand "From the gym" notes per exercise
     api/contact.py      contact form endpoint (Vercel function)
     indexnow.py         submit URLs to IndexNow after a deploy
     templates/          Jinja templates; _macros.html holds icons, ads, cards
@@ -129,7 +133,9 @@ check a few pages; Auto ads plus five fixed units can feel heavy on mobile.
   the same `id` to `CALC` in `calc.js`, and copy to a content file.
 - **Guide / exercise / workout:** add a dict to the relevant file. Pages,
   sitemap entries and links appear on the next build.
-- When you review content, bump `REVIEWED` in `app.py`.
+- When you change a page, add an entry to `changelog.py` naming its path.
+- **Exercise notes:** write your own "From the gym" notes (and optionally a
+  photo of you doing the lift) in `gym_notes.py`. Empty entries show nothing.
 
 ## Deploying
 

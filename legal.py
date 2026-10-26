@@ -87,10 +87,11 @@ LEGAL = [
                 "on the site, check formulas and figures, and correct anything "
                 "that turns out to be wrong. We would rather tell you this than "
                 "have you wonder.",
-                "<strong>Pages carry a review date.</strong> Each calculator, "
-                "guide, plan and exercise page shows when it was last reviewed, "
-                "and we update pages when better evidence or a reader's "
-                "correction comes in.",
+                "<strong>Pages carry an updated date.</strong> Each calculator, "
+                "guide, plan and exercise page shows when its content last "
+                "changed, and we update pages when better evidence or a "
+                "reader's correction comes in. The home page lists what "
+                "changed recently.",
             ]),
             ("What FormFit is not", [
                 "FormFit is not a medical service, and nothing here is a "

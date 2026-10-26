@@ -12,7 +12,7 @@
       <li>{{ icon('check') }} Free</li>
       <li>{{ icon('lock') }} Private: runs on your device</li>
       {% if calc.units %}<li>{{ icon('ruler') }} Metric &amp; imperial</li>{% endif %}
-      <li>{{ icon('calendar') }} Reviewed {{ reviewed }}</li>
+      <li>{{ icon('calendar') }} Updated <time datetime="{{ modified }}">{{ modified_human }}</time></li>
     </ul>
   </div>
 </section>

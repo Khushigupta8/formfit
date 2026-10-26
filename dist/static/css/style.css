@@ -764,3 +764,18 @@ p { margin: 0 0 1em; }
 .cform__ok { display: none; padding: 14px 16px; border-radius: 10px; background: #eef9d6; color: #2b3a07; font-weight: 600; }
 .cform__ok:target, .cform__ok.is-on { display: block; }
 .cform__ok:target + .cform, .cform__ok.is-on + .cform { display: none; }
+
+/* Home: what's new */
+.updates__list { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--volt); }
+.updates__list li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 10px 0 10px 18px; }
+.updates__list time { font: 500 .85rem var(--mono); color: #6b7280; padding-top: 2px; }
+.updates__list p { margin: 0; }
+@media (max-width: 600px) { .updates__list li { grid-template-columns: 1fr; gap: 2px; } }
+
+/* Exercise: first-hand notes */
+.gym { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: start; margin: 32px 0; padding: 20px; border-radius: var(--r); background: var(--green-bg); }
+.gym:not(:has(.gym__img)) { grid-template-columns: 1fr; }
+.gym__img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r); }
+.gym h2 { margin-top: 0; }
+.gym__meta { font: 500 .8rem var(--mono); color: #6b7280; }
+@media (max-width: 600px) { .gym { grid-template-columns: 1fr; } }

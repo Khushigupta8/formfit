@@ -31,6 +31,18 @@
       </div>
     </section>
 
+    {% if gym %}
+    <section class="gym">
+      {% if gym.photo %}<img class="gym__img" src="/static/img/team/{{ gym.photo }}" alt="{{ gym.alt }}" loading="lazy">{% endif %}
+      <div>
+        <p class="kicker">From the gym</p>
+        <h2 id="from-the-gym">How {{ author.name.split()[0] }} does the {{ x.name|lower }}</h2>
+        {% for n in gym.notes %}<p>{{ n|safe }}</p>{% endfor %}
+        <p class="gym__meta">{{ author.name }} · <time datetime="{{ gym.date }}">{{ gym_when }}</time></p>
+      </div>
+    </section>
+    {% endif %}
+
     {{ ad('below_tool') }}
 
     <section class="prose">
