@@ -15,6 +15,8 @@ from datetime import date, datetime
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request
 
 from api import contact as contact_api
+from api import cancel as pro_cancel, me as pro_me, plan as pro_plan,     razorpay_webhook as pro_webhook, subscribe as pro_subscribe, verify as pro_verify
+pro_lib = pro_me.L   # the same _lib module the endpoints use (one HTTPError class)
 
 import calculators as C
 import changelog as CL
@@ -85,6 +87,33 @@ AD_SLOTS = {
 # Outline every placement with a labelled box. On by default when running
 # app.py locally; on the live site add ?adpreview to any URL to see them.
 AD_PREVIEW = os.environ.get("FORMFIT_AD_PREVIEW") == "1"
+
+# FormFit Pro (subscription). Both values below are public by design: the
+# anon key only allows what the row level security in supabase/schema.sql
+# allows. Supabase > Project settings > API. Secrets (service role key,
+# Razorpay keys) go in Vercel env vars only; see api/_lib.py and PRO.md.
+SUPABASE_URL = ""          # https://<project>.supabase.co
+SUPABASE_ANON_KEY = ""
+# Show a "Continue with Google" button (enable Google in Supabase > Auth first).
+GOOGLE_LOGIN = False
+# Must match the plans you create in Razorpay > Subscriptions > Plans (INR).
+PRO_PRICES = {"monthly": 99, "yearly": 799}
+
+
+
+def _load_env_file(path=".env.local"):
+    """For `python app.py`: read KEY=value lines (e.g. from `vercel env pull`)
+    so the Pro API works locally. Real environment variables win."""
+    here = os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
+    if not os.path.exists(here):
+        return
+    for line in open(here, encoding="utf-8"):
+        k, sep, v = line.strip().partition("=")
+        if sep and k and not k.startswith("#"):
+            os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+
+_load_env_file()
 
 app = Flask(__name__)
 
@@ -259,6 +288,7 @@ def render(template, **kw):
         categories=C.CATEGORIES, calcs=C.CALCS, by_cat=C.by_cat,
         popular=[c for c in C.CALCS if c.get("popular")],
         guide_topics=G.TOPICS,
+        pro_prices=PRO_PRICES,
         year=date.today().year,
         **kw)
 
@@ -456,6 +486,91 @@ def guide_page(slug):
                 faq_schema(g["faq"])])
 
 
+# ---------------------------------------------------------------------------
+# FormFit Pro. The pages are static like the rest; pro.js signs people in
+# with Supabase and talks to the api/*.py functions.
+# ---------------------------------------------------------------------------
+
+PRO_FEATURES = [
+    ("target", "Your own plan, built from your numbers",
+     "Calories, protein, carbs and fat from your height, weight, age, activity "
+     "and goal, then a 7-day Indian meal plan (veg, egg or non-veg) with "
+     "portions scaled to hit them."),
+    ("bicep", "A training week that fits your life",
+     "3 to 6 days, gym or home, beginner or intermediate, with every lift "
+     "linked to its technique guide."),
+    ("trend", "Progress tracking",
+     "Log weight, waist and lifts. See your weekly trend and estimated "
+     "one rep max for every lift, on any device."),
+    ("download", "Save and print",
+     "Every plan you make is saved to your account. Print it or save it as a "
+     "PDF for the fridge or the gym bag."),
+    ("bolt", "No ads, anywhere on FormFit",
+     "Calculators, guides and workouts load clean on every device you sign in on."),
+]
+
+
+def pro_config():
+    return {"supabaseUrl": SUPABASE_URL, "supabaseKey": SUPABASE_ANON_KEY,
+            "google": GOOGLE_LOGIN, "prices": PRO_PRICES}
+
+
+@app.route("/pro")
+def pro_page():
+    url = SITE_URL + "/pro"
+    return render(
+        "pro.html",
+        page_title="FormFit Pro: Personal Diet and Workout Plans",
+        page_desc=("FormFit Pro builds your own Indian meal plan and training week "
+                   "from your numbers, tracks your weight and lifts, and removes "
+                   "ads. From Rs {} a month.").format(PRO_PRICES["monthly"]),
+        canonical=url, h1="FormFit Pro", image="meal-prep",
+        features=PRO_FEATURES, pro_cfg=pro_config(),
+        breadcrumb=crumbs(("FormFit Pro", url)),
+        show_ads=False,
+        schema=[{
+            "@context": "https://schema.org", "@type": "Product",
+            "name": "FormFit Pro", "description": "Personal diet and workout plans, "
+            "progress tracking and an ad-free FormFit.",
+            "brand": {"@type": "Brand", "name": SITE_NAME},
+            "offers": [{"@type": "Offer", "price": str(p), "priceCurrency": "INR",
+                        "name": k.title(), "url": url} for k, p in PRO_PRICES.items()],
+        }])
+
+
+@app.route("/account")
+def account_page():
+    return render("account.html", page_title="Your account",
+                  page_desc="Sign in to FormFit and manage your Pro subscription.",
+                  canonical=SITE_URL + "/account", noindex=True, show_ads=False,
+                  h1="Your account", pro_cfg=pro_config())
+
+
+@app.route("/dashboard")
+def dashboard_page():
+    return render("dashboard.html", page_title="Pro dashboard",
+                  page_desc="Your FormFit Pro plans and progress.",
+                  canonical=SITE_URL + "/dashboard", noindex=True, show_ads=False,
+                  h1="Your dashboard", pro_cfg=pro_config(), pro_api=PRO_API_INFO,
+                  lifts=[x["name"] for x in E.EXERCISES if x["slug"] != "plank"])
+
+
+PRO_API = {"me": pro_me.handle, "subscribe": pro_subscribe.handle,
+           "verify": pro_verify.handle, "cancel": pro_cancel.handle,
+           "plan": pro_plan.handle, "razorpay_webhook": pro_webhook.handle}
+# Options for the plan form, from the generator itself.
+PRO_API_INFO = {"activity": pro_plan.P.ACTIVITY, "goals": pro_plan.P.GOALS,
+                "diets": pro_plan.P.DIETS}
+
+
+@app.route("/api/<name>", methods=["GET", "POST"])
+def pro_api(name):
+    """Local stand-in for api/<name>.py, which serves this URL on Vercel."""
+    fn = PRO_API.get(name) or abort(404)
+    status, out = pro_lib.run(fn, request.method, request.headers, request.get_data())
+    return jsonify(out), status
+
+
 @app.route("/<slug>")
 def top_level(slug):
     if slug in C.BY_SLUG:
@@ -491,7 +606,7 @@ def contact_post():
 
 def all_urls():
     u = [("/", "1.0"), ("/calculators", "0.9"), ("/workouts", "0.8"),
-         ("/exercises", "0.8"), ("/guides", "0.8")]
+         ("/exercises", "0.8"), ("/guides", "0.8"), ("/pro", "0.6")]
     u += [("/" + c["slug"], "0.9") for c in C.CALCS]
     u += [("/workouts/" + w["slug"], "0.8") for w in W.WORKOUTS]
     u += [("/exercises/" + x["slug"], "0.7") for x in E.EXERCISES]
@@ -504,7 +619,7 @@ def all_urls():
 def page_images():
     """Photo key for each URL, so the sitemap can list images for image search."""
     m = {"/": "hero", "/calculators": "bright-gym", "/workouts": "gym-floor",
-         "/exercises": "dumbbells", "/guides": "healthy-meal"}
+         "/exercises": "dumbbells", "/guides": "healthy-meal", "/pro": "meal-prep"}
     m.update({"/" + c["slug"]: c["image"] for c in C.CALCS})
     m.update({"/workouts/" + w["slug"]: w["image"] for w in W.WORKOUTS})
     m.update({"/exercises/" + x["slug"]: x["image"] for x in E.EXERCISES})

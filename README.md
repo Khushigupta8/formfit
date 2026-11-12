@@ -50,6 +50,12 @@ The npm scripts just call Python (3.9+ with Flask: pip install -r requirements.t
   Refresh button. To say what changed, set UPDATE_NOTE in app.py (one line,
   e.g. "New: creatine calculator") before building; empty shows no note.
 
+## FormFit Pro (subscription)
+
+Optional paid tier: plan generator, progress tracking, no ads. Supabase for
+accounts, Razorpay for payments, api/*.py for the server side. Setup steps
+and the launch checklist are in PRO.md.
+
 ## Files
 
     app.py              site config (domain, AdSense, ad slot IDs) and routes

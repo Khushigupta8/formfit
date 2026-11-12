@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon with context %}
+{% block bodyclass %}pro-page{% endblock %}
+{% block content %}
+<section class="pagehead pagehead--plain pagehead--short">
+  <div class="wrap pagehead__inner">
+    <p class="eyebrow">FormFit Pro</p>
+    <h1>{{ h1 }}</h1>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="prose prose--narrow acct" data-pro-root>
+    <p class="acct__loading" data-view="loading">Loading your account...</p>
+
+    {# Signed out #}
+    <div data-view="signin" hidden>
+      <h2>Sign in or create an account</h2>
+      <p>We'll email you a sign-in link. No password needed.</p>
+      <form class="cform" data-signin novalidate>
+        <label class="field">
+          <span class="field__label">Your email</span>
+          <input name="email" type="email" autocomplete="email" maxlength="254" required>
+        </label>
+        <button class="btn btn--volt" type="submit">Email me a sign-in link</button>
+        <p class="cform__status" role="status" hidden></p>
+      </form>
+      {% if pro_cfg.google %}
+      <p class="acct__or">or</p>
+      <button type="button" class="btn btn--block acct__google" data-google>Continue with Google</button>
+      {% endif %}
+      <p class="field__hint">By signing in you agree to our <a href="/terms">terms</a> and
+        <a href="/privacy">privacy policy</a>.</p>
+    </div>
+
+    {# Signed in, not Pro #}
+    <div data-view="free" hidden>
+      <p class="acct__who">Signed in as <strong data-email></strong></p>
+      <h2>Upgrade to FormFit Pro</h2>
+      <p>A plan built from your numbers, progress tracking and no ads. <a href="/pro">See everything in Pro</a>.</p>
+      <div class="seg seg--plans" role="radiogroup" aria-label="Billing">
+        <label><input type="radio" name="plan" value="monthly" checked><span>&#8377;{{ pro_prices.monthly }} / month</span></label>
+        <label><input type="radio" name="plan" value="yearly"><span>&#8377;{{ pro_prices.yearly }} / year</span></label>
+      </div>
+      <p><button type="button" class="btn btn--volt" data-subscribe>{{ icon('lock') }} Continue to payment</button></p>
+      <p class="cform__status" data-status role="alert" hidden></p>
+      <p class="field__hint">Payment by Razorpay. Cancel any time from this page.</p>
+    </div>
+
+    {# Pro #}
+    <div data-view="pro" hidden>
+      <p class="acct__who">Signed in as <strong data-email></strong></p>
+      <p class="acct__badge">{{ icon('check') }} FormFit Pro</p>
+      <p data-pro-line></p>
+      <p><a class="btn btn--volt" href="/dashboard">Open your dashboard</a></p>
+      <div class="acct__cancel" data-cancel-box>
+        <button type="button" class="linkbtn" data-cancel>Cancel subscription</button>
+        <div data-cancel-confirm hidden>
+          <p>You won't be charged again, and Pro keeps working until <strong data-end></strong>.</p>
+          <button type="button" class="btn btn--sm" data-cancel-yes>Yes, cancel</button>
+          <button type="button" class="linkbtn" data-cancel-no>Keep Pro</button>
+        </div>
+      </div>
+      <p class="cform__status" data-status role="alert" hidden></p>
+    </div>
+
+    <p class="acct__out" data-signout-wrap hidden><button type="button" class="linkbtn" data-signout>Sign out</button></p>
+    <p class="cform__status" data-setup hidden role="alert">Accounts aren't switched on yet. Please check back soon.</p>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.FF_PRO = {{ pro_cfg|tojson }};</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+<script src="{{ asset('js/pro.js') }}" defer></script>
+{% endblock %}

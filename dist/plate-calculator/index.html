@@ -41,11 +41,23 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="FormFit">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="/static/css/style.css?v=16311aa526">
+<link rel="stylesheet" href="/static/css/style.css?v=0d3ec492a6">
 
 
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9986755295957814" crossorigin="anonymous"></script>
+<meta name="google-adsense-account" content="ca-pub-9986755295957814">
+
+<script>
+(function () {
+  var pro = 0;
+  try { pro = +localStorage.getItem("ff_pro") > Date.now(); } catch (e) {}
+  if (pro) { document.documentElement.className += " is-pro"; return; }
+  var s = document.createElement("script");
+  s.async = true; s.crossOrigin = "anonymous";
+  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9986755295957814";
+  document.head.appendChild(s);
+})();
+</script>
 
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "applicationCategory": "HealthApplication", "description": "Enter a target weight and see exactly which plates go on each side of the bar. Works in kg or lb, any bar weight, with collars and a visual barbell.", "name": "Barbell Plate Calculator", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "operatingSystem": "Any", "url": "https://www.formfit.in/plate-calculator"}</script>
@@ -153,6 +165,7 @@
       <a href="/exercises" class="nav__link">Exercises</a>
       <a href="/guides" class="nav__link">Guides</a>
       <a href="/about" class="nav__link">About</a>
+      <a href="/pro" class="nav__link nav__link--pro">Pro</a>
       <a href="/tdee-calculator" class="btn btn--volt btn--sm nav__cta">Find your calories</a>
     </nav>
   </div>
@@ -552,6 +565,8 @@
     <div>
       <p class="foot__head">FormFit</p>
       <ul>
+        <li><a href="/pro">FormFit Pro</a></li>
+        <li><a href="/account">Your account</a></li>
         <li><a href="/about">About us</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>

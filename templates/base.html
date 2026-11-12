@@ -47,7 +47,21 @@
 {# Ad script only on pages that carry ads, so Auto ads can't appear on the
    legal pages either. #}
 {% if show_ads and adsense %}
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense }}" crossorigin="anonymous"></script>
+<meta name="google-adsense-account" content="{{ adsense }}">
+{# FormFit Pro members get no ads: pro.js stores when their Pro runs out in
+   localStorage "ff_pro", and the ad script is only added if that has passed.
+   It's a display preference, not a permission, so trusting the browser is fine. #}
+<script>
+(function () {
+  var pro = 0;
+  try { pro = +localStorage.getItem("ff_pro") > Date.now(); } catch (e) {}
+  if (pro) { document.documentElement.className += " is-pro"; return; }
+  var s = document.createElement("script");
+  s.async = true; s.crossOrigin = "anonymous";
+  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense }}";
+  document.head.appendChild(s);
+})();
+</script>
 {% endif %}
 {% for s in schema %}
 <script type="application/ld+json">{{ s|tojson }}</script>
@@ -103,6 +117,7 @@
       <a href="/exercises" class="nav__link">Exercises</a>
       <a href="/guides" class="nav__link">Guides</a>
       <a href="/about" class="nav__link">About</a>
+      <a href="/pro" class="nav__link nav__link--pro">Pro</a>
       <a href="/tdee-calculator" class="btn btn--volt btn--sm nav__cta">Find your calories</a>
     </nav>
   </div>
@@ -151,6 +166,8 @@
     <div>
       <p class="foot__head">FormFit</p>
       <ul>
+        <li><a href="/pro">FormFit Pro</a></li>
+        <li><a href="/account">Your account</a></li>
         <li><a href="/about">About us</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>

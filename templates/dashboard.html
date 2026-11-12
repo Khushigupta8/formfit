@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon with context %}
+{% block bodyclass %}pro-page{% endblock %}
+{% block content %}
+<section class="pagehead pagehead--plain pagehead--short noprint">
+  <div class="wrap pagehead__inner">
+    <p class="eyebrow">FormFit Pro</p>
+    <h1>{{ h1 }}</h1>
+    <nav class="jump" data-view="pro" hidden><a href="#plan">Your plan</a><a href="#progress">Progress</a><a href="/account">Account</a></nav>
+  </div>
+</section>
+
+<div class="wrap dash" data-pro-root>
+  <p class="prose prose--narrow acct__loading" data-view="loading">Loading your dashboard...</p>
+
+  <div class="prose prose--narrow" data-view="signin" hidden>
+    <h2>Sign in to see your dashboard</h2>
+    <p><a class="btn btn--volt" href="/account">Sign in</a></p>
+  </div>
+
+  <div class="prose prose--narrow" data-view="free" hidden>
+    <h2>This is a Pro feature</h2>
+    <p>Your dashboard builds a diet and training plan from your numbers and tracks your
+      progress. It comes with FormFit Pro, from &#8377;{{ pro_prices.monthly }} a month.</p>
+    <p><a class="btn btn--volt" href="/pro">See FormFit Pro</a></p>
+  </div>
+
+  <div data-view="pro" hidden>
+    {# ---------------- Plan generator ---------------- #}
+    <section class="block" id="plan" aria-labelledby="plan-head">
+      <div class="block__head noprint"><div><h2 id="plan-head">Build your plan</h2>
+        <p class="block__sub">Takes your numbers, sets your calories and macros, then lays out a week of meals and training.</p></div></div>
+
+      <form class="dash__form noprint" data-plan-form novalidate>
+        <div class="field field--sex">
+          <span class="field__label">Sex</span>
+          <div class="seg"><label><input type="radio" name="sex" value="m" checked><span>Male</span></label><label><input type="radio" name="sex" value="f"><span>Female</span></label></div>
+        </div>
+        <label class="field"><span class="field__label">Age</span><span class="inp"><input name="age" type="number" inputmode="numeric" min="16" max="80" required><span>yrs</span></span><span class="cform__err" data-for="age"></span></label>
+        <label class="field"><span class="field__label">Height</span><span class="inp"><input name="height" type="number" inputmode="decimal" min="130" max="220" required><span>cm</span></span><span class="cform__err" data-for="height"></span></label>
+        <label class="field"><span class="field__label">Weight</span><span class="inp"><input name="weight" type="number" inputmode="decimal" step="0.1" min="35" max="200" required><span>kg</span></span><span class="cform__err" data-for="weight"></span></label>
+        <label class="field"><span class="field__label">Activity</span><select name="activity">{% for k, v in pro_api.activity.items() %}<option value="{{ k }}"{% if k == 'moderate' %} selected{% endif %}>{{ v[1] }}</option>{% endfor %}</select></label>
+        <label class="field"><span class="field__label">Goal</span><select name="goal">{% for k, v in pro_api.goals.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></label>
+        <label class="field"><span class="field__label">Diet</span><select name="diet">{% for k, v in pro_api.diets.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></label>
+        <label class="field"><span class="field__label">Training days a week</span><select name="days">{% for d in range(3, 7) %}<option{% if d == 4 %} selected{% endif %}>{{ d }}</option>{% endfor %}</select></label>
+        <label class="field"><span class="field__label">Where you train</span><select name="place"><option value="gym">Gym</option><option value="home">Home, little equipment</option></select></label>
+        <label class="field"><span class="field__label">Experience</span><select name="level"><option value="beginner">Under a year</option><option value="intermediate">1 year or more</option></select></label>
+        <div class="dash__go">
+          <button class="btn btn--volt" type="submit">Build my plan</button>
+          <p class="cform__status" data-plan-status role="alert" hidden></p>
+        </div>
+      </form>
+
+      <div class="dash__saved noprint" data-saved hidden>
+        <span class="field__label">Saved plans:</span> <span data-saved-list></span>
+      </div>
+
+      <div class="planout" data-plan-out hidden></div>
+    </section>
+
+    {# ---------------- Progress ---------------- #}
+    <section class="block noprint" id="progress" aria-labelledby="prog-head">
+      <div class="block__head"><div><h2 id="prog-head">Progress</h2>
+        <p class="block__sub">Log a few mornings a week. The trend line is a 7-entry moving average, so one salty dinner won't throw it.</p></div></div>
+
+      <div class="dash__grid">
+        <form class="card dash__log" data-log-form novalidate>
+          <h3>Add an entry</h3>
+          <div class="seg" role="radiogroup" aria-label="What to log">
+            <label><input type="radio" name="kind" value="weight" checked><span>Weight</span></label>
+            <label><input type="radio" name="kind" value="waist"><span>Waist</span></label>
+            <label><input type="radio" name="kind" value="lift"><span>Lift</span></label>
+          </div>
+          <label class="field" data-lift-only hidden><span class="field__label">Exercise</span>
+            <span class="inp"><input name="exercise" list="lifts" maxlength="60" autocomplete="off"></span></label>
+          <datalist id="lifts">{% for x in lifts %}<option value="{{ x }}">{% endfor %}</datalist>
+          <div class="dash__row">
+            <label class="field"><span class="field__label" data-value-label>Weight</span><span class="inp"><input name="value" type="number" inputmode="decimal" step="0.1" min="1" required><span data-value-unit>kg</span></span></label>
+            <label class="field" data-lift-only hidden><span class="field__label">Reps</span><span class="inp"><input name="reps" type="number" inputmode="numeric" min="1" max="99"></span></label>
+            <label class="field"><span class="field__label">Date</span><span class="inp"><input name="logged_on" type="date" required></span></label>
+          </div>
+          <button class="btn btn--volt btn--sm" type="submit">Save entry</button>
+          <p class="cform__status" data-log-status role="alert" hidden></p>
+        </form>
+
+        <div class="card dash__chart">
+          <div class="seg" role="radiogroup" aria-label="Chart">
+            <label><input type="radio" name="chart" value="weight" checked><span>Weight</span></label>
+            <label><input type="radio" name="chart" value="waist"><span>Waist</span></label>
+          </div>
+          <div data-chart class="chart"></div>
+          <p class="result__note" data-chart-note></p>
+        </div>
+      </div>
+
+      <div class="dash__grid">
+        <div class="card">
+          <h3>Best lifts</h3>
+          <p class="field__hint">Estimated one rep max (Epley) from your best logged set.</p>
+          <div data-best></div>
+        </div>
+        <div class="card">
+          <h3>Recent entries</h3>
+          <div data-recent></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <p class="cform__status" data-setup hidden role="alert">Accounts aren't switched on yet. Please check back soon.</p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.FF_PRO = {{ pro_cfg|tojson }};</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+<script src="{{ asset('js/pro.js') }}" defer></script>
+{% endblock %}

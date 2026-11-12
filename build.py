@@ -69,7 +69,8 @@ def main():
         # Folder-per-page gives clean URLs (/bmi-calculator) on any static host.
         for path, _ in all_urls():
             ok += write(c, path, "index.html" if path == "/" else path.strip("/") + "/index.html")
-        ok += write(c, "/offline", "offline/index.html")
+        for p in ("offline", "account", "dashboard"):     # noindex, not in the sitemap
+            ok += write(c, "/" + p, p + "/index.html")
         for f in ("sitemap.xml", "robots.txt", "ads.txt", INDEXNOW_KEY + ".txt",
                   "manifest.webmanifest", "sw.js"):
             ok += write(c, "/" + f, f)
