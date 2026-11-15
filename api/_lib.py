@@ -36,7 +36,7 @@ class HTTPError(Exception):
 
 
 def env(name):
-    v = os.environ.get(name, "")
+    v = os.environ.get(name, "").strip()   # pasted values often carry a trailing space or newline
     if not v:
         raise HTTPError(503, "Pro isn't set up yet ({} is missing).".format(name))
     return v
