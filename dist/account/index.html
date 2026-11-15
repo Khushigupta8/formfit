@@ -38,7 +38,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="FormFit">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="/static/css/style.css?v=e44d06feef">
+<link rel="stylesheet" href="/static/css/style.css?v=c9c4677744">
 
 
 
@@ -174,6 +174,22 @@
         <p class="cform__status" role="status" hidden></p>
       </form>
       
+      <details class="acct__pw">
+        <summary>Have a password? Sign in with it</summary>
+        <form class="cform" data-pwsignin novalidate>
+          <label class="field">
+            <span class="field__label">Email</span>
+            <input name="email" type="email" autocomplete="username" maxlength="254" required>
+          </label>
+          <label class="field">
+            <span class="field__label">Password</span>
+            <input name="password" type="password" autocomplete="current-password" maxlength="128" required>
+          </label>
+          <button class="btn" type="submit">Sign in</button>
+          <p class="cform__status" role="status" hidden></p>
+        </form>
+      </details>
+      
       <p class="field__hint">By signing in you agree to our <a href="/terms">terms</a> and
         <a href="/privacy">privacy policy</a>.</p>
     </div>
@@ -286,7 +302,7 @@
 <script>window.FF_PRO = {"google": false, "prices": {"monthly": 99, "yearly": 799}, "supabaseKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrZmZydmJzcXNjemlodmNibXFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3NDM5NjcsImV4cCI6MjExMDMxOTk2N30.k59ERjhOG76Le43opcmyGQSNZNTcyvymQYccaBeNqhA", "supabaseUrl": "https://skffrvbsqsczihvcbmqh.supabase.co"};</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
-<script src="/static/js/pro.js?v=0160ae07fd" defer></script>
+<script src="/static/js/pro.js?v=4d531fd97e" defer></script>
 
 </body>
 </html>

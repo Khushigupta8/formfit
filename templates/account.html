@@ -25,6 +25,23 @@
         <button class="btn btn--volt" type="submit">Email me a sign-in link</button>
         <p class="cform__status" role="status" hidden></p>
       </form>
+      {# Only for accounts that were given a password (e.g. the payment
+         provider's reviewer account). Normal sign-up stays email-link only. #}
+      <details class="acct__pw">
+        <summary>Have a password? Sign in with it</summary>
+        <form class="cform" data-pwsignin novalidate>
+          <label class="field">
+            <span class="field__label">Email</span>
+            <input name="email" type="email" autocomplete="username" maxlength="254" required>
+          </label>
+          <label class="field">
+            <span class="field__label">Password</span>
+            <input name="password" type="password" autocomplete="current-password" maxlength="128" required>
+          </label>
+          <button class="btn" type="submit">Sign in</button>
+          <p class="cform__status" role="status" hidden></p>
+        </form>
+      </details>
       {% if pro_cfg.google %}
       <p class="acct__or">or</p>
       <button type="button" class="btn btn--block acct__google" data-google>Continue with Google</button>

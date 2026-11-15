@@ -124,6 +124,21 @@
         status(st, err.message || "Couldn't send the link. Please try again.");
       }).then(function () { btn.disabled = false; });
     });
+    var pw = $("[data-pwsignin]");
+    if (pw) pw.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var st = $(".cform__status", pw), b = $("button", pw);
+      var email = pw.email.value.trim(), pass = pw.password.value;
+      if (!email || !pass) { status(st, "Enter your email and password."); return; }
+      b.disabled = true;
+      sb.auth.signInWithPassword({ email: email, password: pass }).then(function (r) {
+        if (r.error) throw r.error;
+        pw.password.value = "";
+        status(st, "");
+      }).catch(function () {
+        status(st, "That email and password don't match. Use the email link above instead.");
+      }).then(function () { b.disabled = false; });
+    });
     var g = $("[data-google]");
     if (g) g.addEventListener("click", function () {
       sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: redirect } });
