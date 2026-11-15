@@ -23,4 +23,5 @@ def handle(method, headers, body):
     return 200, {"ok": True, "id": row[0]["id"] if row else None, "plan": plan}
 
 
-handler = L.vercel_handler(handle)
+class handler(L.vercel_handler(handle)):
+    """Vercel only picks up files with a top-level class named `handler`."""

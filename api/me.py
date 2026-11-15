@@ -17,4 +17,5 @@ def handle(method, headers, body):
     return 200, dict(L.public_profile(profile), ok=True, email=user.get("email"))
 
 
-handler = L.vercel_handler(handle)
+class handler(L.vercel_handler(handle)):
+    """Vercel only picks up files with a top-level class named `handler`."""

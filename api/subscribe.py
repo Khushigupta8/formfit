@@ -43,4 +43,5 @@ def handle(method, headers, body):
                  "key_id": L.env("RAZORPAY_KEY_ID"), "email": user.get("email")}
 
 
-handler = L.vercel_handler(handle)
+class handler(L.vercel_handler(handle)):
+    """Vercel only picks up files with a top-level class named `handler`."""
