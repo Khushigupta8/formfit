@@ -20,7 +20,9 @@
   }
 
   // Contact form: send with fetch and show the result in place.
+  // Only the contact form has the ts field; the Pro sign-in form reuses .cform styles.
   var form = document.querySelector(".cform");
+  if (form && !form.elements.ts) form = null;
   if (form) {
     form.ts.value = Date.now();
     var status = form.querySelector(".cform__status");

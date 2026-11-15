@@ -92,8 +92,8 @@ AD_PREVIEW = os.environ.get("FORMFIT_AD_PREVIEW") == "1"
 # anon key only allows what the row level security in supabase/schema.sql
 # allows. Supabase > Project settings > API. Secrets (service role key,
 # Razorpay keys) go in Vercel env vars only; see api/_lib.py and PRO.md.
-SUPABASE_URL = ""          # https://<project>.supabase.co
-SUPABASE_ANON_KEY = ""
+SUPABASE_URL = "https://skffrvbsqsczihvcbmqh.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrZmZydmJzcXNjemlodmNibXFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3NDM5NjcsImV4cCI6MjExMDMxOTk2N30.k59ERjhOG76Le43opcmyGQSNZNTcyvymQYccaBeNqhA"
 # Show a "Continue with Google" button (enable Google in Supabase > Auth first).
 GOOGLE_LOGIN = False
 # Must match the plans you create in Razorpay > Subscriptions > Plans (INR).
