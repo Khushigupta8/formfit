@@ -378,6 +378,88 @@ LEGAL = [
             ]),
         ],
     },
+    {
+        "slug": "refund-policy",
+        "title": "Cancellation and Refund Policy",
+        "h1": "Cancellation and refund policy",
+        "desc": ("How to cancel a FormFit Pro subscription, what happens when you "
+                 "cancel, and when payments are refunded."),
+        "body": [
+            ("What this covers", [
+                "Everything free on FormFit (calculators, workout plans, guides) "
+                "costs nothing, so there is nothing to cancel or refund. This page "
+                "covers FormFit Pro, our paid subscription, billed monthly or "
+                "yearly in Indian rupees through Razorpay.",
+            ]),
+            ("Cancelling", [
+                {"list": [
+                    "You can cancel at any time from your "
+                    "<a href=\"/account\">account page</a>, or by emailing "
+                    "<a href=\"mailto:{email}\">{email}</a> from the address you "
+                    "signed up with.",
+                    "When you cancel, you won't be charged again. Pro stays active "
+                    "until the end of the period you have already paid for.",
+                    "Your saved plans and progress entries stay in your account "
+                    "after Pro ends.",
+                ]},
+            ]),
+            ("Refunds", [
+                {"list": [
+                    "Payments already made are not refunded, except where the law "
+                    "requires it.",
+                    "If you were charged by mistake (for example, charged twice, or "
+                    "charged after cancelling) or Pro didn't work because of a "
+                    "problem on our side, email us within 7 days of the charge and "
+                    "we will refund it.",
+                    "Approved refunds go back to the original payment method "
+                    "through Razorpay, and usually reach you within 5 to 7 working "
+                    "days, depending on your bank.",
+                ]},
+            ]),
+            ("Failed renewals", [
+                "If a renewal payment fails, Razorpay will retry it. If it still "
+                "fails, Pro features stop until you subscribe again. Nothing is "
+                "charged for a renewal that didn't go through.",
+            ]),
+            ("Questions", [
+                "Write to <a href=\"mailto:{email}\">{email}</a> with the email "
+                "address on your account and, if you have it, the Razorpay payment "
+                "ID. We reply within two working days.",
+            ]),
+        ],
+    },
+    {
+        "slug": "shipping-policy",
+        "title": "Shipping and Delivery Policy",
+        "h1": "Shipping and delivery policy",
+        "desc": ("FormFit sells no physical products. FormFit Pro is a digital "
+                 "subscription delivered online straight after payment."),
+        "body": [
+            ("No physical shipping", [
+                "FormFit doesn't sell or ship any physical goods. Nothing is "
+                "posted or couriered to you.",
+            ]),
+            ("How FormFit Pro is delivered", [
+                {"list": [
+                    "FormFit Pro is a digital service. It is switched on for your "
+                    "account as soon as Razorpay confirms your payment, usually "
+                    "within a minute.",
+                    "You use it by signing in at <a href=\"/account\">formfit.in/account</a> "
+                    "and opening your <a href=\"/dashboard\">dashboard</a>, on any "
+                    "device.",
+                    "Plans you generate can be printed or saved as a PDF from your "
+                    "dashboard.",
+                ]},
+            ]),
+            ("If Pro doesn't switch on", [
+                "If you have paid and Pro isn't active within 30 minutes, email "
+                "<a href=\"mailto:{email}\">{email}</a> with the email address on "
+                "your account and the Razorpay payment ID. We will switch it on or "
+                "refund you, as described in our "
+                "<a href=\"/refund-policy\">cancellation and refund policy</a>.",
+            ]),
+        ],
+    },
 ]
 
 BY_SLUG = {p["slug"]: p for p in LEGAL}
