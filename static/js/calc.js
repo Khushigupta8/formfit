@@ -14,6 +14,7 @@
   var out = tool.querySelector(".tool__result");
   var id = tool.getAttribute("data-calc");
   var KEY = "formfit:units";
+  var LOCKS = tool.hasAttribute("data-locks");
   var LB = 2.20462, IN = 2.54;
 
   /* ---------- formatting ---------- */
@@ -36,6 +37,18 @@
     return '<dl class="rows">' + list.map(function (x) {
       return '<div' + (x[2] ? ' class="is-hl"' : "") + "><dt>" + x[0] + "</dt><dd>" + x[1] + "</dd></div>";
     }).join("") + "</dl>";
+  }
+  /* Pro lock: shows a blurred preview of an extra with an unlock button.
+     Calculators run in the browser, so this is a soft paywall; the Pro
+     features that cost us something (plans, tracking) are checked on the server. */
+  function isPro() {
+    try { return +localStorage.getItem("ff_pro") > Date.now(); } catch (e) { return false; }
+  }
+  function pro(label, html) {
+    if (!LOCKS || isPro()) return html;
+    return '<div class="locked"><div class="locked__preview" aria-hidden="true" inert>' + html + "</div>" +
+      '<div class="locked__cta"><p><b>' + label + "</b> is part of FormFit Pro.</p>" +
+      '<a class="btn btn--volt btn--sm" href="/pro">Unlock with Pro</a></div></div>';
   }
   function note(t) { return '<p class="result__note">' + t + "</p>"; }
   function alert(t) { return '<p class="alert">' + t + "</p>"; }
@@ -262,7 +275,7 @@
       }).join("") + "</tbody></table>";
     return big("Maintenance calories (TDEE)", fmt(bmr * act), "kcal/day") +
       rows([["BMR (Mifflin-St Jeor)", kcal(bmr)], ["Activity multiplier", "× " + act],
-            ["Per week", kcal(bmr * act * 7)]]) + t +
+            ["Per week", kcal(bmr * act * 7)]]) + pro("Calories at every activity level", t) +
       note("Weigh yourself for 2–3 weeks eating this much. Stable weight means it's right; adjust by 100–200 kcal if not. Next: <a href=\"/macro-calculator\">set your macros</a>.");
   };
 
@@ -278,7 +291,7 @@
         var k = t + g[1], under = k < floor; if (under) low = true;
         return '<tr' + (g[1] === 0 ? ' class="is-hl"' : "") + "><td>" + g[0] + "</td><td>" + kcal(k) + (under ? " ⚠" : "") + "</td></tr>";
       }).join("") + "</tbody></table>";
-    return big("Maintenance", fmt(t), "kcal/day") + badge("Fat loss target: " + kcal(Math.max(t - 550, floor))) + tbl +
+    return big("Maintenance", fmt(t), "kcal/day") + badge("Fat loss target: " + kcal(Math.max(t - 550, floor))) + pro("Calories for every goal and pace", tbl) +
       (low ? alert("⚠ Below " + floor + " kcal/day. Going this low is hard to sustain and makes it difficult to get enough protein and nutrients. Pick a slower pace, or talk to a doctor or dietitian first.") : "") +
       note("Based on about 7,700 kcal per kg of fat (3,500 per lb). Real loss slows over time, so recalculate every 4–5 kg.");
   };
@@ -311,7 +324,7 @@
       [3, 4, 5].map(function (n) {
         return "<tr><td>" + n + " meals</td><td>" + fmt(p / n) + "g</td><td>" + fmt(c / n) + "g</td><td>" + fmt(f / n) + "g</td></tr>";
       }).join("") + "</tbody></table>";
-    return big("Daily target", fmt(t), "kcal") + macros + stack + warn + meals +
+    return big("Daily target", fmt(t), "kcal") + macros + stack + warn + pro("Macros per meal", meals) +
       note("Protein is set per kg of body weight (" + (v.goal === "cut" ? "2.0" : "1.8") + " g/kg), fat by diet style, and carbs fill the rest.");
   };
 
@@ -326,9 +339,9 @@
       badge(g[0] === g[1] ? g[0] + " g per kg" : g[0] + "–" + g[1] + " g per kg") +
       rows([["Middle of the range", fmt(mid) + " g", true], ["Per meal (4 meals)", "≈ " + fmt(meal) + " g"],
             ["Per lb of body weight", fmt(lo / (v.weight * LB), 2) + "–" + fmt(hi / (v.weight * LB), 2) + " g"]]) +
-      '<table class="tbl-mini"><thead><tr><th>Food</th><th>Protein</th><th>Serving</th></tr></thead><tbody>' +
+      pro("Protein food list", '<table class="tbl-mini"><thead><tr><th>Food</th><th>Protein</th><th>Serving</th></tr></thead><tbody>' +
       foods.map(function (x) { return "<tr><td>" + x[0] + "</td><td>" + x[1] + " g</td><td>" + x[2] + "</td></tr>"; }).join("") +
-      "</tbody></table>" + note("If you have kidney disease, check with your doctor before raising protein.");
+      "</tbody></table>") + note("If you have kidney disease, check with your doctor before raising protein.");
   };
 
   CALC.bmr = function (v) {
@@ -353,8 +366,8 @@
     var d = new Date(); d.setDate(d.getDate() + Math.round(weeks * 7));
     var gb = 18.5 * Math.pow(v.height / 100, 2);
     return big("Eat about", fmt(eat), "kcal/day") + badge("Goal by " + d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })) +
-      rows([["Maintenance (TDEE)", kcal(t)], ["Daily deficit", kcal(realDef)], ["To lose", wt(toLose)],
-            ["Time to goal", fmt(weeks) + " weeks", true], ["Total deficit", kcal(toLose * 7700)]]) +
+      pro("Your full weight loss breakdown", rows([["Maintenance (TDEE)", kcal(t)], ["Daily deficit", kcal(realDef)], ["To lose", wt(toLose)],
+            ["Time to goal", fmt(weeks) + " weeks", true], ["Total deficit", kcal(toLose * 7700)]])) +
       (capped ? alert("That pace would need fewer than " + floor + " kcal/day, so the target is held at " + floor + " and the timeline extended.") : "") +
       (v.goalw < gb ? alert("Your goal is below a BMI of 18.5 for your height. Please check it with a doctor.") : "") +
       note("Weight loss isn't a straight line. Expect slower weeks and recalculate every 5 kg (10 lb).");
@@ -383,7 +396,7 @@
       pc.map(function (x) { return "<tr" + (x[1] === n ? ' class="is-hl"' : "") + "><td>" + x[0] + "%</td><td>" + load(avg * x[0] / 100) + "</td><td>" + x[1] + "</td></tr>"; }).join("") +
       "</tbody></table>";
     return big("Estimated 1RM", imperial() ? fmt(avg * LB) : fmt(avg, 1), imperial() ? "lb" : "kg") +
-      rows([["Epley", load(ep)], ["Brzycki", load(br)], ["Lombardi", load(lo)], ["Average", load(avg), true]]) + t;
+      rows([["Epley", load(ep)], ["Brzycki", load(br)], ["Lombardi", load(lo)], ["Average", load(avg), true]]) + pro("Your full training percentage chart", t);
   };
 
   CALC.plate = function (v) {

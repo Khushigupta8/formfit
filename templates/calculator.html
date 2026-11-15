@@ -20,7 +20,7 @@
 <div class="wrap layout">
   <main class="layout__main">
 
-    <section class="tool" id="calculator" data-calc="{{ calc.id }}">
+    <section class="tool" id="calculator" data-calc="{{ calc.id }}"{% if pro_locks %} data-locks{% endif %}>
       <form class="tool__form" novalidate autocomplete="off">
         <div class="tool__top">
           <h2 class="tool__title">{{ icon(calc.icon) }} Your details</h2>

@@ -100,6 +100,11 @@ GOOGLE_LOGIN = False
 PRO_PRICES = {"monthly": 99, "yearly": 799}
 # Pro stays hidden (no links, pages not built) until Supabase is set up.
 PRO_ENABLED = bool(SUPABASE_URL and SUPABASE_ANON_KEY)
+# Lock the extra tables on calculator results (1RM chart, food lists, meal
+# splits...) behind Pro. The headline number always stays free. Only takes
+# effect once PRO_ENABLED is true, so nobody gets locked out before they can pay.
+PRO_LOCKS = False
+PRO_LOCKS_ON = PRO_ENABLED and PRO_LOCKS
 
 
 
@@ -290,7 +295,7 @@ def render(template, **kw):
         categories=C.CATEGORIES, calcs=C.CALCS, by_cat=C.by_cat,
         popular=[c for c in C.CALCS if c.get("popular")],
         guide_topics=G.TOPICS,
-        pro_prices=PRO_PRICES, pro_enabled=PRO_ENABLED,
+        pro_prices=PRO_PRICES, pro_enabled=PRO_ENABLED, pro_locks=PRO_LOCKS_ON,
         year=date.today().year,
         **kw)
 
@@ -510,6 +515,11 @@ PRO_FEATURES = [
     ("bolt", "No ads, anywhere on FormFit",
      "Calculators, guides and workouts load clean on every device you sign in on."),
 ]
+if PRO_LOCKS_ON:
+    PRO_FEATURES.insert(3, ("lock", "Full calculator results",
+        "Every table behind the headline number: the 1RM percentage chart, "
+        "calories for each activity level and goal, meal-by-meal macros and "
+        "protein food lists."))
 
 
 def pro_config():
