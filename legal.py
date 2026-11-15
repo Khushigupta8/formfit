@@ -131,6 +131,11 @@ LEGAL = [
         "h1": "Contact us",
         "desc": "How to reach the FormFit team with corrections, suggestions or questions.",
         "body": [
+            ("Who runs FormFit", [
+                "FormFit (formfit.in) is owned and operated by Khushi Gupta, an "
+                "individual based in India. Questions about the site, your account "
+                "or a FormFit Pro payment all come to the address below.",
+            ]),
             ("Email", [
                 "Prefer email? Write to "
                 "<a href=\"mailto:{email}\">{email}</a>. The form above lands in "
