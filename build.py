@@ -13,7 +13,8 @@ import shutil
 import stat
 import sys
 
-from app import INDEXNOW_KEY, all_urls, app
+import guides as G
+from app import INDEXNOW_KEY, PRO_ENABLED, all_urls, app
 
 OUT = "dist"
 
@@ -69,8 +70,12 @@ def main():
         # Folder-per-page gives clean URLs (/bmi-calculator) on any static host.
         for path, _ in all_urls():
             ok += write(c, path, "index.html" if path == "/" else path.strip("/") + "/index.html")
-        for p in ("offline", "account", "dashboard"):     # noindex, not in the sitemap
+        hidden = ("offline", "account", "dashboard") if PRO_ENABLED else ("offline",)
+        for p in hidden:                                    # noindex, not in the sitemap
             ok += write(c, "/" + p, p + "/index.html")
+        for t in G.TOPICS:                                  # noindex topic hubs
+            ok += write(c, "/guides/topic/" + t["slug"],
+                        "guides/topic/" + t["slug"] + "/index.html")
         for f in ("sitemap.xml", "robots.txt", "ads.txt", INDEXNOW_KEY + ".txt",
                   "manifest.webmanifest", "sw.js"):
             ok += write(c, "/" + f, f)

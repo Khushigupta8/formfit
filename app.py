@@ -98,6 +98,8 @@ SUPABASE_ANON_KEY = ""
 GOOGLE_LOGIN = False
 # Must match the plans you create in Razorpay > Subscriptions > Plans (INR).
 PRO_PRICES = {"monthly": 99, "yearly": 799}
+# Pro stays hidden (no links, pages not built) until Supabase is set up.
+PRO_ENABLED = bool(SUPABASE_URL and SUPABASE_ANON_KEY)
 
 
 
@@ -288,7 +290,7 @@ def render(template, **kw):
         categories=C.CATEGORIES, calcs=C.CALCS, by_cat=C.by_cat,
         popular=[c for c in C.CALCS if c.get("popular")],
         guide_topics=G.TOPICS,
-        pro_prices=PRO_PRICES,
+        pro_prices=PRO_PRICES, pro_enabled=PRO_ENABLED,
         year=date.today().year,
         **kw)
 
@@ -461,8 +463,8 @@ def guides_topic(topic):
         page_title="{} Guides".format(t["name"]),
         page_desc=t["desc"], canonical=url, h1=t["name"],
         breadcrumb=crumbs(("Guides", SITE_URL + "/guides"), (t["name"], url)),
-        image=t["image"],
-        show_ads=False)     # mostly a list of links: keep ads on content pages
+        image=t["image"], noindex=True,
+        show_ads=False)     # thin list of links: keep out of the index and ad-free
 
 
 @app.route("/guides/<slug>")
@@ -571,12 +573,32 @@ def pro_api(name):
     return jsonify(out), status
 
 
+_NO_PRO_SHORT = (
+    "Calculators run in your browser and the numbers you enter are never sent "
+    "to us. We do not have accounts, logins or a newsletter. If you use the "
+    "contact form, we receive what you write in it, and nothing else. The site "
+    "is paid for by advertising from Google AdSense, which uses cookies as "
+    "described below.")
+
+
+def _without_pro(doc):
+    """Legal page as it reads while Pro is hidden: no Pro sections or links."""
+    body = []
+    for head, blocks in doc["body"]:
+        if "FormFit Pro" in head:
+            continue
+        if head == "The short version" and any("FormFit Pro" in str(b) for b in blocks):
+            blocks = [_NO_PRO_SHORT]
+        body.append((head, blocks))
+    return dict(doc, body=body)
+
+
 @app.route("/<slug>")
 def top_level(slug):
     if slug in C.BY_SLUG:
         return calc_page(C.BY_SLUG[slug])
     if slug in L.BY_SLUG:
-        doc = L.BY_SLUG[slug]
+        doc = L.BY_SLUG[slug] if PRO_ENABLED else _without_pro(L.BY_SLUG[slug])
         url = "{}/{}".format(SITE_URL, slug)
         return render(
             "legal.html", doc=doc,
@@ -606,11 +628,12 @@ def contact_post():
 
 def all_urls():
     u = [("/", "1.0"), ("/calculators", "0.9"), ("/workouts", "0.8"),
-         ("/exercises", "0.8"), ("/guides", "0.8"), ("/pro", "0.6")]
+         ("/exercises", "0.8"), ("/guides", "0.8")]
+    if PRO_ENABLED:             # Pro only goes in the sitemap once sign-up works
+        u.append(("/pro", "0.6"))
     u += [("/" + c["slug"], "0.9") for c in C.CALCS]
     u += [("/workouts/" + w["slug"], "0.8") for w in W.WORKOUTS]
     u += [("/exercises/" + x["slug"], "0.7") for x in E.EXERCISES]
-    u += [("/guides/topic/" + t["slug"], "0.5") for t in G.TOPICS]
     u += [("/guides/" + g["slug"], "0.8") for g in G.GUIDES]
     u += [("/" + p["slug"], "0.3") for p in L.LEGAL]
     return u

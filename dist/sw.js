@@ -8,7 +8,7 @@
    - Other origins (AdSense) and non-GET requests are left alone. */
 "use strict";
 
-var VERSION = "0548d15c5a";
+var VERSION = "dbf4ea65f5";
 var NOTE = "";
 var CORE = "formfit-core-" + VERSION;
 var PAGES = "formfit-pages-" + VERSION;
